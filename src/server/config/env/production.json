@@ -1,0 +1,9 @@
+{
+  "db": {
+    "uri": "mongodb://admin:fdsfdER234xcwrte@blockchain_mongodb:27017/blockchain?authSource=admin"
+  },
+  "http": {
+    "url": "https://blockchain.demo.aspirity.com",
+    "port": 8060
+  }
+}

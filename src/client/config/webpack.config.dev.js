@@ -147,7 +147,7 @@ module.exports = {
 						},
 					},
 					// Process JS with Babel.
-					{
+					/*{
 						test: /\.(js|jsx|mjs)$/,
 						include: paths.appSrc,
 						loader: require.resolve('babel-loader'),
@@ -158,7 +158,17 @@ module.exports = {
 							// directory for faster rebuilds.
 							cacheDirectory: true,
 						},
-					},
+					},*/
+
+
+          {
+            test: /\.jsx?$/,
+            exclude: [/node_modules/],
+            loader: "babel-loader",
+            query: {
+              presets: ['es2015', 'react', 'stage-2']
+            }
+          },
 					// "postcss" loader applies autoprefixer to our CSS.
 					// "css" loader resolves paths in CSS and adds assets as dependencies.
 					// "style" loader turns CSS into JS modules that inject <style> tags.
@@ -231,13 +241,12 @@ module.exports = {
 		// The public URL is available as %PUBLIC_URL% in index.html, e.g.:
 		// <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 		// In development, this will be an empty string.
-		new InterpolateHtmlPlugin(env.raw),
 		// Generates an `index.html` file with the <script> injected.
 		new HtmlWebpackPlugin({
-			title: 'asdasdas',
 			inject: true,
 			template: paths.appHtml,
 		}),
+    new InterpolateHtmlPlugin(env.raw),
 		// Add module names to factory functions so they appear in browser profiler.
 		new webpack.NamedModulesPlugin(),
 		// Makes some environment variables available to the JS code, for example:
@@ -261,6 +270,7 @@ module.exports = {
 		// You can remove this if you don't use Moment.js:
 		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 	],
+  //eslint: { configFile: '.eslintrc' },
 	// Some libraries import Node modules but don't use them in the browser.
 	// Tell Webpack to provide empty mocks for them so importing them works.
 	node: {
@@ -275,5 +285,5 @@ module.exports = {
 	// cumbersome.
 	performance: {
 		hints: false,
-	},
+	}
 };
