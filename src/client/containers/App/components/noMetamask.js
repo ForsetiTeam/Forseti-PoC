@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 class NoMetamask extends Component {
   render() {
     return (
-      <div>Необходимо подключить MetaMask</div>
+      <div>
+        <h3>MetaMask не подключен</h3>
+        <p>Необходимо подключить MetaMask</p>
+      </div>
     );
   }
 }

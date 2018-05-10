@@ -25,7 +25,7 @@
   &__version {
     position: absolute;
     bottom: -$margin;
-    left: -$margin - 100px;
+    left: -$margin - $tabsWidth;
     padding-left: 10px;
   }
 }

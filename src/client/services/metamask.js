@@ -8,11 +8,21 @@ function getAccount() {
   return checkPlugin ? window.web3.eth.accounts[0] : null;
 }
 
-function requestSign(message) {
+function loadAccount() {
+  return new Promise((resolve, reject) => {
+    if (!checkPlugin()) return reject();
+    window.web3.eth.getAccounts((error, accounts) => {
+      if (error || !accounts) return reject();
+      resolve(accounts[0]);
+    });
+  });
+}
+
+function requestSig(message) {
   return new Promise((resolve, reject) => {
     const account = getAccount();
 
-    if (!account) return false;
+    if (!account) return reject();
     const data = ethUtil.bufferToHex(new Buffer(message, 'utf8'));
 
     window.web3.currentProvider.sendAsync(
@@ -39,5 +49,6 @@ function requestSign(message) {
 export {
   checkPlugin,
   getAccount,
-  requestSign
+  requestSig,
+  loadAccount
 };

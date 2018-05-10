@@ -47,83 +47,14 @@ const config = convict({
         env: "MONGO_URI",
       },
     },
-    cryptoRates: {
-      bitcoinUrl: {
-        doc: "External api url for fetching bitcoin price",
-        format: String,
-        default: "https://api.coinmarketcap.com/v1/ticker/bitcoin/",
-      },
-      ethereumUrl: {
-        doc: "External api url for fetching ethereum price",
-        format: String,
-        default: "https://api.coinmarketcap.com/v1/ticker/ethereum/",
-      },
+    metamask: {
+        sigPhrase: {
+            doc: "String for signing metamask",
+            format: String,
+            default: "Forseti greets you!",
+        },
     },
-    emailTransport: {
-      service: {
-        doc: "Service for email transport",
-        format: String,
-        default: "gmail",
-      },
-      user: {
-        doc: "User for email transport",
-        format: String,
-        default: "testpreico@gmail.com",
-      },
-      pass: {
-        doc: "Password for email transport",
-        format: String,
-        default: "123qweASD123qweASD",
-      },
-    },
-    emailConfirmation: {
-      tokenLength: {
-        doc: "Length of token for email confirmation",
-        format: Number,
-        default: 32,
-      },
-      tokenTTL: {
-        doc: "Time to live of token for email confirmation in hours",
-        format: Number,
-        default: 24,
-      },
-    },
-    passwordRecover: {
-      tokenLength: {
-        doc: "Length of token for email confirmation",
-        format: Number,
-        default: 32,
-      },
-      tokenTTL: {
-        doc: "Time to live of token for email confirmation in hours",
-        format: Number,
-        default: 24,
-      },
-    },
-    emailChange: {
-      tokenLength: {
-        doc: "Length of token for email changing",
-        format: Number,
-        default: 32,
-      },
-      tokenTTL: {
-        doc: "Time to live of token for email changing in hours",
-        format: Number,
-        default: 24,
-      },
-    },
-    passwordChange: {
-      tokenLength: {
-        doc: "Length of token for password changing",
-        format: Number,
-        default: 32,
-      },
-      tokenTTL: {
-        doc: "Time to live of token for password changing in hours",
-        format: Number,
-        default: 24,
-      },
-    },
+
 });
 
 const env = config.get("env");

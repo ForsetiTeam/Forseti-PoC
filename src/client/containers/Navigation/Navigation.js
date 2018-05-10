@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import NavigationContainer from './components/NavigationContainer';
 
 function mapStateToProps(state) {
-  const auth = state.auth;
+  const isLogged = state.auth.loaded;
 
-  return { auth };
+  return { isLogged };
 }
 
 export default connect(mapStateToProps)(NavigationContainer);

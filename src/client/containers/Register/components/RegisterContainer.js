@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 import { getAccount } from '../../../services/metamask';
 
 import Register from './Register';
+import config from '../../../config/config';
 
 class RegisterContainer extends Component {
   static propTypes = {
     auth: PropTypes.any,
     onSubmit: PropTypes.func,
-    onRequestSign: PropTypes.func
+    onRequestSig: PropTypes.func,
+
+    history: PropTypes.shape({
+      push: PropTypes.func
+    }).isRequired
   };
 
   state = {
@@ -29,10 +34,13 @@ class RegisterContainer extends Component {
     this.props.onSubmit(user);
   };
 
-  handleRequestSign = e => {
+  handleRequestSig = e => {
     e.preventDefault();
     this.setState({ isSigning: true });
-    this.props.onRequestSign('Forseti greets you!')
+
+    const sigPhrase = config.get('metamask.sigPhrase');
+
+    this.props.onRequestSig(sigPhrase)
       .then(sign =>
         this.setState({
           sign,
@@ -62,7 +70,7 @@ class RegisterContainer extends Component {
       <Register
         onChange={this.handleChange}
         onSubmit={this.handleSubmit}
-        onRequestSign={this.handleRequestSign}
+        onRequestSig={this.handleRequestSig}
         canSubmit={this.isFormValid()}
         isSigning={this.state.isSigning}
         isSigned={!!this.state.sign}

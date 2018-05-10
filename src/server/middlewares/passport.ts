@@ -1,13 +1,34 @@
 import * as passport from "passport";
 import * as passportLocal from "passport-local";
 import * as passportJwt from "passport-jwt";
-import * as bcrypt from "bcryptjs-then";
+import * as ethUtil from 'ethereumjs-util';
 import config from "../config";
 import UserModel from "../models/UserModel";
 import {Express, Request} from "../types/ExpressExtended";
 
+// const metaAuth = require('meta-auth');
+
 const LocalStrategy = passportLocal.Strategy;
 const JwtStrategy = passportJwt.Strategy;
+
+
+function checkSig(sig, owner) {
+  try {
+    let phrase = config.get("metamask.sigPhrase");
+    let message = ethUtil.toBuffer(phrase);
+    let msgHash = ethUtil.hashPersonalMessage(message);
+    // Get the address of whoever signed this message
+    let signature = ethUtil.toBuffer(sig);
+    let sigParams = ethUtil.fromRpcSig(signature);
+    let publicKey = ethUtil.ecrecover(msgHash, sigParams.v, sigParams.r, sigParams.s);
+    let sender = ethUtil.publicToAddress(publicKey);
+    let addr = ethUtil.bufferToHex(sender);
+    return addr == owner;
+  } catch(e) {
+    return false;
+  }
+}
+
 
 export default (app: Express): void => {
   passport.serializeUser((user: any, done) => {
@@ -24,22 +45,22 @@ export default (app: Express): void => {
   });
 
   passport.use(new LocalStrategy({
-      usernameField: "email",
-      passwordField: "password",
+      usernameField: "account",
+      passwordField: "sig",
     },
-    async (email, password, next) => {
-      const user = await UserModel.findOne({email}).lean();
+    async (account, sig, next) => {
+    console.log('local', account, sig);
+      const user = await UserModel.findOne({account}).lean();
       if (!user) {
-        return next(null, false, {message: "Неправильный e-mail или пароль"});
+        return next(null, false, {message: "Аккаунт не найден"});
       }
-      if (!user.emailConfirmed) {
-        return next(null, false, {message: "Аккаунт неподтверждён"});
+      if (!checkSig(sig, account)) {
+        return next(null, false, {message: "Неправильная подпись"});
       }
-      const res = await bcrypt.compare(password, user.password);
+      /*const res = await bcrypt.compare(password, user.password);
       if (!res) {
         return next(null, false, {message: "Неправильный e-mail или пароль"});
-      }
-      delete user.password;
+      }*/
       return next(null, user);
     },
   ));
@@ -57,17 +78,22 @@ export default (app: Express): void => {
       token = req.headers.authorization;
     }
 
+    console.log('jwtFromRequest', token);
     return token;
   };
   jwtStrategyOpts.secretOrKey = config.get("jwt.secret");
 
-  passport.use(new JwtStrategy(jwtStrategyOpts, async (jwtPayload, next) => {
-    const user = await UserModel.findOne({ _id: jwtPayload.userId }).lean();
-    if (!user) {
-      return next(null, false);
+  passport.use(new JwtStrategy(
+    jwtStrategyOpts,
+    async (jwtPayload, next) => {
+      console.log('jwtPayload', jwtPayload)
+      const user = await UserModel.findOne({ _id: jwtPayload.userId }).lean();
+      if (!user) {
+        return next(null, false);
+      }
+      return next(null, user);
     }
-    return next(null, user);
-  }));
+  ));
 
   app.use(passport.initialize());
   app.use(passport.session());

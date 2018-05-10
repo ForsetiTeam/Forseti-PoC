@@ -1,17 +1,20 @@
 import { connect } from 'react-redux';
 
-import Login from './components/Login';
+import LoginContainer from './components/LoginContainer';
 
-import { fetchLogin } from '../../redux/actions/auth';
+import { fetchLogin } from '../../redux/actions/authLogin';
+import { loadAccount, requestSig } from '../../services/metamask';
 
 function mapStateToProps(state) {
-  const user = state.auth;
+  const isLogged = state.auth.loaded;
 
-  return { user };
+  return { isLogged };
 }
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (user) => dispatch(fetchLogin(user))
+  loadAccount: () => loadAccount(),
+  requestSig: message => requestSig(message),
+  login: (account, sig) => dispatch(fetchLogin(account, sig))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

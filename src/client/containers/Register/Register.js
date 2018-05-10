@@ -2,18 +2,18 @@ import { connect } from 'react-redux';
 
 import RegisterContainer from './components/RegisterContainer';
 
-import { fetchRegister } from '../../redux/actions/auth';
-import { requestSign } from '../../services/metamask';
+import { fetchRegister } from '../../redux/actions/authRegister';
+import { requestSig } from '../../services/metamask';
 
 function mapStateToProps(state) {
-  const auth = state.auth;
+  const isLogged = state.auth.loaded;
 
-  return { auth };
+  return { isLogged };
 }
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: user => dispatch(fetchRegister(user)),
-  onRequestSign: message => requestSign(message)
+  onRequestSig: message => requestSig(message)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);

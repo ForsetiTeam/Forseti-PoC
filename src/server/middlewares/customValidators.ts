@@ -1,5 +1,4 @@
 import * as expressValidator from "express-validator";
-import * as bcrypt from "bcryptjs-then";
 import UserModel from "../models/UserModel";
 
 function isContains(item, targetItems) {
@@ -73,18 +72,6 @@ function isCustomPhone(phone) {
   return /^\d{0,15}$/.test(phone);
 }
 
-function isSamePassword(oldPassword, user) {
-  if (!user) {
-    return Promise.reject("user undefined");
-  }
-
-  return bcrypt.compare(oldPassword, user.password)
-    .then((valid) => {
-      if (valid) { return Promise.resolve(); }
-
-      return Promise.reject("different passwords");
-    });
-}
 
 async function isUserExistsByAccount(account) {
     if (!account) { return Promise.resolve(); }
@@ -107,7 +94,6 @@ function setupValidator() {
       isArray,
       isString,
       isCustomPhone,
-      isSamePassword,
       isUserExistsByEmailUpdate,
 
       isUserExistsByAccount

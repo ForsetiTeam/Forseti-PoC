@@ -2,6 +2,7 @@ import { push } from 'react-router-redux';
 import axios from 'axios';
 
 import config from '../../config/config';
+import { setUser } from "../../services/localStore";
 import {
   fetchDecorator,
   // fetchProtectedAuth,
@@ -54,23 +55,17 @@ function fetchRegisterDo(user) {
         // partial(fetchProtectedAuth, dispatch),
         // (...args) => fetchProtectedAuth(dispatch, ...args),
         fetchSuccessStatusDecorator// ,
-        // fetchFromJsonDecorator
       ],
       axios.post(`${config.get('serverAPI')}auth/register`, user)
-      /* fetch(`${config.get('serverAPI')}auth/register`, {
-        method: 'post',
-        // headers: new Headers({ 'content-type': 'application/json' }),
-        body: JSON.stringify(user),
-        credentials: 'same-origin'
-      })*/
     )
-      .then(() => {
+      .then((res) => {
+        const resUser = res.data.user;
+        setUser(resUser);
         dispatch(receiveRegister());
         dispatch(push('/'));
       })
       .catch(error => {
         dispatch(failureRegister(error.response.data));
       });
-    /* , 'Authorization': state.session.cookies.jwt */
   };
 }

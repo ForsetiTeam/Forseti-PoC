@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import SpinnerWaiter from '../../../components/SpinnerWaiter';
+
 class Register extends Component {
   static propTypes = {
     onChange: PropTypes.func,
     onSubmit: PropTypes.func,
-    onRequestSign: PropTypes.func,
+    onRequestSig: PropTypes.func,
     canSubmit: PropTypes.bool,
     isSigning: PropTypes.bool,
     isSigned: PropTypes.bool,
@@ -48,7 +50,10 @@ class Register extends Component {
             <p className='text-danger'>{this.props.errors.account.msg}</p>
           }
           {!this.props.isSigned ?
-            <button className='btn btn-warning' onClick={this.props.onRequestSign}>Request sign</button>
+            <div>
+              <button className='btn btn-warning' onClick={this.props.onRequestSig}>Request sign</button>
+              <SpinnerWaiter isLoading={this.props.isSigning}/>
+            </div>
             :
             <button type='submit' className='btn btn-primary' disabled={!this.props.canSubmit}>Submit</button>
           }

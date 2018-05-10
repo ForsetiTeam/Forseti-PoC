@@ -13,6 +13,13 @@ const config = convict({
     doc: 'Server API URL',
     format: String,
     default: 'http://localhost:8063/api/'
+  },
+  metamask: {
+    sigPhrase: {
+      doc: "String for signing metamask",
+      format: String,
+      default: "Forseti greets you!"
+    }
   }
 });
 
