@@ -86,6 +86,15 @@ function isSamePassword(oldPassword, user) {
     });
 }
 
+async function isUserExistsByAccount(account) {
+    if (!account) { return Promise.resolve(); }
+    const existingUser = await UserModel.findOne({account});
+    if (existingUser) {
+        return Promise.reject("user exist");
+    }
+    return Promise.resolve();
+}
+
 function setupValidator() {
   return expressValidator({
     customValidators: {
@@ -100,6 +109,8 @@ function setupValidator() {
       isCustomPhone,
       isSamePassword,
       isUserExistsByEmailUpdate,
+
+      isUserExistsByAccount
     },
   });
 }

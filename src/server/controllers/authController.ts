@@ -51,42 +51,6 @@ async function signIn(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function signUp(req: Request, res: Response, next: NextFunction) {
-  const user = req.body;
-
-  const tokenBuffer = await crypto.randomBytes(config.get("emailConfirmation.tokenLength"));
-  const confirmationToken = tokenBuffer.toString("hex");
-  const now = new Date();
-  const confirmationLastDate = now.setUTCHours(now.getUTCHours() + config.get("emailConfirmation.tokenTTL"));
-
-  const userDoc = {
-    name: user.name,
-    surname: user.surname,
-    email: user.email,
-    password: null,
-    confirmationToken,
-    confirmationLastDate,
-  };
-
-  userDoc.password = await bcrypt.hash(user.password);
-  await UserModel.create(userDoc);
-  req.session.destroy(() => true);
-
-  const confirmationLink =
-    `${config.get("http.url")}/signup/confirm/${confirmationToken}`;
-  const confirmationMailOptions = {
-    from: "Aspirity Blockchain <aspirity@blockchain.com>",
-    to: user.email,
-    subject: "Подтверждение учётной записи",
-    text: `Для подтверждения учётной записи перейдите по ссылке: ${confirmationLink}`,
-    html: `<p>Для подтверждения учётной записи перейдите по ссылке:
-           <a href="${confirmationLink}">${confirmationLink}</a></p>`,
-  };
-
-  await sendMail(confirmationMailOptions);
-
-  return res.responses.success("Регистрация завершена");
-}
 
 async function confirmEmail(req: Request, res: Response, next: NextFunction) {
   try {
@@ -184,8 +148,26 @@ async function setNewPassword(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+
+
+async function register(req: Request, res: Response, next: NextFunction) {
+    const user = req.body;
+
+    const userDoc = {
+        email: user.email,
+        account: user.account,
+        sign: user.sign
+    };
+
+    await UserModel.create(userDoc);
+    req.session.destroy(() => true);
+
+    return res.responses.success("Регистрация завершена");
+}
+
+router.post("/register", validate(signUpSchema), register);
+
 router.post("/signin", validate(signInSchema), signIn);
-router.post("/signup", validate(signUpSchema), signUp);
 router.put("/confirm", validate(confirmEmailSchema), confirmEmail);
 router.put("/password/recover", validate(passwordRecoverSchema), sendMailForPasswordRecover);
 router.put("/password/set", validate(passwordSetSchema), setNewPassword);

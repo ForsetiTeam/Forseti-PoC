@@ -1,38 +1,40 @@
 import {
-  REQUEST_VERSION_LOADING,
-  REQUEST_VERSION_SUCCESS,
-  REQUEST_VERSION_FAILURE
-}                                     from '../actions/version';
+  REQUEST_REGISTER_LOADING,
+  REQUEST_REGISTER_SUCCESS,
+  REQUEST_REGISTER_FAILURE
+} from '../actions/auth';
 
 const initialState = {
-  code: '',
+  user: '',
   loaded: false,
-  loading: false
+  loading: false,
+  error: false
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case REQUEST_VERSION_LOADING: {
+    case REQUEST_REGISTER_LOADING: {
       const newState = { ...state };
 
       newState.loaded = false;
       newState.loading = true;
+      newState.user = null;
+      newState.error = null;
       return newState;
     }
-    case REQUEST_VERSION_SUCCESS: {
+    case REQUEST_REGISTER_SUCCESS: {
       const newState = { ...state };
 
       newState.loaded = true;
       newState.loading = false;
-      newState.code = action.version;
+      newState.user = action.user;
       return newState;
     }
-    case REQUEST_VERSION_FAILURE: {
+    case REQUEST_REGISTER_FAILURE: {
       const newState = { ...state };
 
-      newState.loaded = true;
       newState.loading = false;
-      newState.code = false;
+      newState.error = action.error;
       return newState;
     }
     default:

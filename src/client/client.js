@@ -28,22 +28,3 @@ ReactDOM.render((
 ), document.getElementById('root'));
 
 registerServiceWorker();
-
-/*
-
-import React from 'react';
-import ReactDOM   from 'react-dom';
-import { browserHistory, Router } from 'react-router';
-import routes from './redux/routes.jsx';
-import { ReduxAsyncConnect } from 'redux-connect';
-
-const component = (
-  <Provider store={store}>
-    <Router render={(props) => <ReduxAsyncConnect {...props}/>} history={browserHistory}>
-      {routes}
-    </Router>
-  </Provider>
-);
-
-ReactDOM.render(component, document.getElementById('react-view'));
-*/

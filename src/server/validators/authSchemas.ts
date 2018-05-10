@@ -7,31 +7,15 @@ function signUpSchema(req) {
       },
       notEmpty: { errorMessage: "Поле должно быть заполнено." },
     },
-    password: {
-      isLength: {
-        options: [{ min: 6 }],
-        errorMessage: "Минимальная длина пароля 6 символов.",
-      },
-      isPassword: {
-        errorMessage:
-          "Пароль должен содержать не менее 6 символов, хотя бы одну цифру, одну прописную и одну строчную буквы.",
-      },
-      notEmpty: {errorMessage: "Поле должно быть заполнено."},
-    },
-    name: {
-      isLength: {
-        options: [2, 50],
-        errorMessage: "Допустимая длина имени - до 50 символов.",
+    account: {
+      isUserExistsByAccount: {
+          errorMessage: "Пользователь с таким кошельком уже зарегистрирован в системе.",
       },
       notEmpty: { errorMessage: "Поле должно быть заполнено." },
     },
-    surname: {
-      isLength: {
-        options: [2, 50],
-        errorMessage: "Допустимая длина фамилии - до 50 символов.",
-      },
+    sign: {
       notEmpty: { errorMessage: "Поле должно быть заполнено." },
-    },
+    }
   };
 }
 

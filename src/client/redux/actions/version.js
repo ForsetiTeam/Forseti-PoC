@@ -61,7 +61,7 @@ function fetchVersionDo() {
       .then(version => {
         dispatch(receiveVersion(version.message));
       })
-      .catch((error) => {
+      .catch(error => {
         dispatch(failureVersion(error));
       });
     /* , 'Authorization': state.session.cookies.jwt */

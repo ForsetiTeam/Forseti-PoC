@@ -1,8 +1,10 @@
 import { combineReducers }                  from 'redux';
 import { reducer as reduxAsyncConnect }     from 'redux-connect';
-import versionReducer                          from './version';
+import version from './version';
+import auth from './auth';
 
 export default combineReducers({
   reduxAsyncConnect,
-  version: versionReducer
+  version,
+  auth
 });
