@@ -46,6 +46,11 @@ async function login(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+async function logout(req: Request, res: Response, next: NextFunction) {
+  req.logout();
+  return res.responses.success("Успешно");
+}
+
 async function register(req: Request, res: Response, next: NextFunction) {
     const user = req.body;
 
@@ -62,7 +67,7 @@ async function register(req: Request, res: Response, next: NextFunction) {
 }
 
 router.post("/register", validate(signUpSchema), register);
-
 router.post("/login", validate(signInSchema), login);
+router.post("/logout", validate(signInSchema), login);
 
 export default router;

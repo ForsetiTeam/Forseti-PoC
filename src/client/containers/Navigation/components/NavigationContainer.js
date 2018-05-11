@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Navigation from './Navigation';
-import { checkPlugin, getAccount } from '../../../services/metamask';
+import { checkPlugin, getAccount, loadAccount } from '../../../services/metamask';
 
 class NavigationContainer extends Component {
   static propTypes = {
     isLogged: PropTypes.bool
   };
+
+  componentDidMount() {
+    loadAccount()
+      .then(() => {
+        this.forceUpdate();
+      });
+  }
 
   calcTabs() {
     if (!checkPlugin() || !getAccount()) {
@@ -15,6 +22,7 @@ class NavigationContainer extends Component {
     }
     if (this.props.isLogged) {
       return [
+        { title: 'Communities', uri: '/community/' },
         { title: 'Ongoing Disputes', uri: '/dispute/' },
         { title: 'Finished Disputes', uri: '/dispute/finished' },
         { title: 'Log Out', uri: '/logout' }

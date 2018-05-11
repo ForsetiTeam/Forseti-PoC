@@ -7,6 +7,7 @@ import { getUser } from './services/localStore';
 import About from './containers/About/index';
 import Register from './containers/Register/index';
 import Login from './containers/Login/index';
+import { Communities, Community } from './containers/Community/index';
 
 const Main = () => {
   const isLogged = checkPlugin() && getUser();
@@ -28,6 +29,8 @@ const Main = () => {
       <Switch>
         <Redirect exact from='/' to={defPage} />
         <Route path='/dispute' component={About} />
+        <Route path='/community/:communityId' component={Community} />
+        <Route path='/community' component={Communities} />
         <Redirect from='*' to={defPage} />
       </Switch>
     </main>

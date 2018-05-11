@@ -1,14 +1,14 @@
 import { push } from 'react-router-redux';
 import axios from 'axios';
 
-import config from '../../config/config';
-import { setUser } from "../../services/localStore";
+import config from '../../../config/config';
+import { setUser, setToken } from '../../../services/localStore';
 import {
   fetchDecorator,
   // fetchProtectedAuth,
   fetchSuccessStatusDecorator// ,
   // fetchFromJsonDecorator
-} from './decorators';
+} from '../decorators/index';
 
 export const REQUEST_LOGIN_LOADING = 'REQUEST_LOGIN_LOADING';
 export const REQUEST_LOGIN_SUCCESS = 'REQUEST_LOGIN_SUCCESS';
@@ -67,8 +67,8 @@ function fetchLoginDo(account, sig) {
     })*/
     )
       .then((res) => {
-        const user = res.data.user;
-        setUser(user);
+        setUser(res.data.user);
+        setToken(res.data.token);
         dispatch(receiveLogin());
         dispatch(push('/'));
       })

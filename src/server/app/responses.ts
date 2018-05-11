@@ -6,7 +6,7 @@ export class ResponseFactory {
   private res: Response;
   constructor(res) { this.res = res; }
 
-  public notFoundResource(message, options): Response {
+  public notFoundResource(message, options = null): Response {
     const code = 404;
     const responseMessage = {
       message: message || http.STATUS_CODES[code],

@@ -1,6 +1,6 @@
 
-export default function () {
-  return this
+export default function (resp) {
+  return resp
     .then(response => {
       return response.json();
     });

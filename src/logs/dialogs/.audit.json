@@ -6,29 +6,29 @@
     "auditLog": "/home/aspirity/Projects/Forseti/src/logs/dialogs/.audit.json",
     "files": [
         {
-            "date": 1525945440026,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Th",
-            "hash": "68f55c03d371f34d3d71ef7b12a8268b"
+            "date": 1526030137235,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Fr",
+            "hash": "40e41b0b5328b5a25d65caeaca3de255"
         },
         {
-            "date": 1525945440026,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Th",
-            "hash": "cde78f4aac2d44585c81b828b40af217"
+            "date": 1526030137235,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Fr",
+            "hash": "d049f8a32d32e3e7982f4f4badc4636d"
         },
         {
-            "date": 1525948687580,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/all/-all.log.yyyy-05-Th",
-            "hash": "28c8edfbc54b6bc029f05ca1306067e5"
+            "date": 1526030940765,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/all/-all.log.yyyy-05-Fr",
+            "hash": "b6a96d1ad03eb7b03c98cdf5ef1c0696"
         },
         {
-            "date": 1525948687603,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Th",
-            "hash": "114ea6422aa5194416104e6f38432a1a"
+            "date": 1526030940766,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Fr",
+            "hash": "eef80a6a2e4be8f28194669b99f6f09e"
         },
         {
-            "date": 1525948687606,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Th",
-            "hash": "287b82d6212924f7b04c10eb9092b7e9"
+            "date": 1526030940767,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Fr",
+            "hash": "4735178dd6530aa26674b9974b591965"
         }
     ]
 }

@@ -1,14 +1,12 @@
 import { push } from 'react-router-redux';
 import axios from 'axios';
 
-import config from '../../config/config';
-import { setUser } from "../../services/localStore";
+import config from '../../../config/config';
+import { setUser, setToken } from '../../../services/localStore';
 import {
   fetchDecorator,
-  // fetchProtectedAuth,
-  fetchSuccessStatusDecorator// ,
-  // fetchFromJsonDecorator
-} from './decorators';
+  fetchSuccessStatusDecorator
+} from '../decorators/index';
 
 export const REQUEST_REGISTER_LOADING = 'REQUEST_REGISTER_LOADING';
 export const REQUEST_REGISTER_SUCCESS = 'REQUEST_REGISTER_SUCCESS';
@@ -52,15 +50,13 @@ function fetchRegisterDo(user) {
 
     return fetchDecorator(
       [
-        // partial(fetchProtectedAuth, dispatch),
-        // (...args) => fetchProtectedAuth(dispatch, ...args),
         fetchSuccessStatusDecorator// ,
       ],
       axios.post(`${config.get('serverAPI')}auth/register`, user)
     )
       .then((res) => {
-        const resUser = res.data.user;
-        setUser(resUser);
+        setUser(res.data.user);
+        setToken(res.data.token);
         dispatch(receiveRegister());
         dispatch(push('/'));
       })

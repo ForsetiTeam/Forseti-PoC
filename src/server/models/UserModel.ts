@@ -1,4 +1,6 @@
-import { prop, Typegoose, ModelType, InstanceType } from "typegoose";
+import { prop, Typegoose, ModelType, InstanceType, Ref } from "typegoose";
+
+import Community from './CommunityModel';
 
 export class User extends Typegoose {
   /*@prop({ required: false })
@@ -12,6 +14,9 @@ export class User extends Typegoose {
 
   @prop({ required: true })
   public sign: string;
+
+  @prop()
+  public communities: Ref<Community>[]
 }
 
 const UserModel = new User().getModelForClass(User);

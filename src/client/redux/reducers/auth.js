@@ -3,12 +3,12 @@ import {
   REQUEST_REGISTER_LOADING,
   REQUEST_REGISTER_SUCCESS,
   REQUEST_REGISTER_FAILURE
-} from '../actions/authRegister';
+} from '../actions/auth/authRegister';
 import {
   REQUEST_LOGIN_LOADING,
   REQUEST_LOGIN_SUCCESS,
   REQUEST_LOGIN_FAILURE
-} from '../actions/authLogin';
+} from '../actions/auth/authLogin';
 
 const user = getUser();
 

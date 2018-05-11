@@ -2,13 +2,13 @@ import { connect } from 'react-redux';
 
 import RegisterContainer from './components/RegisterContainer';
 
-import { fetchRegister } from '../../redux/actions/authRegister';
+import { fetchRegister } from '../../redux/actions/auth/authRegister';
 import { requestSig } from '../../services/metamask';
 
 function mapStateToProps(state) {
-  const isLogged = state.auth.loaded;
+  const auth = state.auth;
 
-  return { isLogged };
+  return { auth };
 }
 
 const mapDispatchToProps = dispatch => ({
