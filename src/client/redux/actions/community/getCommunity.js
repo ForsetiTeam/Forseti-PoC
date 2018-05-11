@@ -4,8 +4,18 @@ import axios from 'axios';
 import config from '../../../config/config';
 import {
   fetchDecorator,
-  fetchSuccessStatusDecorator
+  fetchSuccessStatusDecorator,
+  fetchProtectedAuth
 } from '../decorators/index';
+import { getToken } from '../../../services/localStore';
+
+axios.interceptors.response.use(undefined, err => {
+  const res = err.response;
+
+  if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
+    return Promise.resolve(res);
+  }
+});
 
 export const REQUEST_COMMUNITY_LOADING = 'REQUEST_COMMUNITY_LOADING';
 export const REQUEST_COMMUNITY_SUCCESS = 'REQUEST_COMMUNITY_SUCCESS';
@@ -48,17 +58,20 @@ function fetchCommunityDo(id) {
     console.log('Fetch: Community');
     dispatch(requestCommunity());
 
+    const token = getToken();
+
     return fetchDecorator(
       [
+        resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      axios.get(`${config.get('serverAPI')}community/${id}`)
+      axios.get(`${config.get('serverAPI')}community/${id}`, { headers: { Authorization: token } })
     )
       .then(res => {
         dispatch(receiveCommunity(res.data));
       })
-      .catch(error => {
-        dispatch(failureCommunity(error.response.data));
+      .catch(() => {
+        dispatch(failureCommunity());
         dispatch(push('/'));
       });
   };

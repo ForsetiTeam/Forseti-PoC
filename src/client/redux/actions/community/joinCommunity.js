@@ -1,5 +1,13 @@
 import axios from 'axios';
 
+axios.interceptors.response.use(undefined, err => {
+  const res = err.response;
+
+  if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
+    return Promise.resolve(res);
+  }
+});
+
 import config from '../../../config/config';
 import { getToken } from '../../../services/localStore';
 import {
@@ -66,7 +74,13 @@ function fetchCommunityJoinDo(id) {
           'Authorization': token
         })
       })*/
-      axios.post(`${config.get('serverAPI')}community/${id}/join`, { headers: { Authorization: token } })
+
+      axios.post(`${config.get('serverAPI')}community/${id}/join`, null, {
+        headers: {
+          Authorization: token,
+          'Content-Type': 'application/json'
+        }
+      })
     )
       .then(res => {
         dispatch(receiveCommunityJoin(res.data));

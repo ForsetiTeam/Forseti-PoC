@@ -48,6 +48,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
 
 async function logout(req: Request, res: Response, next: NextFunction) {
   req.logout();
+  // req.session.destroy(() => true);
   return res.responses.success("Успешно");
 }
 

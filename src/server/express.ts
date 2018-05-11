@@ -30,14 +30,22 @@ const initMiddleware = (app: Express) => {
 };
 
 const initSession = (app: Express) => {
-    app.use(
+    /*app.use(
         session({
             saveUninitialized: true,
             resave: true,
             secret: config.get("session.secret"),
             cookie: { maxAge: config.get("session.maxAge") },
         }),
-    );
+    );*/
+  app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+    }
+  }));
+
 };
 
 const initModulesServerRoutes = (app: Express) => { routers(app); };
