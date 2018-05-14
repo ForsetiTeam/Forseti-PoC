@@ -8,12 +8,6 @@ const config = convict({
         env: "NODE_ENV",
     },
     http: {
-        url: {
-            doc: "Base server url",
-            format: String,
-            default: "http://localhost:3000",
-            env: "APP_URL",
-        },
         port: {
           doc: "Http listening port",
           format: "port",
@@ -22,13 +16,13 @@ const config = convict({
         },
     },
     session: {
-        secret: { format: String, default: "meowmeowmeow" },
+        secret: { format: String, default: "secret" },
         maxAge: { format: Number, default: 300000 },
     },
     jwt: {
       secret: {
         format: String,
-        default: "meow",
+        default: "secret",
       },
       expiresIn: {
         doc: "Expressed in seconds or a string describing a time span zeit/ms.",
@@ -42,7 +36,7 @@ const config = convict({
     },
     db: {
       uri: {
-        doc: "Mongodb connection string (migrated from profeels docker-compose)",
+        doc: "Mongodb connection string",
         format: String, default: "mongodb://localhost/forseti",
         env: "MONGO_URI",
       },
