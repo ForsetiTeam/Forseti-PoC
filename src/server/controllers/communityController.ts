@@ -6,7 +6,6 @@ import {NextFunction, Request, Response} from "../types/ExpressExtended";
 const router = express.Router();
 
 async function getList(req: Request, res: Response, next: NextFunction) {
-  req.session.www = 123;
   let list = await CommunityModel.find();
   res.json(list);
 }

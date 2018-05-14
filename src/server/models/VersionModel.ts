@@ -4,7 +4,7 @@ export class Version extends Typegoose {
   @prop({ required: true })
   public version: string;
 
-  @prop({ required: true })
+  @prop({})
   public description: string;
 }
 

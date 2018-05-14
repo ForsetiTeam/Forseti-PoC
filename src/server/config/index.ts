@@ -46,6 +46,11 @@ const config = convict({
         format: String, default: "mongodb://localhost/forseti",
         env: "MONGO_URI",
       },
+      autoApplyMigrations: {
+        doc: 'Auto apply migrations',
+        format: Boolean,
+        'default': false
+      },
     },
     metamask: {
         sigPhrase: {

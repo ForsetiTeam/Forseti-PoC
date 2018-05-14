@@ -1,7 +1,10 @@
+import MongoDb from '../../mongodb';
+import CommunityModel from '../../models/CommunityModel';
 
-import CommunityModel from "../../models/CommunityModel";
+const db = new MongoDb();
 
 function initCommunities() {
+  CommunityModel.remove();
 
   const collection = [
     {
@@ -23,7 +26,21 @@ function initCommunities() {
   ];
 
   collection.forEach(data => new CommunityModel(data).save());
-
 }
 
-initCommunities();
+function migrate() {
+  return Promise.resolve()
+    .then(initCommunities);
+}
+
+function getInfo() {
+  return Promise.resolve({
+    version: '0.0.1',
+    requiredVersion: '0.0.0'
+  });
+}
+
+export {
+  migrate,
+  getInfo
+};

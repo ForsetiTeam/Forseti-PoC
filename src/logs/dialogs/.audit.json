@@ -6,29 +6,29 @@
     "auditLog": "/home/aspirity/Projects/Forseti/src/logs/dialogs/.audit.json",
     "files": [
         {
-            "date": 1526033429876,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Fr",
-            "hash": "2fee5e5380aeb2d4f7e140fdfb175d60"
+            "date": 1526265571999,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Mo",
+            "hash": "d74806bb31046cdcc784de95a58e1f24"
         },
         {
-            "date": 1526033429878,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Fr",
-            "hash": "39c8a1bda0bb34609cb8948f711ca5ca"
+            "date": 1526265572001,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Mo",
+            "hash": "5b8ae16094d6153371392285f2baf3f5"
         },
         {
-            "date": 1526033654349,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/all/-all.log.yyyy-05-Fr",
-            "hash": "32262b4e650032d131d7d5cf33c57de8"
+            "date": 1526265576007,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/all/-all.log.yyyy-05-Mo",
+            "hash": "13c3f70e5d95758015432117f06e019e"
         },
         {
-            "date": 1526033654350,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Fr",
-            "hash": "d26f2a6c89698cf49f09434918880997"
+            "date": 1526265576008,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Mo",
+            "hash": "7a31448a3d4229a98f3c36aaefa83df3"
         },
         {
-            "date": 1526033654350,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Fr",
-            "hash": "00aaab96693d23891c678a14284734a6"
+            "date": 1526265576012,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Mo",
+            "hash": "a1396798b2383033262c3b5ccbd5e159"
         }
     ]
 }

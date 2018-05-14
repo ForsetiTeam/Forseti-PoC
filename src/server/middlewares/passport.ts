@@ -49,7 +49,6 @@ export default (app: Express): void => {
       passwordField: "sig",
     },
     async (account, sig, next) => {
-    console.log('local', account, sig);
       const user = await UserModel.findOne({account}).lean();
       if (!user) {
         return next(null, false, {message: "Аккаунт не найден"});
@@ -78,7 +77,6 @@ export default (app: Express): void => {
       token = req.headers.authorization;
     }
 
-    console.log('jwtFromRequest', token);
     return token;
   };
   jwtStrategyOpts.secretOrKey = config.get("jwt.secret");
@@ -86,7 +84,6 @@ export default (app: Express): void => {
   passport.use(new JwtStrategy(
     jwtStrategyOpts,
     async (jwtPayload, next) => {
-      console.log('jwtPayload', jwtPayload)
       const user = await UserModel.findOne({ _id: jwtPayload.userId }).lean();
       if (!user) {
         return next(null, false);
