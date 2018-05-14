@@ -1,0 +1,34 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 5
+    },
+    "auditLog": "/home/aspirity/Projects/Forseti/src/logs/dialogs/.audit.json",
+    "files": [
+        {
+            "date": 1526277353893,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Mo",
+            "hash": "f008b64db1a414e36e90d798e61f511b"
+        },
+        {
+            "date": 1526277353898,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Mo",
+            "hash": "1044c30cc8efed077da8d611b55efc5c"
+        },
+        {
+            "date": 1526277402935,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/all/-all.log.yyyy-05-Mo",
+            "hash": "9e033a575af40e14cd117e49eeeea689"
+        },
+        {
+            "date": 1526277402936,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Mo",
+            "hash": "ba01fe994f0bea56e07db0b33ce12475"
+        },
+        {
+            "date": 1526277402936,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Mo",
+            "hash": "7e008e8b8c47f57b96102361efb31282"
+        }
+    ]
+}
