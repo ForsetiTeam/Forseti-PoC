@@ -9,65 +9,35 @@ import Register from './containers/Register/index';
 import Login from './containers/Login/index';
 import { Communities, Community } from './containers/Community/index';
 
+import PrivateRoute from './containers/App/components/PrivateRoute';
+
 const Main = () => {
-  const isLogged = checkPlugin() && getUser();
+  const isLogged = checkPlugin() && !!getUser();
 
-  const defPage = isLogged ? '/dispute' : '/register';
+  const defPage = isLogged ? '/community' : '/register';
 
-  return !isLogged ?
+  return (
     <main>
       <Switch>
         <Redirect exact from='/' to={defPage} />
         <Route path='/about' component={About} />
         <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
+        <PrivateRoute path='/community/:communityId' component={Community} isLogged={isLogged} />
+        <PrivateRoute path='/community' component={Communities} isLogged={isLogged} />
         <Redirect from='*' to={defPage} />
       </Switch>
     </main>
-    :
-    <main>
-      <Switch>
-        <Redirect exact from='/' to={defPage} />
-        <Route path='/dispute' component={About} />
-        <Route path='/community/:communityId' component={Community} />
-        <Route path='/community' component={Communities} />
-        <Redirect from='*' to={defPage} />
-      </Switch>
-    </main>
-  ;
+  );
 };
 
 export default Main;
-
-/*
-
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-
-class Main extends Component {
-  static propTypes = {
-    isLogged: PropTypes.bool
-  };
-
-  render() {
-    return (
-      <main>
-        <Switch>
-          <Redirect exact from='/' to='/register' />
-          <Route path='/about' component={About} />
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
-        </Switch>
-      </main>
-    );
-  }
-}
-
-function mapStateToProps(state) {
-  const isLogged = state.auth.loaded;
-
-  return { isLogged };
-}
-
-export default connect(mapStateToProps)(Main);
-*/
+/* <Route path='/community' component={Communities} />
+        <PrivateRoute
+          path='/community'
+          component={Communities}
+          isLogged={isLogged}
+          redirect={'/register'}
+        />
+        <PrivateRoute path="/community" currentUser={isLogged} component={Communities} />
+        */
