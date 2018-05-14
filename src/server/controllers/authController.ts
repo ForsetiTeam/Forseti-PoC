@@ -53,18 +53,22 @@ async function logout(req: Request, res: Response, next: NextFunction) {
 }
 
 async function register(req: Request, res: Response, next: NextFunction) {
-    const user = req.body;
+  const userData = req.body;
 
-    const userDoc = {
-        email: user.email,
-        account: user.account,
-        sign: user.sign
-    };
+  const userDoc = {
+    email: userData.email,
+    account: userData.account,
+    sign: userData.sign
+  };
 
-    await UserModel.create(userDoc);
-    req.session.destroy(() => true);
+  const user = await UserModel.create(userDoc);
 
-    return res.responses.success("Регистрация завершена");
+  const token = generateToken(user);
+  req.logIn(user, (loginErr) => {
+    if (loginErr) { return next(new VError("Auth error")); }
+    res.cookie("jwt", token, {httpOnly: true});
+    return res.json({message: "Success", user: user, token});
+  });
 }
 
 router.post("/register", validate(signUpSchema), register);

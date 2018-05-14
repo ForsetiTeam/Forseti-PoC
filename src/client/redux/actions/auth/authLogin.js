@@ -72,8 +72,8 @@ function fetchLoginDo(account, sig) {
         dispatch(receiveLogin());
         dispatch(push('/'));
       })
-      .catch(error => {
-        dispatch(failureLogin(error.response.data));
+      .catch(() => {
+        dispatch(failureLogin());
       });
   };
 }
