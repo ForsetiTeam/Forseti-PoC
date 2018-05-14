@@ -8,6 +8,7 @@ class Communities extends Component {
   static propTypes = {
     id: PropTypes.string,
     community: PropTypes.any,
+    isJoined: PropTypes.bool,
     fetchCommunity: PropTypes.func,
     onJoin: PropTypes.func
   };
@@ -38,7 +39,7 @@ class Communities extends Component {
           </div>
         </div>
         <div className='text-center'>
-          <button className='btn m-1' onClick={this.handleJoin}>Join</button>
+          <button className='btn m-1' onClick={this.handleJoin}>{this.props.isJoined ? 'Leave' : 'Join'}</button>
           <button className='btn m-1'>Add dispute</button>
         </div>
       </div>

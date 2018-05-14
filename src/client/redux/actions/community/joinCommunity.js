@@ -9,7 +9,7 @@ axios.interceptors.response.use(undefined, err => {
 });
 
 import config from '../../../config/config';
-import { getToken } from '../../../services/localStore';
+import { getToken, setUser } from '../../../services/localStore';
 import {
   fetchDecorator,
   fetchSuccessStatusDecorator,
@@ -26,10 +26,10 @@ function requestCommunityJoin() {
   };
 }
 
-function receiveCommunityJoin(list) {
+function receiveCommunityJoin(user) {
   return {
     type: REQUEST_COMMUNITY_JOIN_SUCCESS,
-    list
+    user
   };
 }
 
@@ -64,16 +64,6 @@ function fetchCommunityJoinDo(id) {
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      /* fetch(`${config.get('serverAPI')}community/${id}/join`, {
-
-        method: 'POST',
-        credentials: 'same-origin',
-        mode: 'no-cors',
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          'Authorization': token
-        })
-      })*/
 
       axios.post(`${config.get('serverAPI')}community/${id}/join`, null, {
         headers: {
@@ -83,7 +73,8 @@ function fetchCommunityJoinDo(id) {
       })
     )
       .then(res => {
-        dispatch(receiveCommunityJoin(res.data));
+        setUser(res.data.user);
+        dispatch(receiveCommunityJoin(res.data.user));
       })
       .catch(() => {
         dispatch(failureCommunityJoin());

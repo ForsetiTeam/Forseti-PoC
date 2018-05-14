@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import NavigationContainer from './components/NavigationContainer';
 
 function mapStateToProps(state) {
-  const isLogged = state.auth.loaded;
+  const isLogged = state.curUser.loaded;
 
   return { isLogged };
 }

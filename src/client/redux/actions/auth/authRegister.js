@@ -40,7 +40,7 @@ export function fetchRegister(user) {
 }
 
 function shouldFetchRegister(state) {
-  return !state.auth.loading && !state.auth.user;
+  return !state.curUser.loading && !state.curUser.user;
 }
 
 function fetchRegisterDo(user) {

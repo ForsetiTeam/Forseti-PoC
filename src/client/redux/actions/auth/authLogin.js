@@ -42,7 +42,7 @@ export function fetchLogin(account, sig) {
 }
 
 function shouldFetchLogin(state) {
-  return !state.auth.loading && !state.auth.user;
+  return !state.curUser.loading && !state.curUser.user;
 }
 
 function fetchLoginDo(account, sig) {

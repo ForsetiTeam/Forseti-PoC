@@ -9,6 +9,11 @@ import {
   REQUEST_LOGIN_SUCCESS,
   REQUEST_LOGIN_FAILURE
 } from '../actions/auth/authLogin';
+import {
+  REQUEST_COMMUNITY_JOIN_LOADING,
+  REQUEST_COMMUNITY_JOIN_SUCCESS,
+  REQUEST_COMMUNITY_JOIN_FAILURE
+} from '../actions/community/joinCommunity';
 
 const user = getUser();
 
@@ -22,7 +27,8 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case REQUEST_REGISTER_LOADING:
-    case REQUEST_LOGIN_LOADING: {
+    case REQUEST_LOGIN_LOADING:
+    case REQUEST_COMMUNITY_JOIN_LOADING: {
       const newState = { ...state };
 
       newState.loaded = false;
@@ -32,7 +38,8 @@ export default function (state = initialState, action) {
       return newState;
     }
     case REQUEST_REGISTER_SUCCESS:
-    case REQUEST_LOGIN_SUCCESS: {
+    case REQUEST_LOGIN_SUCCESS:
+    case REQUEST_COMMUNITY_JOIN_SUCCESS: {
       const newState = { ...state };
 
       newState.loaded = true;
@@ -41,7 +48,8 @@ export default function (state = initialState, action) {
       return newState;
     }
     case REQUEST_REGISTER_FAILURE:
-    case REQUEST_LOGIN_FAILURE: {
+    case REQUEST_LOGIN_FAILURE:
+    case REQUEST_COMMUNITY_JOIN_FAILURE: {
       const newState = { ...state };
 
       newState.loading = false;
