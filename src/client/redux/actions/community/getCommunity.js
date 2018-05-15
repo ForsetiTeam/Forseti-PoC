@@ -70,8 +70,8 @@ function fetchCommunityDo(id) {
       .then(res => {
         dispatch(receiveCommunity(res.data));
       })
-      .catch(() => {
-        dispatch(failureCommunity());
+      .catch(err => {
+        dispatch(failureCommunity(err));
         dispatch(push('/'));
       });
   };

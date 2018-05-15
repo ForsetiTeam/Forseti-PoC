@@ -71,8 +71,8 @@ function fetchCommunityListDo() {
       .then(res => {
         dispatch(receiveCommunityList(res.data));
       })
-      .catch(() => {
-        dispatch(failureCommunityList());
+      .catch(err => {
+        dispatch(failureCommunityList(err));
       });
   };
 }

@@ -60,8 +60,8 @@ function fetchRegisterDo(user) {
         dispatch(receiveRegister());
         dispatch(push('/'));
       })
-      .catch(() => {
-        dispatch(failureRegister());
+      .catch(err => {
+        dispatch(failureRegister(err));
       });
   };
 }

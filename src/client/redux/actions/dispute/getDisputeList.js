@@ -74,8 +74,8 @@ function fetchDisputeListDo(owner, status) {
       .then(res => {
         dispatch(receiveDisputeList(res.data));
       })
-      .catch(() => {
-        dispatch(failureDisputeList());
+      .catch(err => {
+        dispatch(failureDisputeList(err));
       });
   };
 }

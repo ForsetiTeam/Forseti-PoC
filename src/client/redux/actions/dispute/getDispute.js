@@ -70,8 +70,8 @@ function fetchDisputeDo(id) {
       .then(res => {
         dispatch(receiveDispute(res.data));
       })
-      .catch(() => {
-        dispatch(failureDispute());
+      .catch(err => {
+        dispatch(failureDispute(err));
         dispatch(push('/'));
       });
   };

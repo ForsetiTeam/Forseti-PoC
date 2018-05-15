@@ -6,13 +6,10 @@ import config from '../../../config/config';
 
 class RegisterContainer extends Component {
   static propTypes = {
+    curUser: PropTypes.any,
     loadAccount: PropTypes.func,
     requestSig: PropTypes.func,
-    login: PropTypes.func,
-
-    history: PropTypes.shape({
-      push: PropTypes.func
-    }).isRequired
+    login: PropTypes.func
   };
 
   state = {
@@ -20,9 +17,6 @@ class RegisterContainer extends Component {
   };
 
   componentDidMount() {
-    /* if (this.props.auth.loaded) {
-      this.props.history.push('/');
-    }*/
     this.getSigAndLogin();
   }
 
@@ -58,6 +52,7 @@ class RegisterContainer extends Component {
   render() {
     return (
       <Login
+        curUser={this.props.curUser}
         onRequestSig={this.handleRequestSig}
         isSigning={this.state.isSigning}
       />

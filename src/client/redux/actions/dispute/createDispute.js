@@ -73,9 +73,10 @@ function fetchCreateDisputeDo(dispute, community) {
     )
       .then(res => {
         dispatch(receiveCreateDispute(res.data));
+        dispatch(push(`/dispute/${res.data.id}`));
       })
-      .catch(() => {
-        dispatch(failureCreateDispute());
+      .catch(err => {
+        dispatch(failureCreateDispute(err));
         dispatch(push('/'));
       });
   };
