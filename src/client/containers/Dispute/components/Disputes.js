@@ -25,7 +25,7 @@ class Disputes extends Component {
     if (!this.props.list.length) return <div>No entries</div>;
 
     return (
-      <div className='d-flex'>
+      <div className='d-flex flex-wrap'>
         {this.props.list.map(dispute =>
           <DisputesItem key={dispute.id} dispute={dispute}/>
         )}
