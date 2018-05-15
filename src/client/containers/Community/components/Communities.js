@@ -17,7 +17,7 @@ class Communities extends Component {
     return (
       <div className='d-flex'>
         {this.props.list.map(community =>
-          <CommunitiesItem key={community.id} community={community}/>
+          <CommunitiesItem key={community.name} community={community}/>
         )}
       </div>
     );

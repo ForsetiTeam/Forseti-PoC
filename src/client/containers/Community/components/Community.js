@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/fontawesome-free-solid';
 
-class Communities extends Component {
+class Community extends Component {
   static propTypes = {
     id: PropTypes.string,
     community: PropTypes.any,
@@ -39,12 +40,14 @@ class Communities extends Component {
           </div>
         </div>
         <div className='text-center'>
-          <button className='btn m-1' onClick={this.handleJoin}>{this.props.isJoined ? 'Leave' : 'Join'}</button>
-          <button className='btn m-1'>Add dispute</button>
+          <button className='btn m-1 btn-primary' onClick={this.handleJoin}>{this.props.isJoined ? 'Leave' : 'Join'}</button>
+          {this.props.isJoined &&
+            <Link to={`/community/${comm.name}/dispute/new`} className='btn m-1 btn-info'>Add dispute</Link>
+          }
         </div>
       </div>
     );
   }
 }
 
-export default Communities;
+export default Community;

@@ -16,9 +16,9 @@ const config = convict({
   },
   metamask: {
     sigPhrase: {
-      doc: "String for signing metamask",
+      doc: 'String for signing metamask',
       format: String,
-      default: "Forseti greets you!"
+      default: 'Forseti greets you!'
     }
   }
 });

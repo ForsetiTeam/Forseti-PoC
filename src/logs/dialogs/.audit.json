@@ -6,29 +6,29 @@
     "auditLog": "/home/aspirity/Projects/Forseti/src/logs/dialogs/.audit.json",
     "files": [
         {
-            "date": 1526277353893,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Mo",
-            "hash": "f008b64db1a414e36e90d798e61f511b"
+            "date": 1526367206526,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Tu",
+            "hash": "4f87e8209c95d3fb67f72a1760ea2bad"
         },
         {
-            "date": 1526277353898,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Mo",
-            "hash": "1044c30cc8efed077da8d611b55efc5c"
+            "date": 1526367206526,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Tu",
+            "hash": "31cdde3e5fe7f33636fcef5a2495d817"
         },
         {
-            "date": 1526277402935,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/all/-all.log.yyyy-05-Mo",
-            "hash": "9e033a575af40e14cd117e49eeeea689"
+            "date": 1526367422806,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/all/-all.log.yyyy-05-Tu",
+            "hash": "2ac03e0bb8bc5e1465cc6de6c369c5da"
         },
         {
-            "date": 1526277402936,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Mo",
-            "hash": "ba01fe994f0bea56e07db0b33ce12475"
+            "date": 1526367422807,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Tu",
+            "hash": "d59fe23772e54283c0b49208c670f800"
         },
         {
-            "date": 1526277402936,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Mo",
-            "hash": "7e008e8b8c47f57b96102361efb31282"
+            "date": 1526367422807,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Tu",
+            "hash": "5947275f07d0f443cc1dfd655ce75c28"
         }
     ]
 }

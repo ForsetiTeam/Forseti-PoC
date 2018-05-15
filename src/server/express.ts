@@ -4,10 +4,9 @@ import * as session from "express-session";
 import * as morgan from "morgan";
 import * as express from "express";
 import * as path from "path";
-import * as cors from 'cors';
 import config from "./config";
 import {log as logger, logStream} from "./app/logger";
-import routers from "./app/routers";
+import routers from "./controllers/routers";
 import responses from "./app/responses";
 import {Express} from "./types/ExpressExtended";
 import customValidators from "./middlewares/customValidators";
@@ -19,7 +18,7 @@ const initMiddleware = (app: Express) => {
     app.use(morgan(`[:date[clf]] - ":method :url" :status :response-time ms - :res[content-length]` as any,
         {stream: logStream} as any),
     );
-    //app.use(cookieParser());
+    app.use(cookieParser());
     app.use(bodyParser.json());
     /*app.use((err, req, res, next) => {
         return res.status(400).json({message: "Invalid JSON string."});
@@ -30,22 +29,14 @@ const initMiddleware = (app: Express) => {
 };
 
 const initSession = (app: Express) => {
-    /*app.use(
-        session({
-            saveUninitialized: true,
-            resave: true,
-            secret: config.get("session.secret"),
-            cookie: { maxAge: config.get("session.maxAge") },
-        }),
-    );*/
-  app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-    }
-  }));
-
+  app.use(
+    session({
+      saveUninitialized: true,
+      resave: true,
+      secret: config.get("session.secret"),
+      cookie: { maxAge: config.get("session.maxAge") },
+    }),
+  );
 };
 
 const initModulesServerRoutes = (app: Express) => { routers(app); };
@@ -81,22 +72,15 @@ const notFoundRoutes = (app: Express) => {
 };
 
 const initCORS = (app: Express) => {
-    // enable CORS
-    app.use((req, res, next) => {
+  // enable CORS
+  app.use((req, res, next) => {
 
-     /*   res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With');
-        res.header('Access-Control-Allow-Credentials', 'true');
-        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-*/
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-
-      res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE');
-      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-        next();
-    });
+    next();
+  });
 };
 
 const init = (): Express => {
