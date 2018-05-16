@@ -1,5 +1,7 @@
-import { combineReducers }                  from 'redux';
-import { reducer as reduxAsyncConnect }     from 'redux-connect';
+import { combineReducers } from 'redux';
+import { reducer as reduxAsyncConnect } from 'redux-connect';
+import { routerReducer } from 'react-router-redux';
+
 import version from './version';
 import curUser from './curUser';
 import community from './community';
@@ -10,5 +12,7 @@ export default combineReducers({
   version,
   curUser,
   community,
-  dispute
+  dispute,
+
+  routing: routerReducer
 });

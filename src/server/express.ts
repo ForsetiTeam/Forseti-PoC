@@ -11,7 +11,7 @@ import responses from "./app/responses";
 import {Express} from "./types/ExpressExtended";
 import customValidators from "./middlewares/customValidators";
 import passport from "./middlewares/passport";
-import "./tasks";
+
 
 const initMiddleware = (app: Express) => {
     // "as any" used to prevent buggy behavior with method override
@@ -85,6 +85,7 @@ const initCORS = (app: Express) => {
 
 const init = (): Express => {
     const app = express();
+
     initCORS(app);
     initSession(app);
     initMiddleware(app);
@@ -92,6 +93,7 @@ const init = (): Express => {
     initErrorRoutes(app);
     notFoundRoutes(app);
     initStatic(app);
+
     return app;
 };
 

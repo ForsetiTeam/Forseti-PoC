@@ -6,29 +6,29 @@
     "auditLog": "/home/aspirity/Projects/Forseti/src/logs/dialogs/.audit.json",
     "files": [
         {
-            "date": 1526367206526,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Tu",
-            "hash": "4f87e8209c95d3fb67f72a1760ea2bad"
+            "date": 1526449487686,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-We",
+            "hash": "8d03fc1e593db5acd0cf6ffe4178f5b0"
         },
         {
-            "date": 1526367206526,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Tu",
-            "hash": "31cdde3e5fe7f33636fcef5a2495d817"
+            "date": 1526449487687,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-We",
+            "hash": "db2b88ba41943b6d5a400a57ae8be015"
         },
         {
-            "date": 1526367422806,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/all/-all.log.yyyy-05-Tu",
-            "hash": "2ac03e0bb8bc5e1465cc6de6c369c5da"
+            "date": 1526450175348,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/all/-all.log.yyyy-05-We",
+            "hash": "1c2fe321a9c0879f10774f27955ef929"
         },
         {
-            "date": 1526367422807,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-Tu",
-            "hash": "d59fe23772e54283c0b49208c670f800"
+            "date": 1526450175349,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-We",
+            "hash": "1a41775d38406f370d587884bffa222c"
         },
         {
-            "date": 1526367422807,
-            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-Tu",
-            "hash": "5947275f07d0f443cc1dfd655ce75c28"
+            "date": 1526450175350,
+            "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-We",
+            "hash": "a917295d1788fc45f7267901c8b83b37"
         }
     ]
 }

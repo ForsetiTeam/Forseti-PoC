@@ -1,7 +1,8 @@
 import {instanceMethod, InstanceType, prop, Ref, Typegoose} from "typegoose";
 
-import UserModel, {User} from "./UserModel";
+import UserModel from "./UserModel";
 import CommunityModel from './CommunityModel';
+import DocumentModel from './DocumentModel';
 
 enum Status {
   OPEN = 'open',
@@ -15,24 +16,34 @@ export class Dispute extends Typegoose {
   @prop({ required: true })
   public title: string;
 
-  @prop({})
+  @prop({default: ''})
   public description: string;
 
-  @prop({ required: true, autopopulate: true })
+  @prop({ required: true })
   public community: Ref<CommunityModel>;
 
-  @prop({enum: Status, default: Status.OPEN})
+  @prop({ enum: Status, default: Status.OPEN })
   public status: Status;
+
+  @prop({ required: true })
+  public arbitersNeed?: number;
+
+  @prop({ })
+  public document?: Ref<DocumentModel>;
 
   @instanceMethod
   getExportJSON(this: InstanceType<Dispute>) {
+    const document = this.document ? this.document.toJSON() : null;
+    const fileName = document && document.metadata ? document.metadata.fileName : null;
     return {
       id: this._id,
       author: this.author,
       title: this.title,
       description: this.description,
       community: this.community.name,
-      status: this.status
+      status: this.status,
+      arbitersNeed: this.arbitersNeed,
+      document: fileName
     }
   }
 }
@@ -43,6 +54,7 @@ const DisputeModel = new Dispute().getModelForClass(Dispute);
 DisputeModel.populateAll = function(query) {
   query
     .populate({path: 'community', model: CommunityModel})
+    .populate({path: 'document', model: DocumentModel});
     //.populate({path: 'author', model: UserModel});
   return query;
 };

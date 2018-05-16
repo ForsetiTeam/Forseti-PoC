@@ -6,6 +6,7 @@ class Dispute extends Component {
     id: PropTypes.string,
     dispute: PropTypes.any,
     curUser: PropTypes.any,
+    documentLink: PropTypes.string,
     fetchDispute: PropTypes.func
   };
 
@@ -14,7 +15,6 @@ class Dispute extends Component {
   }
 
   isArbiter() {
-    console.log('isARBITER', this.props.dispute.author, this.props.curUser.id);
     return this.props.dispute.author !== this.props.curUser.id;
   }
 
@@ -27,7 +27,13 @@ class Dispute extends Component {
         <h3 className='text-center'>{dispute.title}</h3>
         <div className='row justify-content-center m-3'>
           <div className='col-6'>
-            <p>{dispute.description}</p>
+            <p>Author: {dispute.author}</p>
+            <p>Community: {dispute.community}</p>
+            <p>Description: {dispute.description}</p>
+            <p>Arbiters count: {dispute.arbitersNeed}</p>
+            {dispute.document &&
+              <p><a href={this.props.documentLink}>Download document</a></p>
+            }
           </div>
         </div>
         {this.isArbiter() &&

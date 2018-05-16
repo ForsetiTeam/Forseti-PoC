@@ -8,6 +8,7 @@ import {
   fetchProtectedAuth
 } from '../decorators/index';
 import { getToken } from '../../../services/localStore';
+import { jsonToFormData } from '../utils/jsonToFormData';
 
 axios.interceptors.response.use(undefined, err => {
   const res = err.response;
@@ -60,16 +61,23 @@ function fetchCreateDisputeDo(dispute, community) {
 
     const token = getToken();
 
-    // спасибо настройкам линта! Охуенно удобно
-    // dispute.community = community._id;
-    const disputeWithCommunity = Object.assign({}, dispute, { community: community._id });
+    const disputeForm = jsonToFormData(dispute);
+
+    disputeForm.append('community', community._id);
 
     return fetchDecorator(
       [
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      axios.post(`${config.get('serverAPI')}dispute`, { dispute: disputeWithCommunity }, { headers: { Authorization: token } })
+      axios.post(
+        `${config.get('serverAPI')}dispute`,
+        // { dispute: disputeForm },
+        disputeForm,
+        { headers: {
+          Authorization: token,
+          'content-type': 'multipart/form-data'
+        } })
     )
       .then(res => {
         dispatch(receiveCreateDispute(res.data));

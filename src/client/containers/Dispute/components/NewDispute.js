@@ -12,10 +12,6 @@ class NewDispute extends Component {
   };
 
   state = {
-    contractorAddress: '',
-    contractorAddressValid: false,
-    contractorAddressError: '',
-
     formValid: false
   };
 
@@ -25,18 +21,22 @@ class NewDispute extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log('SUBMIT');
+
     this.props.fetchCreateDispute({
       title: this.state.title,
       contractorAddress: this.state.contractorAddress,
       eth: this.state.eth,
-      description: this.state.description
+      description: this.state.description,
+      arbitersNeed: this.state.arbitersNeed,
+      document: this.state.document
     }, this.props.community);
   };
 
   handleChange = validators => event => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const target = event.target;
+
+    const name = target.name;
+    const value = target.type === 'file' ? target.files[0] : target.value;
 
     this.setState({ [name]: value }, () => this.validateField(name, value, validators));
   };
@@ -47,10 +47,9 @@ class NewDispute extends Component {
     this.setState({ [`${fieldName}Valid`]: isValid, [`${fieldName}Error`]: error }, this.validateForm);
   };
 
-
   validateForm = () => {
     this.setState({
-      formValid: this.state.title
+      formValid: this.state.title && this.state.arbitersNeed
     });
   };
 
@@ -99,6 +98,29 @@ class NewDispute extends Component {
               <input
                 id='description'
                 name='description'
+                className='form-control'
+                onChange={this.handleChange({})}
+              />
+            </div>
+          </div>
+          <div className='form-group row'>
+            <label htmlFor='arbitersNeed' className='col-sm-4 col-form-label'>Arbiters count</label>
+            <div className='col-sm-8'>
+              <input
+                id='arbitersNeed'
+                name='arbitersNeed'
+                className='form-control'
+                onChange={this.handleChange({})}
+              />
+            </div>
+          </div>
+          <div className='form-group row'>
+            <label htmlFor='document' className='col-sm-4 col-form-label'>Upload file</label>
+            <div className='col-sm-8'>
+              <input
+                type='file'
+                id='document'
+                name='document'
                 className='form-control'
                 onChange={this.handleChange({})}
               />
