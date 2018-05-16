@@ -49,7 +49,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
 async function logout(req: Request, res: Response, next: NextFunction) {
   req.logout();
   // req.session.destroy(() => true);
-  return res.responses.success("Успешно");
+  return res.responses.success("Success");
 }
 
 async function register(req: Request, res: Response, next: NextFunction) {

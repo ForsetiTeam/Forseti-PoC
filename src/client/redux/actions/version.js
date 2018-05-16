@@ -1,9 +1,9 @@
+import axios from 'axios';
+
 import config from '../../config/config';
 import {
   fetchDecorator,
-  // fetchProtectedAuth,
-  fetchSuccessStatusDecorator,
-  fetchFromJsonDecorator
+  fetchSuccessStatusDecorator
 }                                     from './decorators';
 
 export const REQUEST_VERSION_LOADING = 'REQUEST_VERSION_LOADING';
@@ -49,17 +49,19 @@ function fetchVersionDo() {
 
     return fetchDecorator(
       [
-        // partial(fetchProtectedAuth, dispatch),
-        // (...args) => fetchProtectedAuth(dispatch, ...args),
-        fetchSuccessStatusDecorator,
-        fetchFromJsonDecorator
+        fetchSuccessStatusDecorator
       ],
-      fetch(`${config.get('serverAPI')}version`, {
-        method: 'GET'
-      })
+      axios(
+        {
+          url: `${config.get('serverAPI')}version`,
+          validateStatus: status => {
+            return status >= 200 && status < 300 || status === 304;
+          }
+        }
+      )
     )
-      .then(version => {
-        dispatch(receiveVersion(version.message));
+      .then(res => {
+        dispatch(receiveVersion(res.data.version));
       })
       .catch(error => {
         dispatch(failureVersion(error));

@@ -1,22 +1,19 @@
 import { connect } from 'react-redux';
 
-import { fetchVersion } from '../../redux/actions/version';
+import App from './components/App';
+
 import { fetchLogin } from '../../redux/actions/auth/authLogin';
 import { fetchLoadMetamask } from '../../redux/actions/metamask/loadMetaMask';
 
-import Layer from './components/Layer';
-
 function mapStateToProps(state) {
-  const version = state.version.code;
   const isMetamaskLoaded = state.metamask.loaded;
 
-  return { isMetamaskLoaded, version };
+  return { isMetamaskLoaded };
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchVersion: () => dispatch(fetchVersion()),
   fetchLoadMetamask: () => dispatch(fetchLoadMetamask()),
-  fetchLogin: (account, token) => dispatch(fetchLogin(account, token))
+  fetchLogin: account => dispatch(fetchLogin(account))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layer);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -51,7 +51,6 @@ export function fetchCommunityList() {
 
 function shouldFetchCommunityList() {
   return true;
-  // !state.community.loading && !state.community.user;
 }
 
 function fetchCommunityListDo() {

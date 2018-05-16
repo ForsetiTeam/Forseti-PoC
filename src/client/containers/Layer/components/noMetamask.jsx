@@ -4,8 +4,8 @@ class NoMetamask extends Component {
   render() {
     return (
       <div>
-        <h3>MetaMask не подключен</h3>
-        <p>Необходимо подключить MetaMask</p>
+        <h3>Metamask not found</h3>
+        <p>Site can't work without MetaMask installed.</p>
       </div>
     );
   }

@@ -4,8 +4,8 @@ class NoMetamaskAccount extends Component {
   render() {
     return (
       <div>
-        <h3>Аккаунт не найден</h3>
-        <p>Необходимо зарегистрироваться в MetaMask и выбрать аккаунт</p>
+        <h3>Account not found.</h3>
+        <p>You should install MetaMask plugin and select account.</p>
       </div>
     );
   }

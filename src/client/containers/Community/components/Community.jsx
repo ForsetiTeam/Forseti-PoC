@@ -7,7 +7,7 @@ import * as icons from '@fortawesome/fontawesome-free-solid';
 
 class Community extends Component {
   static propTypes = {
-    id: PropTypes.string,
+    communityName: PropTypes.string,
     community: PropTypes.any,
     isJoined: PropTypes.bool,
     fetchCommunity: PropTypes.func,
@@ -15,11 +15,11 @@ class Community extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchCommunity(this.props.id);
+    this.props.fetchCommunity(this.props.communityName);
   }
 
   handleJoin = () => {
-    this.props.onJoin(this.props.id);
+    this.props.onJoin(this.props.communityName);
   };
 
   render() {

@@ -6,11 +6,8 @@ import config from "../config";
 import UserModel from "../models/UserModel";
 import {Express, Request} from "../types/ExpressExtended";
 
-// const metaAuth = require('meta-auth');
-
 const LocalStrategy = passportLocal.Strategy;
 const JwtStrategy = passportJwt.Strategy;
-
 
 function checkSig(sig, owner) {
   try {
@@ -28,7 +25,6 @@ function checkSig(sig, owner) {
     return false;
   }
 }
-
 
 export default (app: Express): void => {
   passport.serializeUser((user: any, done) => {
@@ -51,15 +47,11 @@ export default (app: Express): void => {
     async (account, sig, next) => {
       const user = await UserModel.findOne({account}).lean();
       if (!user) {
-        return next(null, false, {message: "Аккаунт не найден"});
+        return next(null, false, {message: "Account not found"});
       }
       if (!checkSig(sig, account)) {
-        return next(null, false, {message: "Неправильная подпись"});
+        return next(null, false, {message: "Signature missmatch"});
       }
-      /*const res = await bcrypt.compare(password, user.password);
-      if (!res) {
-        return next(null, false, {message: "Неправильный e-mail или пароль"});
-      }*/
       return next(null, user);
     },
   ));

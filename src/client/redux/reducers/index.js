@@ -6,6 +6,7 @@ import version from './version';
 import curUser from './curUser';
 import community from './community';
 import dispute from './dispute';
+import metamask from './metamask';
 
 export default combineReducers({
   reduxAsyncConnect,
@@ -13,6 +14,7 @@ export default combineReducers({
   curUser,
   community,
   dispute,
+  metamask,
 
   routing: routerReducer
 });
