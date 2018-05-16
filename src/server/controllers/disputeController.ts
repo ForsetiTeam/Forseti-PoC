@@ -91,7 +91,7 @@ async function getDocument(req: Request, res: Response, next: NextFunction) {
 
 console.log('INIT ROUTES');
 router.get("/", passport.authenticate("jwt", { session: false }), getList);
-router.get("/:id/document", getDocument);
+router.get("/:id/document", passport.authenticate("jwt", { session: false }), getDocument);
 router.get("/:id", passport.authenticate("jwt", { session: false }), get);
 router.post("/", passport.authenticate("jwt", { session: false }), upload.single('document'), create);
 
