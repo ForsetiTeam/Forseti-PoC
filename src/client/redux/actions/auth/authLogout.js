@@ -1,6 +1,8 @@
-import fetch                              from 'isomorphic-fetch';
+import axios from 'axios';
+
 import { removeUser } from '../../../services/localStore';
 import config from '../../../config/config';
+
 export function logOut() {
   return (dispatch) => {
     dispatch(logOutDo());
@@ -9,14 +11,11 @@ export function logOut() {
 
 function logOutDo() {
   return () => {
-    return fetch(`${config.get('serverAPI')}auth/logout`, {
-      method: 'POST',
-      headers: new Headers({ 'content-type': 'application/json' }),
-      credentials: 'same-origin'
-    })
+    return axios.post(`${config.get('serverAPI')}auth/logout`)
       .then(() => {
         removeUser();
         window.location = '/';
       });
   };
 }
+

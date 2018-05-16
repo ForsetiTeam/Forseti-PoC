@@ -72,7 +72,6 @@ function fetchCreateDisputeDo(dispute, community) {
       ],
       axios.post(
         `${config.get('serverAPI')}dispute`,
-        // { dispute: disputeForm },
         disputeForm,
         { headers: {
           Authorization: token,

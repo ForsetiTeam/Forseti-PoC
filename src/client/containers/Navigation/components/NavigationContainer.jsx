@@ -2,22 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Navigation from './Navigation';
-import { checkPlugin, getAccount, loadAccount } from '../../../services/metamask';
+import { checkPlugin } from '../../../services/metamask';
 
 class NavigationContainer extends Component {
   static propTypes = {
+    isMetamaskLoaded: PropTypes.bool,
     isLogged: PropTypes.bool
   };
 
-  componentDidMount() {
-    loadAccount()
-      .then(() => {
-        this.forceUpdate();
-      });
-  }
-
-  calcTabs() {
-    if (!checkPlugin() || !getAccount()) {
+  calculateTabs() {
+    if (!checkPlugin() || !this.props.isMetamaskLoaded) {
       return [];
     }
     if (this.props.isLogged) {
@@ -25,8 +19,7 @@ class NavigationContainer extends Component {
         { title: 'Communities', uri: '/community/' },
         { title: 'My Disputes', uri: '/dispute/filter/my' },
         { title: 'Ongoing Disputes', uri: '/dispute/filter/open' },
-        { title: 'Finished Disputes', uri: '/dispute/filter/closed' },
-        { title: 'Log Out', uri: '/logout' }
+        { title: 'Finished Disputes', uri: '/dispute/filter/closed' }
       ];
     }
     return [
@@ -37,7 +30,7 @@ class NavigationContainer extends Component {
   }
 
   render() {
-    const tabs = this.calcTabs();
+    const tabs = this.calculateTabs();
 
     return (
       <Navigation tabs={tabs} />

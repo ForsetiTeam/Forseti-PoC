@@ -1,7 +1,5 @@
 import convict from 'convict';
 
-// import dev from './env/dev';
-
 const config = convict({
   env: {
     doc: 'The application environment.',
@@ -23,9 +21,6 @@ const config = convict({
   }
 });
 
-// const env = config.get('env');
-// config.load(`./src/server/config/env/${env}.json`);
-// config.load(dev);
 config.validate();
 
 export default config;

@@ -6,29 +6,29 @@
     "auditLog": "/home/aspirity/Projects/Forseti/src/logs/dialogs/.audit.json",
     "files": [
         {
-            "date": 1526449487686,
+            "date": 1526464075012,
             "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-We",
-            "hash": "8d03fc1e593db5acd0cf6ffe4178f5b0"
+            "hash": "4921f80c5034da1168edd6322f3e0b5f"
         },
         {
-            "date": 1526449487687,
+            "date": 1526464075012,
             "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-We",
-            "hash": "db2b88ba41943b6d5a400a57ae8be015"
+            "hash": "40d31e0c35ebecb91e423f05516e096e"
         },
         {
-            "date": 1526450175348,
+            "date": 1526464133498,
             "name": "/home/aspirity/Projects/Forseti/src/logs/all/-all.log.yyyy-05-We",
-            "hash": "1c2fe321a9c0879f10774f27955ef929"
+            "hash": "108c6a83c1522626a3512888cc004e4e"
         },
         {
-            "date": 1526450175349,
+            "date": 1526464133501,
             "name": "/home/aspirity/Projects/Forseti/src/logs/morgan/-morgan.log.yyyy-05-We",
-            "hash": "1a41775d38406f370d587884bffa222c"
+            "hash": "eae3892a2dfa180b13ba226578f3bf12"
         },
         {
-            "date": 1526450175350,
+            "date": 1526464133501,
             "name": "/home/aspirity/Projects/Forseti/src/logs/dialogs/-dialog.log.yyyy-05-We",
-            "hash": "a917295d1788fc45f7267901c8b83b37"
+            "hash": "cbb6c4ee02d36555d31157bb1bc6a7cf"
         }
     ]
 }

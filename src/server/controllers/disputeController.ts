@@ -72,8 +72,6 @@ async function getDocument(req: Request, res: Response, next: NextFunction) {
       const fileName = docData.metadata && docData.metadata.fileName || 'undefined';
 
       const gfs = Grid(mongoose.connection.db, mongoose.mongo);
-      //заплатка из-за несовместимости gridfs-stream и mongoose v5
-      //eval(`Grid.prototype.findOne = ${Grid.prototype.findOne.toString().replace('nextObject', 'next')}`);
 
       const readstream = gfs.createReadStream({
         _id: docData._id,
@@ -88,8 +86,6 @@ async function getDocument(req: Request, res: Response, next: NextFunction) {
     .catch(() => res.responses.notFoundResource("Dispute not found"));
 }
 
-
-console.log('INIT ROUTES');
 router.get("/", passport.authenticate("jwt", { session: false }), getList);
 router.get("/:id/document", passport.authenticate("jwt", { session: false }), getDocument);
 router.get("/:id", passport.authenticate("jwt", { session: false }), get);

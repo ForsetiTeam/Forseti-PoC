@@ -1,7 +1,7 @@
 function setEthAddressSchema(req) {
   return {
     ethAddress: {
-      notEmpty: {errorMessage: "Поле должно быть заполнено"},
+      notEmpty: {errorMessage: "Field is required"},
     },
   };
 }
@@ -9,10 +9,10 @@ function setEthAddressSchema(req) {
 function changeEmailSchema(req) {
   return {
     email: {
-      isCustomEmail: { errorMessage: "Неверный формат электронной почты." },
-      notEmpty: { errorMessage: "Поле должно быть заполнено." },
+      isCustomEmail: { errorMessage: "Invalid email." },
+      notEmpty: { errorMessage: "Field is required." },
       isUserExistsByEmailUpdate: {
-        errorMessage: "Пользователь с таким адресом электронной почты уже зарегистрирован в системе.",
+        errorMessage: "Email is used.",
         options: [ req.user.email ],
       },
     },
@@ -24,11 +24,11 @@ function changePasswordSchema(req) {
     password: {
       isLength: {
         options: [{ min: 6 }],
-        errorMessage: "Минимальная длина пароля 6 символов.",
+        errorMessage: "Min 6 characters.",
       },
       isPassword: {
         errorMessage:
-          "Пароль должен содержать не менее 6 символов, хотя бы одну цифру, одну прописную и одну строчную буквы.",
+          "The password must contain at least 6 characters, at least one number, one uppercase letter and one lowercase letter.",
       },
     },
   };
@@ -37,7 +37,7 @@ function changePasswordSchema(req) {
 function confirmEmailChangeSchema(req) {
   return {
     emailChangeToken: {
-      notEmpty: { errorMessage: "Токен должен присутствовать в теле запроса." },
+      notEmpty: { errorMessage: "Token not found." },
     },
   };
 }
@@ -45,7 +45,7 @@ function confirmEmailChangeSchema(req) {
 function confirmPasswordChangeSchema(req) {
   return {
     passwordChangeToken: {
-      notEmpty: { errorMessage: "Токен должен присутствовать в теле запроса." },
+      notEmpty: { errorMessage: "Token not found." },
     },
   };
 }

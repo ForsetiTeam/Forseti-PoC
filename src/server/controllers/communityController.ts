@@ -15,17 +15,17 @@ async function getList(req: Request, res: Response, next: NextFunction) {
 }
 
 async function get(req: Request, res: Response, next: NextFunction) {
-  const communityId = req.params.id;
-  let community = await CommunityModel.findOne({name: communityId});
+  const communityName = req.params.communityName;
+  let community = await CommunityModel.findOne({name: communityName});
   if (!community) return res.responses.notFoundResource("Community not found");
   res.json(community);
 }
 
 async function join(req: Request, res: Response, next: NextFunction) {
   const user = req.user;
-  const communityId = req.params.id;
+  const communityName = req.params.communityName;
 
-  let community = await CommunityModel.findOne({name: communityId});
+  let community = await CommunityModel.findOne({name: communityName});
   if (!community) return res.responses.notFoundResource("Community not found");
 
   let communities = user.communities||[];
@@ -44,7 +44,7 @@ async function join(req: Request, res: Response, next: NextFunction) {
 }
 
 router.get("/", passport.authenticate("jwt", { session: false }), getList);
-router.get("/:id", passport.authenticate("jwt", { session: false }), get);
-router.post("/:id/join", passport.authenticate("jwt", { session: false }), join);
+router.get("/:communityName", passport.authenticate("jwt", { session: false }), get);
+router.post("/:communityName/join", passport.authenticate("jwt", { session: false }), join);
 
 export default router;

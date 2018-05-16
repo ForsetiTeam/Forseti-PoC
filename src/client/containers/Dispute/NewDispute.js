@@ -6,14 +6,14 @@ import { fetchCommunity } from '../../redux/actions/community/getCommunity';
 import { fetchCreateDispute } from '../../redux/actions/dispute/createDispute';
 
 function mapStateToProps(state, props) {
-  const communityId = props.match.params.communityId;
-  const community = state.community.list.find(communityI => communityI.name === communityId);
+  const communityName = props.match.params.communityName;
+  const community = state.community.list.find(communityI => communityI.name === communityName);
 
-  return { communityId, community };
+  return { communityName, community };
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchCommunity: id => dispatch(fetchCommunity(id)),
+  fetchCommunity: communityName => dispatch(fetchCommunity(communityName)),
   fetchCreateDispute: (dispute, community) => dispatch(fetchCreateDispute(dispute, community))
 });
 

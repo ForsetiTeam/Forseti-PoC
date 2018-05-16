@@ -50,7 +50,7 @@ function fetchRegisterDo(user) {
 
     return fetchDecorator(
       [
-        fetchSuccessStatusDecorator// ,
+        fetchSuccessStatusDecorator
       ],
       axios.post(`${config.get('serverAPI')}auth/register`, user)
     )
