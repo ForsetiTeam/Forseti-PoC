@@ -20,14 +20,19 @@ export class User extends Typegoose {
 
   @instanceMethod
   getExportJSON(this: InstanceType<User>) {
-    return {
-      email: this.email,
-      account: this.account,
-      communities: this.communities.map(community => community.name)
-    }
+    return UserModel.getExportJSON(this);
   }
 }
 
 const UserModel = new User().getModelForClass(User);
+
+UserModel.getExportJSON = function(user: InstanceType<User>) {
+  return {
+    id: user._id,
+    email: user.email,
+    account: user.account,
+    communities: user.communities.map(community => community.name)
+  }
+};
 
 export default UserModel;

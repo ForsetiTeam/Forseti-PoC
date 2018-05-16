@@ -66,14 +66,14 @@ function fetchLoginDo(account, sig) {
       data: { account }
     })*/
     )
-      .then((res) => {
+      .then(res => {
         setUser(res.data.user);
         setToken(res.data.token);
         dispatch(receiveLogin());
         dispatch(push('/'));
       })
-      .catch(() => {
-        dispatch(failureLogin());
+      .catch(err => {
+        dispatch(failureLogin(err));
       });
   };
 }

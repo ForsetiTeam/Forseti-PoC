@@ -76,8 +76,8 @@ function fetchCommunityJoinDo(id) {
         setUser(res.data.user);
         dispatch(receiveCommunityJoin(res.data.user));
       })
-      .catch(() => {
-        dispatch(failureCommunityJoin());
+      .catch(err => {
+        dispatch(failureCommunityJoin(err));
       });
   };
 }

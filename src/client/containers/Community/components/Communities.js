@@ -15,9 +15,9 @@ class Communities extends Component {
 
   render() {
     return (
-      <div className='d-flex'>
+      <div className='d-flex flex-wrap'>
         {this.props.list.map(community =>
-          <CommunitiesItem key={community.id} community={community}/>
+          <CommunitiesItem key={community.name} community={community}/>
         )}
       </div>
     );

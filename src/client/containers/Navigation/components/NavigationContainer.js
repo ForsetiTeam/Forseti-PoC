@@ -23,8 +23,9 @@ class NavigationContainer extends Component {
     if (this.props.isLogged) {
       return [
         { title: 'Communities', uri: '/community/' },
-        { title: 'Ongoing Disputes', uri: '/dispute/' },
-        { title: 'Finished Disputes', uri: '/dispute/finished' },
+        { title: 'My Disputes', uri: '/dispute/filter/my' },
+        { title: 'Ongoing Disputes', uri: '/dispute/filter/open' },
+        { title: 'Finished Disputes', uri: '/dispute/filter/closed' },
         { title: 'Log Out', uri: '/logout' }
       ];
     }
