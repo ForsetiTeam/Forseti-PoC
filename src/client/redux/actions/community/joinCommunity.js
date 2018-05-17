@@ -40,10 +40,10 @@ function failureCommunityJoin(error) {
   };
 }
 
-export function fetchCommunityJoin(id) {
+export function fetchCommunityJoin(communityName) {
   return (dispatch, getState) => {
     if (shouldFetchCommunityJoin(getState())) {
-      return dispatch(fetchCommunityJoinDo(id));
+      return dispatch(fetchCommunityJoinDo(communityName));
     }
   };
 }
@@ -52,7 +52,7 @@ function shouldFetchCommunityJoin() {
   return true;
 }
 
-function fetchCommunityJoinDo(id) {
+function fetchCommunityJoinDo(communityName) {
   return dispatch => {
     console.log('Fetch: CommunityJoin');
     dispatch(requestCommunityJoin());
@@ -65,7 +65,7 @@ function fetchCommunityJoinDo(id) {
         fetchSuccessStatusDecorator
       ],
 
-      axios.post(`${config.get('serverAPI')}community/${id}/join`, null, {
+      axios.post(`${config.get('serverAPI')}community/${communityName}/join`, null, {
         headers: {
           Authorization: token,
           'Content-Type': 'application/json'
@@ -76,8 +76,8 @@ function fetchCommunityJoinDo(id) {
         setUser(res.data.user);
         dispatch(receiveCommunityJoin(res.data.user));
       })
-      .catch(() => {
-        dispatch(failureCommunityJoin());
+      .catch(err => {
+        dispatch(failureCommunityJoin(err));
       });
   };
 }

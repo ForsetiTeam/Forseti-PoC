@@ -41,10 +41,10 @@ function failureCommunity(error) {
   };
 }
 
-export function fetchCommunity(id) {
+export function fetchCommunity(communityName) {
   return (dispatch, getState) => {
     if (shouldFetchCommunity(getState())) {
-      return dispatch(fetchCommunityDo(id));
+      return dispatch(fetchCommunityDo(communityName));
     }
   };
 }
@@ -53,7 +53,7 @@ function shouldFetchCommunity(state) {
   return !state.community.loading && !state.community.user;
 }
 
-function fetchCommunityDo(id) {
+function fetchCommunityDo(communityName) {
   return dispatch => {
     console.log('Fetch: Community');
     dispatch(requestCommunity());
@@ -65,13 +65,13 @@ function fetchCommunityDo(id) {
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      axios.get(`${config.get('serverAPI')}community/${id}`, { headers: { Authorization: token } })
+      axios.get(`${config.get('serverAPI')}community/${communityName}`, { headers: { Authorization: token } })
     )
       .then(res => {
         dispatch(receiveCommunity(res.data));
       })
-      .catch(() => {
-        dispatch(failureCommunity());
+      .catch(err => {
+        dispatch(failureCommunity(err));
         dispatch(push('/'));
       });
   };

@@ -5,10 +5,16 @@ import config from '../../../config/config';
 import { setUser, setToken } from '../../../services/localStore';
 import {
   fetchDecorator,
-  // fetchProtectedAuth,
-  fetchSuccessStatusDecorator// ,
-  // fetchFromJsonDecorator
+  fetchSuccessStatusDecorator
 } from '../decorators/index';
+
+axios.interceptors.response.use(undefined, err => {
+  const res = err.response;
+
+  if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
+    return Promise.resolve(res);
+  }
+});
 
 export const REQUEST_LOGIN_LOADING = 'REQUEST_LOGIN_LOADING';
 export const REQUEST_LOGIN_SUCCESS = 'REQUEST_LOGIN_SUCCESS';
@@ -20,9 +26,10 @@ function requestLogin() {
   };
 }
 
-function receiveLogin() {
+function receiveLogin(user) {
   return {
-    type: REQUEST_LOGIN_SUCCESS
+    type: REQUEST_LOGIN_SUCCESS,
+    user
   };
 }
 
@@ -52,28 +59,18 @@ function fetchLoginDo(account, sig) {
 
     return fetchDecorator(
       [
-        // partial(fetchProtectedAuth, dispatch),
-        // (...args) => fetchProtectedAuth(dispatch, ...args),
-        fetchSuccessStatusDecorator// ,
-        // fetchFromJsonDecorator
+        fetchSuccessStatusDecorator
       ],
       axios.post(`${config.get('serverAPI')}auth/login`, { account, sig })
-      /*
-    axios({
-      method: 'post',
-      url: `${config.get('serverAPI')}auth/login`,
-      withCredentials: true,
-      data: { account }
-    })*/
     )
-      .then((res) => {
+      .then(res => {
         setUser(res.data.user);
         setToken(res.data.token);
-        dispatch(receiveLogin());
+        dispatch(receiveLogin(res.data.user));
         dispatch(push('/'));
       })
-      .catch(() => {
-        dispatch(failureLogin());
+      .catch(err => {
+        dispatch(failureLogin(err));
       });
   };
 }

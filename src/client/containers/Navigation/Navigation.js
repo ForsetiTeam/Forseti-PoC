@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import NavigationContainer from './components/NavigationContainer';
 
 function mapStateToProps(state) {
-  const isLogged = state.curUser.loaded;
+  const isMetamaskLoaded = state.metamask.loaded;
+  const isLogged =  state.curUser.loaded;
 
-  return { isLogged };
+  return { isMetamaskLoaded, isLogged };
 }
 
 export default connect(mapStateToProps)(NavigationContainer);

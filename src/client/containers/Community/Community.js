@@ -6,16 +6,16 @@ import { fetchCommunity } from '../../redux/actions/community/getCommunity';
 import { fetchCommunityJoin } from '../../redux/actions/community/joinCommunity';
 
 function mapStateToProps(state, props) {
-  const id = props.match.params.communityId;
-  const community = state.community.list.find(comm => comm.name === id);
-  const isJoined = state.curUser.user && state.curUser.user.communities.includes(id);
+  const communityName = props.match.params.communityName;
+  const community = state.community.list.find(comm => comm.name === communityName);
+  const isJoined = state.curUser.user && state.curUser.user.communities.includes(communityName);
 
-  return { id, community, isJoined };
+  return { communityName, community, isJoined };
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchCommunity: (id) => dispatch(fetchCommunity(id)),
-  onJoin: (id) => dispatch(fetchCommunityJoin(id))
+  fetchCommunity: communityName => dispatch(fetchCommunity(communityName)),
+  onJoin: communityName => dispatch(fetchCommunityJoin(communityName))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Community);

@@ -1,7 +1,5 @@
 import convict from 'convict';
 
-// import dev from './env/dev';
-
 const config = convict({
   env: {
     doc: 'The application environment.',
@@ -16,16 +14,13 @@ const config = convict({
   },
   metamask: {
     sigPhrase: {
-      doc: "String for signing metamask",
+      doc: 'String for signing metamask',
       format: String,
-      default: "Forseti greets you!"
+      default: 'Forseti greets you!'
     }
   }
 });
 
-// const env = config.get('env');
-// config.load(`./src/server/config/env/${env}.json`);
-// config.load(dev);
 config.validate();
 
 export default config;
