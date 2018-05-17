@@ -1,15 +1,7 @@
-import axios from 'axios';
+import { request } from '../utils/axios';
+import apiRoutes from '../../apiRoutes';
 
-axios.interceptors.response.use(undefined, err => {
-  const res = err.response;
-
-  if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
-    return Promise.resolve(res);
-  }
-});
-
-import config from '../../../config/config';
-import { getToken, setUser } from '../../../services/localStore';
+import { setUser } from '../../../services/localStore';
 import {
   fetchDecorator,
   fetchSuccessStatusDecorator,
@@ -57,20 +49,13 @@ function fetchCommunityJoinDo(communityName) {
     console.log('Fetch: CommunityJoin');
     dispatch(requestCommunityJoin());
 
-    const token = getToken();
-
     return fetchDecorator(
       [
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
 
-      axios.post(`${config.get('serverAPI')}community/${communityName}/join`, null, {
-        headers: {
-          Authorization: token,
-          'Content-Type': 'application/json'
-        }
-      })
+      request('post', apiRoutes.communityJoin(communityName), null, { 'Content-Type': 'application/json' })
     )
       .then(res => {
         setUser(res.data.user);

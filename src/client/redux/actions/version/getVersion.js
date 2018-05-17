@@ -1,10 +1,10 @@
-import axios from 'axios';
+import { request } from '../utils/axios';
 
-import config from '../../config/config';
 import {
   fetchDecorator,
   fetchSuccessStatusDecorator
-}                                     from './decorators';
+} from '../decorators/index';
+import apiRoutes from '../../apiRoutes';
 
 export const REQUEST_VERSION_LOADING = 'REQUEST_VERSION_LOADING';
 export const REQUEST_VERSION_SUCCESS = 'REQUEST_VERSION_SUCCESS';
@@ -51,14 +51,7 @@ function fetchVersionDo() {
       [
         fetchSuccessStatusDecorator
       ],
-      axios(
-        {
-          url: `${config.get('serverAPI')}version`,
-          validateStatus: status => {
-            return status >= 200 && status < 300 || status === 304;
-          }
-        }
-      )
+      request('get', apiRoutes.version())
     )
       .then(res => {
         dispatch(receiveVersion(res.data.version));

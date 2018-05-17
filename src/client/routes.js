@@ -36,12 +36,3 @@ const Main = () => {
 };
 
 export default Main;
-/* <Route path='/community' component={Communities} />
-        <PrivateRoute
-          path='/community'
-          component={Communities}
-          isLogged={isLogged}
-          redirect={'/register'}
-        />
-        <PrivateRoute path="/community" currentUser={isLogged} component={Communities} />
-        */

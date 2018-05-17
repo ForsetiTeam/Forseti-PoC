@@ -7,7 +7,7 @@ import config from '../../../config/config';
 
 class RegisterContainer extends Component {
   static propTypes = {
-    curUser: PropTypes.any,
+    currentUser: PropTypes.shape,
     onSubmit: PropTypes.func,
     onRequestSig: PropTypes.func,
 
@@ -74,7 +74,7 @@ class RegisterContainer extends Component {
         canSubmit={this.isFormValid()}
         isSigning={this.state.isSigning}
         isSigned={!!this.state.sign}
-        errors={this.props.curUser.error ? this.props.curUser.error.errors : null}
+        errors={this.props.currentUser.error ? this.props.currentUser.error.errors : null}
       />
     );
   }

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { request, downloadFile } from '../../../redux/actions/utils/axios';
+import apiRoutes from '../../../redux/apiRoutes';
 
 class Dispute extends Component {
   static propTypes = {
     id: PropTypes.string,
-    dispute: PropTypes.any,
-    curUser: PropTypes.any,
+    dispute: PropTypes.shape,
+    currentUser: PropTypes.shape,
     documentLink: PropTypes.string,
     fetchDispute: PropTypes.func
   };
@@ -14,8 +16,13 @@ class Dispute extends Component {
     this.props.fetchDispute(this.props.id);
   }
 
+  handleDownloadDocument = e => {
+    e.preventDefault();
+    request('get', apiRoutes.disputeDocument(this.props.id)).then(response => downloadFile(response));
+  };
+
   isArbiter() {
-    return this.props.dispute.author !== this.props.curUser.id;
+    return this.props.dispute.author !== this.props.currentUser.id;
   }
 
   render() {
@@ -32,7 +39,7 @@ class Dispute extends Component {
             <p>Description: {dispute.description}</p>
             <p>Arbiters count: {dispute.arbitersNeed}</p>
             {dispute.document &&
-              <p><a href={this.props.documentLink}>Download document</a></p>
+              <p><a href='#' onClick={this.handleDownloadDocument}>Download document</a></p>
             }
           </div>
         </div>

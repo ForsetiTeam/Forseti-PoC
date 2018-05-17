@@ -5,7 +5,7 @@ import ErrorRequest from '../../../components/ErrorRequest';
 
 class Login extends Component {
   static propTypes = {
-    curUser: PropTypes.any,
+    currentUser: PropTypes.shape,
     isSigning: PropTypes.bool,
     onRequestSig: PropTypes.func
   };
@@ -19,7 +19,7 @@ class Login extends Component {
           Request sign
         </button>
         <SpinnerWaiter isLoading={this.props.isSigning} />
-        <ErrorRequest error={this.props.curUser.error} />
+        <ErrorRequest error={this.props.currentUser.error} />
       </div>
     );
   }

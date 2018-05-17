@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { request } from '../utils/axios';
+import apiRoutes from '../../apiRoutes';
 
 import { removeUser } from '../../../services/localStore';
-import config from '../../../config/config';
 
 export function logOut() {
   return (dispatch) => {
@@ -11,7 +11,7 @@ export function logOut() {
 
 function logOutDo() {
   return () => {
-    return axios.post(`${config.get('serverAPI')}auth/logout`)
+    return request('post', apiRoutes.authLogout())
       .then(() => {
         removeUser();
         window.location = '/';

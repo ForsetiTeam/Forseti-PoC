@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { fetchVersion } from '../../redux/actions/version';
+import { fetchVersion } from '../../redux/actions/version/getVersion';
 import { fetchLogin } from '../../redux/actions/auth/authLogin';
 import { fetchLoadMetamask } from '../../redux/actions/metamask/loadMetaMask';
 

@@ -3,15 +3,13 @@ import { connect } from 'react-redux';
 import Dispute from './components/Dispute';
 
 import { fetchDispute } from '../../redux/actions/dispute/getDispute';
-import config from '../../config/config';
 
 function mapStateToProps(state, props) {
   const id = props.match.params.disputeId;
   const dispute = state.dispute.list.find(disputeI => disputeI.id === id);
-  const curUser = state.curUser.user;
-  const documentLink = `${config.get('serverAPI')}dispute/${id}/document`;
+  const currentUser = state.currentUser.user;
 
-  return { id, dispute, curUser, documentLink };
+  return { id, dispute, currentUser };
 }
 
 const mapDispatchToProps = dispatch => ({
