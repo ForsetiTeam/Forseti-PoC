@@ -10,7 +10,7 @@ enum Status {
 }
 export class Dispute extends Typegoose {
 
-  @prop({ required: true, autopopulate: true })
+  @prop({ required: true })
   public author: Ref<UserModel>;
 
   @prop({ required: true })
@@ -48,15 +48,13 @@ export class Dispute extends Typegoose {
   }
 }
 
-
 const DisputeModel = new Dispute().getModelForClass(Dispute);
 
-DisputeModel.populateAll = function(query) {
-  query
+export function populateDispute(query) {
+  return query
     .populate({path: 'community', model: CommunityModel})
     .populate({path: 'document', model: DocumentModel});
-    //.populate({path: 'author', model: UserModel});
-  return query;
-};
+  //.populate({path: 'author', model: UserModel});
+}
 
 export default DisputeModel;

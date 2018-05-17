@@ -1,22 +1,14 @@
 import { push } from 'react-router-redux';
-import axios from 'axios';
 
-import config from '../../../config/config';
+import { request } from '../utils/axios';
+import apiRoutes from '../../apiRoutes';
+
 import {
   fetchDecorator,
   fetchSuccessStatusDecorator,
   fetchProtectedAuth
 } from '../decorators/index';
-import { getToken } from '../../../services/localStore';
 import { jsonToFormData } from '../utils/jsonToFormData';
-
-axios.interceptors.response.use(undefined, err => {
-  const res = err.response;
-
-  if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
-    return Promise.resolve(res);
-  }
-});
 
 export const REQUEST_CREATE_DISPUTE_LOADING = 'REQUEST_CREATE_DISPUTE_LOADING';
 export const REQUEST_CREATE_DISPUTE_SUCCESS = 'REQUEST_CREATE_DISPUTE_SUCCESS';
@@ -59,8 +51,6 @@ function fetchCreateDisputeDo(dispute, community) {
     console.log('Fetch: CreateDispute');
     dispatch(requestCreateDispute());
 
-    const token = getToken();
-
     const disputeForm = jsonToFormData(dispute);
 
     disputeForm.append('community', community._id);
@@ -70,13 +60,7 @@ function fetchCreateDisputeDo(dispute, community) {
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      axios.post(
-        `${config.get('serverAPI')}dispute`,
-        disputeForm,
-        { headers: {
-          Authorization: token,
-          'content-type': 'multipart/form-data'
-        } })
+      request('post', apiRoutes.disputeList(), disputeForm, { 'content-type': 'multipart/form-data' })
     )
       .then(res => {
         dispatch(receiveCreateDispute(res.data));

@@ -5,7 +5,7 @@ import CommunitiesItem from './CommunitiesItem';
 
 class Communities extends Component {
   static propTypes = {
-    list: PropTypes.array,
+    list: PropTypes.arrayOf(PropTypes.shape),
     fetchCommunityList: PropTypes.func
   };
 

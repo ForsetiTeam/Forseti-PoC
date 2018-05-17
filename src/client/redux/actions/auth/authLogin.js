@@ -1,20 +1,13 @@
 import { push } from 'react-router-redux';
-import axios from 'axios';
 
-import config from '../../../config/config';
+import { request } from '../utils/axios';
+import apiRoutes from '../../apiRoutes';
+
 import { setUser, setToken } from '../../../services/localStore';
 import {
   fetchDecorator,
   fetchSuccessStatusDecorator
 } from '../decorators/index';
-
-axios.interceptors.response.use(undefined, err => {
-  const res = err.response;
-
-  if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
-    return Promise.resolve(res);
-  }
-});
 
 export const REQUEST_LOGIN_LOADING = 'REQUEST_LOGIN_LOADING';
 export const REQUEST_LOGIN_SUCCESS = 'REQUEST_LOGIN_SUCCESS';
@@ -49,7 +42,7 @@ export function fetchLogin(account, sig) {
 }
 
 function shouldFetchLogin(state) {
-  return !state.curUser.loading && !state.curUser.user;
+  return !state.currentUser.loading && !state.currentUser.user;
 }
 
 function fetchLoginDo(account, sig) {
@@ -61,7 +54,7 @@ function fetchLoginDo(account, sig) {
       [
         fetchSuccessStatusDecorator
       ],
-      axios.post(`${config.get('serverAPI')}auth/login`, { account, sig })
+      request('post', apiRoutes.authLogin(), { account, sig })
     )
       .then(res => {
         setUser(res.data.user);

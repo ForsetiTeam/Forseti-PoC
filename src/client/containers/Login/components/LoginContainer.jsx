@@ -6,7 +6,7 @@ import config from '../../../config/config';
 
 class RegisterContainer extends Component {
   static propTypes = {
-    curUser: PropTypes.any,
+    currentUser: PropTypes.shape,
     loadAccount: PropTypes.func,
     requestSig: PropTypes.func,
     login: PropTypes.func
@@ -52,7 +52,7 @@ class RegisterContainer extends Component {
   render() {
     return (
       <Login
-        curUser={this.props.curUser}
+        currentUser={this.props.currentUser}
         onRequestSig={this.handleRequestSig}
         isSigning={this.state.isSigning}
       />

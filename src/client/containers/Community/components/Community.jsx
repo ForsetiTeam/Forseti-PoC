@@ -8,7 +8,7 @@ import * as icons from '@fortawesome/fontawesome-free-solid';
 class Community extends Component {
   static propTypes = {
     communityName: PropTypes.string,
-    community: PropTypes.any,
+    community: PropTypes.shape,
     isJoined: PropTypes.bool,
     fetchCommunity: PropTypes.func,
     onJoin: PropTypes.func
