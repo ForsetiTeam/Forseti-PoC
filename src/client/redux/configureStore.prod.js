@@ -1,8 +1,6 @@
 import { applyMiddleware, createStore, compose } from 'redux';
-import thunk                                     from 'redux-thunk';
-import rootReducer                               from './reducers';
-// import socketMiddleware                          from '../redux/socket/socketMiddleware';
-import requestMiddleware                         from '../redux/request/requestMiddleware';
+import thunk from 'redux-thunk';
+import rootReducer from './reducers';
 
 export default function (initialState = {}/* , socketClient*/) {
   const store = createStore(
@@ -10,8 +8,6 @@ export default function (initialState = {}/* , socketClient*/) {
     initialState,
     compose(
       applyMiddleware(thunk),
-      // applyMiddleware(socketMiddleware(socketClient)),
-      applyMiddleware(requestMiddleware()),
     )
   );
 

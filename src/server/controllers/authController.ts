@@ -37,7 +37,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
       req.logIn(user, (loginErr) => {
         if (loginErr) { return next(new VError(err, "Auth error")); }
         res.cookie("jwt", token, {httpOnly: true});
-        return res.json({message: "Success", user: user, token});
+        return res.json({message: "Success", user: UserModel.getExportJSON(user), token});
       });
 
     })(req, res, next);
@@ -49,7 +49,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
 async function logout(req: Request, res: Response, next: NextFunction) {
   req.logout();
   // req.session.destroy(() => true);
-  return res.responses.success("Успешно");
+  return res.responses.success("Success");
 }
 
 async function register(req: Request, res: Response, next: NextFunction) {

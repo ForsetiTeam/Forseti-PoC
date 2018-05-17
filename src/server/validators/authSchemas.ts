@@ -1,20 +1,20 @@
 function signUpSchema(req) {
   return {
     email: {
-      isCustomEmail: { errorMessage: "Неверный формат электронной почты." },
+      isCustomEmail: { errorMessage: "Invalid email." },
       isUserExistsByEmail: {
-        errorMessage: "Пользователь с таким адресом электронной почты уже зарегистрирован в системе.",
+        errorMessage: "Email is used.",
       },
-      notEmpty: { errorMessage: "Поле должно быть заполнено." },
+      notEmpty: { errorMessage: "Field is required." },
     },
     account: {
       isUserExistsByAccount: {
-          errorMessage: "Пользователь с таким кошельком уже зарегистрирован в системе.",
+          errorMessage: "Account is used.",
       },
-      notEmpty: { errorMessage: "Поле должно быть заполнено." },
+      notEmpty: { errorMessage: "Field is required." },
     },
     sign: {
-      notEmpty: { errorMessage: "Поле должно быть заполнено." },
+      notEmpty: { errorMessage: "Field is required." },
     }
   };
 }
@@ -22,7 +22,7 @@ function signUpSchema(req) {
 function signInSchema(req) {
   return {
     account: {
-      notEmpty: { errorMessage: "Поле должно быть заполнено." },
+      notEmpty: { errorMessage: "Field is required." },
     },
   };
 }
