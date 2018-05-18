@@ -8,7 +8,7 @@ import { fetchCommunityJoin } from '../../redux/actions/community/joinCommunity'
 function mapStateToProps(state, props) {
   const communityName = props.match.params.communityName;
   const community = state.community.list.find(comm => comm.name === communityName);
-  const isJoined = state.curUser.user && state.curUser.user.communities.includes(communityName);
+  const isJoined = state.currentUser.user && state.currentUser.user.communities.includes(communityName);
 
   return { communityName, community, isJoined };
 }

@@ -6,9 +6,9 @@ import { fetchLogin } from '../../redux/actions/auth/authLogin';
 import { loadAccount, requestSig } from '../../services/metamask';
 
 function mapStateToProps(state) {
-  const curUser = state.curUser;
+  const currentUser = state.currentUser;
 
-  return { curUser };
+  return { currentUser };
 }
 
 const mapDispatchToProps = dispatch => ({

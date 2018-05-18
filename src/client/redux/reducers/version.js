@@ -2,7 +2,7 @@ import {
   REQUEST_VERSION_LOADING,
   REQUEST_VERSION_SUCCESS,
   REQUEST_VERSION_FAILURE
-}                                     from '../actions/version';
+} from '../actions/version/getVersion';
 
 const initialState = {
   code: '',

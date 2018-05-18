@@ -6,9 +6,9 @@ import { fetchRegister } from '../../redux/actions/auth/authRegister';
 import { requestSig } from '../../services/metamask';
 
 function mapStateToProps(state) {
-  const curUser = state.curUser;
+  const currentUser = state.currentUser;
 
-  return { curUser };
+  return { currentUser };
 }
 
 const mapDispatchToProps = dispatch => ({
