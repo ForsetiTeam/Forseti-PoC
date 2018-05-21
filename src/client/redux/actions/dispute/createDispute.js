@@ -10,6 +10,8 @@ import {
 } from '../decorators/index';
 import { jsonToFormData } from '../utils/jsonToFormData';
 
+import createDispute from '../../../etherium/actions/createDispute';
+
 export const REQUEST_CREATE_DISPUTE_LOADING = 'REQUEST_CREATE_DISPUTE_LOADING';
 export const REQUEST_CREATE_DISPUTE_SUCCESS = 'REQUEST_CREATE_DISPUTE_SUCCESS';
 export const REQUEST_CREATE_DISPUTE_FAILURE = 'REQUEST_CREATE_DISPUTE_FAILURE';
@@ -35,6 +37,7 @@ function failureCreateDispute(error) {
 }
 
 export function fetchCreateDispute(dispute, community) {
+  console.log('fetchCreateDispute', dispute, community);
   return (dispatch, getState) => {
     if (shouldFetchCreateDispute(getState())) {
       return dispatch(fetchCreateDisputeDo(dispute, community));
@@ -47,13 +50,25 @@ function shouldFetchCreateDispute(state) {
 }
 
 function fetchCreateDisputeDo(dispute, community) {
-  return dispatch => {
+  return async dispatch => {
     console.log('Fetch: CreateDispute');
     dispatch(requestCreateDispute());
 
     const disputeForm = jsonToFormData(dispute);
 
     disputeForm.append('community', community._id);
+
+    let ethAddress;
+
+    try {
+      ethAddress = await createDispute(dispute);
+    } catch (err) {
+      console.log('ERR', err);
+      return;
+    }
+
+    console.log(ethAddress);
+    disputeForm.append('ethAddress', ethAddress);
 
     return fetchDecorator(
       [
@@ -72,3 +87,4 @@ function fetchCreateDisputeDo(dispute, community) {
       });
   };
 }
+

@@ -31,6 +31,9 @@ export class Dispute extends Typegoose {
   @prop({ })
   public document?: Ref<DocumentModel>;
 
+  @prop({ required: true })
+  public ethAddress: string;
+
   @instanceMethod
   getExportJSON(this: InstanceType<Dispute>) {
     const document = this.document ? this.document.toJSON() : null;

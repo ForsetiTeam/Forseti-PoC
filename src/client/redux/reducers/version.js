@@ -17,6 +17,7 @@ export default function (state = initialState, action) {
 
       newState.loaded = false;
       newState.loading = true;
+      newState.code = '';
       return newState;
     }
     case REQUEST_VERSION_SUCCESS: {
@@ -32,7 +33,7 @@ export default function (state = initialState, action) {
 
       newState.loaded = true;
       newState.loading = false;
-      newState.code = false;
+      newState.code = '';
       return newState;
     }
     default:
