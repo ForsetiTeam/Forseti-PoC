@@ -2,11 +2,11 @@
   $margin: 30px;
   $tabsWidth: 150px;
 
-  position: absolute;
-  top: $margin;
-  bottom: $margin;
-  left: $margin + $tabsWidth;
-  right: $margin;
+  position: relative;
+  margin-top: $margin;
+  margin-bottom: $margin;
+  margin-left: $margin + $tabsWidth;
+  margin-right: $margin;
 
   &__tabs {
     position: absolute;
