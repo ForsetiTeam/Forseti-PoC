@@ -3,10 +3,7 @@
   $tabsWidth: 150px;
 
   position: relative;
-  margin-top: $margin;
-  margin-bottom: $margin;
-  margin-left: $margin + $tabsWidth;
-  margin-right: $margin;
+  margin-left: $tabsWidth;
 
   &__tabs {
     position: absolute;

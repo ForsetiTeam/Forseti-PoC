@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Navigation from './Navigation';
 import { checkPlugin, getAccount } from '../../../services/metamask';
-import { DISPUTE_FILTER_MY, DISPUTE_FILTER_OPEN, DISPUTE_FILTER_CLOSED } from '../../../roterConsts';
+import { DISPUTE_FILTER_MY, DISPUTE_FILTER_OPEN, DISPUTE_FILTER_CLOSED } from '../../../consts';
 
 class NavigationContainer extends Component {
   static propTypes = {

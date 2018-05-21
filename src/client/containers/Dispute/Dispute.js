@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Dispute from './components/Dispute';
 
 import { fetchDispute } from '../../redux/actions/dispute/getDispute';
+import { fetchVoteDispute } from '../../redux/actions/dispute/voteDispute';
 
 function mapStateToProps(state, props) {
   const id = props.match.params.disputeId;
@@ -13,7 +14,8 @@ function mapStateToProps(state, props) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchDispute: id => dispatch(fetchDispute(id))
+  fetchDispute: disputeId => dispatch(fetchDispute(disputeId)),
+  fetchVoteDispute: (disputeId, vote) => dispatch(fetchVoteDispute(disputeId, vote))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dispute);
