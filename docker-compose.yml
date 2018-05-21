@@ -1,0 +1,18 @@
+version: '2'
+services:
+  node:
+    build: .
+    container_name: forseti_node
+    links:
+      - mongodb
+    ports:
+      - "21006:8060"
+    environment:
+      NODE_ENV: "production"
+    command: ["/bin/wait-for-it.sh", "mongodb:27017", "--timeout=15", "--", "npm", "run", "start_server"]
+  mongodb:
+    build: ./mongodb
+    container_name: forseti_mongodb
+    environment:
+      MONGODB_PASS: "p1230h6t34qd4i7ex"
+    command: ["/bin/run.sh"]

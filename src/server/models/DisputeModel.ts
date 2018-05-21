@@ -8,6 +8,7 @@ enum Status {
   OPEN = 'open',
   CLOSED = 'closed',
 }
+
 export class Dispute extends Typegoose {
 
   @prop({ required: true })

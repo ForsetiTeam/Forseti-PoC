@@ -38,21 +38,27 @@ const rawData = {
       title: 'Some open dispute',
       description: 'I make this dispute in web comunity',
       community: () => storedData.Community[0]._id,
-      status: 'open'
+      status: 'open',
+      arbitersNeed: 7,
+      ethAddress: 'test'
     },
     {
       author: () => storedData.User[0]._id,
       title: 'Closed dispute',
       description: 'For web comunity',
       community: () => storedData.Community[0]._id,
-      status: 'closed'
+      status: 'closed',
+      arbitersNeed: 5,
+      ethAddress: 'test'
     },
     {
       author: () => storedData.User[0]._id,
       title: 'Another dispute',
       description: 'some tasks in blockchain',
       community: () => storedData.Community[1]._id,
-      status: 'closed'
+      status: 'closed',
+      arbitersNeed: 10,
+      ethAddress: 'test'
     }
   ]
 };
@@ -60,7 +66,7 @@ const rawData = {
 function fillCollection(model) {
   return new Promise(async resolve => {
     const modelName = model.modelName;
-    await model.remove({})
+    await model.remove({});
 
     const collection = rawData[modelName];
     for (const i in collection) {

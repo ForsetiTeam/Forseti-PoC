@@ -11,7 +11,7 @@ const config = convict({
         port: {
           doc: "Http listening port",
           format: "port",
-          default: 8063,
+          default: 8060,
           env: "APP_PORT"  ,
         },
     },
@@ -37,7 +37,7 @@ const config = convict({
     db: {
       uri: {
         doc: "Mongodb connection string",
-        format: String, default: "mongodb://localhost/forseti",
+        format: String, default: "mongodb://localhost:12345/forseti",
         env: "MONGO_URI",
       },
       autoApplyMigrations: {
