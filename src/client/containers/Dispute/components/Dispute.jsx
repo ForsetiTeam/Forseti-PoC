@@ -6,8 +6,8 @@ import apiRoutes from '../../../redux/apiRoutes';
 class Dispute extends Component {
   static propTypes = {
     id: PropTypes.string,
-    dispute: PropTypes.shape,
-    currentUser: PropTypes.shape,
+    dispute: PropTypes.shape(),
+    currentUser: PropTypes.shape(),
     documentLink: PropTypes.string,
     fetchDispute: PropTypes.func
   };

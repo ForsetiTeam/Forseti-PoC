@@ -7,7 +7,7 @@ import * as icons from '@fortawesome/fontawesome-free-solid';
 
 class CommunitiesItem extends Component {
   static propTypes = {
-    community: PropTypes.shape
+    community: PropTypes.shape()
   };
 
   render() {

@@ -7,7 +7,7 @@ import config from '../../../config/config';
 
 class RegisterContainer extends Component {
   static propTypes = {
-    currentUser: PropTypes.shape,
+    currentUser: PropTypes.shape(),
     onSubmit: PropTypes.func,
     onRequestSig: PropTypes.func,
 

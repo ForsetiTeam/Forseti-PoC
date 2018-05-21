@@ -6,7 +6,7 @@ import config from '../../../config/config';
 
 class RegisterContainer extends Component {
   static propTypes = {
-    currentUser: PropTypes.shape,
+    currentUser: PropTypes.shape(),
     loadAccount: PropTypes.func,
     requestSig: PropTypes.func,
     login: PropTypes.func

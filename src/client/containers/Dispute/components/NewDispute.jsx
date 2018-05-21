@@ -6,7 +6,7 @@ import validate from '../../../services/validate';
 class NewDispute extends Component {
   static propTypes = {
     communityName: PropTypes.string,
-    community: PropTypes.shape,
+    community: PropTypes.shape(),
     fetchCommunity: PropTypes.func,
     fetchCreateDispute: PropTypes.func
   };

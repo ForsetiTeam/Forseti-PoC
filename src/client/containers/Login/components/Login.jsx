@@ -5,7 +5,7 @@ import ErrorRequest from '../../../components/ErrorRequest';
 
 class Login extends Component {
   static propTypes = {
-    currentUser: PropTypes.shape,
+    currentUser: PropTypes.shape(),
     isSigning: PropTypes.bool,
     onRequestSig: PropTypes.func
   };
