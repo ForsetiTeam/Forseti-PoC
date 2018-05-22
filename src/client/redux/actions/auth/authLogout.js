@@ -1,21 +1,21 @@
+import { push } from 'react-router-redux';
+
 import { request } from '../utils/axios';
 import apiRoutes from '../../apiRoutes';
 
-import { removeUser } from '../../../services/localStore';
+import { removeUser, removeToken } from '../../../services/localStore';
 
-export function logOut() {
-  return (dispatch) => {
-    dispatch(logOutDo());
-  };
-}
+export const LOGOUT = 'LOGOUT';
 
-function logOutDo() {
-  return () => {
-    return request('post', apiRoutes.authLogout())
-      .then(() => {
-        removeUser();
-        window.location = '/';
-      });
+export function fetchLogout() {
+  return dispatch => {
+    request('post', apiRoutes.authLogout());
+    removeUser();
+    removeToken();
+    dispatch({
+      type: LOGOUT
+    });
+    dispatch(push('/'));
   };
 }
 

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getAccount } from '../../../services/metamask';
 
 import Register from './Register';
-import config from '../../../config/config';
 
 class RegisterContainer extends Component {
   static propTypes = {
     currentUser: PropTypes.shape(),
+    metamask: PropTypes.shape(),
+
     onSubmit: PropTypes.func,
     onRequestSig: PropTypes.func,
 
@@ -17,40 +17,18 @@ class RegisterContainer extends Component {
   };
 
   state = {
-    email: '',
-    sign: false,
-    isSigning: false
+    email: ''
   };
 
   handleSubmit = e => {
     e.preventDefault();
     const user = {
       email: this.state.email,
-      account: getAccount(),
-      sign: this.state.sign
+      account: this.props.metamask.account,
+      sig: this.props.metamask.sig
     };
 
     this.props.onSubmit(user);
-  };
-
-  handleRequestSig = e => {
-    e.preventDefault();
-    this.setState({ isSigning: true });
-
-    const sigPhrase = config.get('metamask.sigPhrase');
-
-    this.props.onRequestSig(sigPhrase)
-      .then(sign =>
-        this.setState({
-          sign,
-          isSigning: false
-        })
-      )
-      .catch(() =>
-        this.setState({
-          isSigning: false
-        })
-      );
   };
 
   handleChange = e => {
@@ -61,7 +39,7 @@ class RegisterContainer extends Component {
   };
 
   isFormValid() {
-    return !!this.state.email;
+    return !!this.state.email && this.props.metamask.sig;
   }
 
   render() {
@@ -69,10 +47,8 @@ class RegisterContainer extends Component {
       <Register
         onChange={this.handleChange}
         onSubmit={this.handleSubmit}
-        onRequestSig={this.handleRequestSig}
         canSubmit={this.isFormValid()}
-        isSigning={this.state.isSigning}
-        isSigned={!!this.state.sign}
+        isSigned={!!this.props.metamask.sig}
         errors={this.props.currentUser.error ? this.props.currentUser.error.errors : null}
       />
     );

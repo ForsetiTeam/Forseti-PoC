@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 
 import { fetchVersion } from '../../redux/actions/version/getVersion';
-import { fetchLogin } from '../../redux/actions/auth/authLogin';
-import { fetchLoadMetamask } from '../../redux/actions/metamask/loadMetaMask';
+import { fetchProcessAccount } from '../../redux/actions/metamask/processMetamask';
 
 import Layer from './components/Layer';
 
@@ -15,8 +14,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
   fetchVersion: () => dispatch(fetchVersion()),
-  fetchLoadMetamask: () => dispatch(fetchLoadMetamask()),
-  fetchLogin: (account, token) => dispatch(fetchLogin(account, token))
+  fetchProcessMetamaskAccount: () => dispatch(fetchProcessAccount())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layer);

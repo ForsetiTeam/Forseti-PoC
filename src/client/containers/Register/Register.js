@@ -7,8 +7,9 @@ import { requestSig } from '../../services/metamask';
 
 function mapStateToProps(state) {
   const currentUser = state.currentUser;
+  const metamask = state.metamask;
 
-  return { currentUser };
+  return { currentUser, metamask };
 }
 
 const mapDispatchToProps = dispatch => ({

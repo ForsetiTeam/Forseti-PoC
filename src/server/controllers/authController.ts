@@ -58,7 +58,7 @@ async function register(req: Request, res: Response, next: NextFunction) {
   const userDoc = {
     email: userData.email,
     account: userData.account,
-    sign: userData.sign
+    sig: userData.sig
   };
 
   const user = await UserModel.create(userDoc);

@@ -1,47 +1,57 @@
 const USER = 'user';
 const TOKEN = 'token';
+const METAMASK = 'metamask';
 
-function setUser(user) {
+export function setUser(user) {
   if (!localStorage) return false;
   localStorage.setItem(USER, JSON.stringify(user));
 }
 
-function setToken(token) {
+export function setToken(token) {
   if (!localStorage) return false;
   localStorage.setItem(TOKEN, token);
 }
 
-function removeUser() {
+export function setMetamask(account, sig) {
+  if (!localStorage) return false;
+  localStorage.setItem(METAMASK, JSON.stringify({ account, sig }));
+}
+
+export function removeUser() {
   if (!localStorage) return false;
   localStorage.removeItem(USER);
 }
 
-function removeToken() {
+export function removeToken() {
   if (!localStorage) return false;
   localStorage.removeItem(TOKEN);
 }
 
-function getUser() {
+export function removeMetamask() {
   if (!localStorage) return false;
-  const user = localStorage.getItem(USER);
+  localStorage.removeItem(METAMASK);
+}
+
+function getJSONItem(name) {
+  if (!localStorage) return false;
+  const item = localStorage.getItem(name);
 
   try {
-    return JSON.parse(user);
+    return JSON.parse(item);
   } catch (e) {
     return false;
   }
 }
 
-function getToken() {
+export function getUser() {
+  return getJSONItem(USER);
+}
+
+export function getToken() {
   if (!localStorage) return false;
   return localStorage.getItem(TOKEN);
 }
 
-export {
-  getUser,
-  setUser,
-  removeUser,
-  getToken,
-  setToken,
-  removeToken
-};
+export function getMetamask() {
+  return getJSONItem(METAMASK);
+}

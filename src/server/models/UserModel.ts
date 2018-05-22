@@ -13,7 +13,7 @@ export class User extends Typegoose {
   public account: string;
 
   @prop({ required: true })
-  public sign: string;
+  public sig: string;
 
   @arrayProp({ itemsRef: Community })
   public communities: Ref<Community>[];

@@ -13,7 +13,7 @@ function signUpSchema(req) {
       },
       notEmpty: { errorMessage: "Field is required." },
     },
-    sign: {
+    sig: {
       notEmpty: { errorMessage: "Field is required." },
     }
   };

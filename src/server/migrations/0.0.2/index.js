@@ -11,7 +11,7 @@ const rawData = {
     {
       email: 'some@user.me',
       account: '12345',
-      sign: 'sign'
+      sig: 'sig'
     }
   ],
   Community: [

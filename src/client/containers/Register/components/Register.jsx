@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import SpinnerWaiter from '../../../components/SpinnerWaiter';
+import ErrorRequest from '../../../components/ErrorRequest';
 
 class Register extends Component {
   static propTypes = {
@@ -9,7 +9,6 @@ class Register extends Component {
     onSubmit: PropTypes.func,
     onRequestSig: PropTypes.func,
     canSubmit: PropTypes.bool,
-    isSigning: PropTypes.bool,
     isSigned: PropTypes.bool,
     errors: PropTypes.any
   };
@@ -37,13 +36,9 @@ class Register extends Component {
           {this.props.errors && this.props.errors.account &&
             <p className='text-danger'>{this.props.errors.account.msg}</p>
           }
-          {!this.props.isSigned ?
-            <div>
-              <button className='btn btn-warning' onClick={this.props.onRequestSig}>Request sign</button>
-              <SpinnerWaiter isLoading={this.props.isSigning}/>
-            </div>
-            :
-            <button type='submit' className='btn btn-primary' disabled={!this.props.canSubmit}>Submit</button>
+          <button type='submit' className='btn btn-primary' disabled={!this.props.canSubmit}>Submit</button>
+          {!this.props.isSigned &&
+            <ErrorRequest error='MetaMask account not signed'/>
           }
         </form>
       </div>
