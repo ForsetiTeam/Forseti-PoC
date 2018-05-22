@@ -18,7 +18,6 @@ class RegisterContainer extends Component {
 
   state = {
     email: '',
-    poolAddress: '',
     sign: false,
     isSigning: false
   };
@@ -62,7 +61,7 @@ class RegisterContainer extends Component {
   };
 
   isFormValid() {
-    return !!this.state.email && !!this.state.poolAddress;
+    return !!this.state.email;
   }
 
   render() {

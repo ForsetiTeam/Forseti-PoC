@@ -34,18 +34,6 @@ class Register extends Component {
               }
             </div>
           </div>
-          <div className='form-group row'>
-            <label htmlFor='inputPoolAddress' className='col-sm-2 col-form-label'>Pool Address</label>
-            <div className='col-sm-10'>
-              <input
-                name='poolAddress'
-                className='form-control'
-                id='inputPoolAddress'
-                placeholder='???'
-                onChange={this.props.onChange}
-              />
-            </div>
-          </div>
           {this.props.errors && this.props.errors.account &&
             <p className='text-danger'>{this.props.errors.account.msg}</p>
           }
