@@ -1,15 +1,22 @@
 .Layer {
   $margin: 30px;
-  $tabsWidth: 150px;
+  $tabsWidth: 240px;
 
   position: relative;
   margin-left: $tabsWidth;
 
-  &__tabs {
-    position: absolute;
-    top: 30px;
-    left: -$tabsWidth + 3;
+  &__sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    height: 100vh;
     width: $tabsWidth;
+    background-color: white;
+    border-right: 1px solid grey;
+  }
+  &__tabs {
+
   }
 
   &__content {
@@ -21,8 +28,8 @@
 
   &__version {
     position: absolute;
-    bottom: -$margin;
-    left: -$margin - $tabsWidth;
+    bottom: 0;
+    left: 0;
     padding-left: 10px;
   }
 }

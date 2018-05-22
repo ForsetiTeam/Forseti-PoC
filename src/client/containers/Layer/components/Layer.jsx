@@ -46,14 +46,16 @@ class Layer extends Component {
 
     return (
       <div className='Layer'>
-        <div className='Layer__tabs'>
-          <Navigation />
+        <div className='Layer__sidebar'>
+          <div className='Layer__tabs'>
+            <Navigation />
+          </div>
+          <div className='Layer__version'>V {this.props.version || '...'}</div>
         </div>
         <div className='Layer__content border p-3'>
           {page}
         </div>
 
-        <div className='Layer__version'>V {this.props.version || '...'}</div>
       </div>
     );
   }
