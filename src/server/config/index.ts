@@ -37,7 +37,7 @@ const config = convict({
     db: {
       uri: {
         doc: "Mongodb connection string",
-        format: String, default: "mongodb://localhost:12345/forseti",
+        format: String, default: "mongodb://localhost/forseti",
         env: "MONGO_URI",
       },
       autoApplyMigrations: {
