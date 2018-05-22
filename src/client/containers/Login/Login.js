@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import LoginContainer from './components/LoginContainer';
 
 import { fetchLogin } from '../../redux/actions/auth/authLogin';
-import { loadAccount, requestSig } from '../../services/metamask';
+import { getAccount, requestSig } from '../../services/metamask';
 
 function mapStateToProps(state) {
   const currentUser = state.currentUser;
@@ -12,7 +12,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  loadAccount: () => loadAccount(),
+  getAccount: () => getAccount(),
   requestSig: message => requestSig(message),
   login: (account, sig) => dispatch(fetchLogin(account, sig))
 });

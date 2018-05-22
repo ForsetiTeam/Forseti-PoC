@@ -7,7 +7,7 @@ import config from '../../../config/config';
 class RegisterContainer extends Component {
   static propTypes = {
     currentUser: PropTypes.shape(),
-    loadAccount: PropTypes.func,
+    getAccount: PropTypes.func,
     requestSig: PropTypes.func,
     login: PropTypes.func
   };
@@ -36,11 +36,10 @@ class RegisterContainer extends Component {
         this.setState({
           isSigning: false
         });
-        this.props.loadAccount()
-          .then(account => {
-            if (!account) return;
-            this.props.login(account, sig);
-          });
+        const account = this.props.getAccount();
+
+        if (!account) return;
+        this.props.login(account, sig);
       })
       .catch(() =>
         this.setState({

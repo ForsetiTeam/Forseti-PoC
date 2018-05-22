@@ -12,7 +12,6 @@ export default function createDispute(dispute) {
     const arbitersNeed = dispute.arbitersNeed;
 
     drm.DisputeCreate().watch((err, response) => {
-      console.log('CREATE DISPUTE');
       if (err) return reject(err);
       if (!response || !response.args || !response.args._dispute) return reject('Event has no data');
       resolve(response.args._dispute);

@@ -1,4 +1,4 @@
-import { loadAccount } from '../../../services/metamask';
+import { waitLoadAccount } from '../../../services/metamask';
 
 export const REQUEST_METAMASK_LOADING = 'REQUEST_METAMASK_LOADING';
 export const REQUEST_METAMASK_SUCCESS = 'REQUEST_METAMASK_SUCCESS';
@@ -32,7 +32,7 @@ function fetchLoadMetamaskDo() {
     console.log('Fetch: LoadMetamask');
     dispatch(requestLoadMetamask());
 
-    loadAccount().then(() =>
+    waitLoadAccount().then(() =>
       dispatch(receiveLoadMetamask())
     );
   };

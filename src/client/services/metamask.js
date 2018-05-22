@@ -1,14 +1,15 @@
 const ethUtil = require('ethereumjs-util');
 
-function checkPlugin() {
+export function checkPlugin() {
   return !!window.web3;
 }
 
-function getAccount() {
+export function getAccount() {
   return checkPlugin ? window.web3.eth.accounts[0] : null;
 }
 
-function loadAccount() {
+/*
+export function loadAccount() {
   return new Promise((resolve, reject) => {
     if (!checkPlugin()) return reject();
     window.web3.eth.getAccounts((error, accounts) => {
@@ -16,9 +17,24 @@ function loadAccount() {
       resolve(accounts[0]);
     });
   });
+}*/
+
+export function waitLoadAccount() {
+  function loadAccountWithTimeout(resolve, reject) {
+    window.web3.eth.getAccounts((error, accounts) => {
+      if (error) return reject();
+      if (accounts && accounts[0]) return resolve(accounts[0]);
+      setTimeout(() => loadAccountWithTimeout(resolve, reject), 1000);
+    });
+  }
+
+  return new Promise((resolve, reject) => {
+    if (!checkPlugin()) return reject();
+    loadAccountWithTimeout(resolve, reject);
+  });
 }
 
-function requestSig(message) {
+export function requestSig(message) {
   return new Promise((resolve, reject) => {
     const account = getAccount();
 
@@ -45,10 +61,3 @@ function requestSig(message) {
     );
   });
 }
-
-export {
-  checkPlugin,
-  getAccount,
-  requestSig,
-  loadAccount
-};
