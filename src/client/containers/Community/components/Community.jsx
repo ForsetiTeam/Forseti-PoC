@@ -35,6 +35,7 @@ class Community extends Component {
           </div>
           <div className='col-6'>
             <p>{comm.description}</p>
+            <div>Pool address: {comm.poolAddress}</div>
             <div>Solved dispute: {comm.disputesSolved}</div>
             <div>Active members: {comm.membersActive}</div>
           </div>

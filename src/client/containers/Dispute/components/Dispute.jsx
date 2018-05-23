@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { request, downloadFile } from '../../../redux/actions/utils/axios';
 import apiRoutes from '../../../redux/apiRoutes';
 
-import { DISPUTE_VOTE_APPROVE, DISPUTE_VOTE_DISAPPROVE, DISPUTE_VOTE_ABSTAIN } from '../../../consts';
+import {
+  DISPUTE_VOTE_APPROVE,
+  DISPUTE_VOTE_DISAPPROVE,
+  DISPUTE_VOTE_ABSTAIN,
+  DISPUTE_STATUS_OPEN
+} from '../../../consts';
 
 class Dispute extends Component {
   static propTypes = {
@@ -24,7 +29,7 @@ class Dispute extends Component {
     this.props.fetchDispute(this.props.id);
   }
 
-  handleToggle = e => {
+  handleOpen = e => {
     e.preventDefault();
     this.setState({ isToggled: !this.state.isToggled });
   };
@@ -40,7 +45,7 @@ class Dispute extends Component {
 
     this.props.fetchVoteDispute(this.props.id, vote);
 
-    this.handleToggle(e);
+    this.setState({ isToggled: false });
   };
 
   isArbiter() {
@@ -48,23 +53,30 @@ class Dispute extends Component {
   }
 
   renderButtons() {
-    if (this.isArbiter()) {
-      if (this.state.isToggled) {
-        return (
-          <div>
-            <button className='btn btn-danger m-1' data-vote={DISPUTE_VOTE_DISAPPROVE} onClick={this.handleVote}>
-              Disaprove
-            </button>
-            <button className='btn btn-warning m-1' data-vote={DISPUTE_VOTE_ABSTAIN} onClick={this.handleVote}>
-              Abstain
-            </button>
-            <button className='btn btn-success m-1' data-vote={DISPUTE_VOTE_APPROVE} onClick={this.handleVote}>
-              Aprove
-            </button>
-          </div>
-        );
+    if (this.props.dispute.status === DISPUTE_STATUS_OPEN) {
+      if (this.isArbiter()) {
+        if (this.state.isToggled) {
+          return (
+            <div>
+              <button className='btn btn-danger m-1' data-vote={DISPUTE_VOTE_DISAPPROVE} onClick={this.handleVote}>
+                Disaprove
+              </button>
+              <button className='btn btn-success m-1' data-vote={DISPUTE_VOTE_APPROVE} onClick={this.handleVote}>
+                Aprove
+              </button>
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              <button className='btn btn-warning m-1' data-vote={DISPUTE_VOTE_ABSTAIN} onClick={this.handleVote}>
+                Abstain
+              </button>
+              <button className='btn btn-info m-1' onClick={this.handleOpen}>Resolve</button>
+            </div>
+          );
+        }
       }
-      return <button className='btn btn-info m-1' onClick={this.handleToggle}>Resolve</button>;
     }
   }
 
@@ -81,6 +93,7 @@ class Dispute extends Component {
             <p>Community: {dispute.community}</p>
             <p>Description: {dispute.description}</p>
             <p>Arbiters count: {dispute.arbitersNeed}</p>
+            <p>Status: {dispute.status}</p>
             {dispute.document &&
               <p><a href='#' onClick={this.handleDownloadDocument}>Download document</a></p>
             }
