@@ -37,7 +37,7 @@ class Community extends Component {
             <p>{comm.description}</p>
             <div>Pool address: {comm.poolAddress}</div>
             <div>Solved dispute: {comm.disputesSolved}</div>
-            <div>Active members: {comm.membersActive}</div>
+            <div>Active members: {comm.usersActive}</div>
           </div>
         </div>
         <div className='text-center'>

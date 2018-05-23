@@ -1,12 +1,12 @@
 import {prop, Ref, Typegoose} from "typegoose";
-import User from "./UserModel";
+import { User } from "./UserModel";
 
 export class Vote extends Typegoose {
 
   @prop({ required: true })
   public user: Ref<User>;
 
-  @prop({ required: true })
+  @prop({ })
   public decision: string;
 }
 

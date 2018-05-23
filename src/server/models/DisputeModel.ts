@@ -1,9 +1,11 @@
 import {arrayProp, instanceMethod, InstanceType, prop, Ref, Typegoose} from "typegoose";
 
-import UserModel from "./UserModel";
-import CommunityModel from './CommunityModel';
-import DocumentModel from './DocumentModel';
-import VoteModel, {Vote} from './VoteModel';
+import { User } from "./UserModel";
+import CommunityModel, { Community } from './CommunityModel';
+import DocumentModel, { Document } from './DocumentModel';
+import VoteModel, { Vote } from './VoteModel';
+
+import selectArbiters from '../lib/selectArbiters';
 
 enum Status {
   OPEN = 'open',
@@ -13,7 +15,7 @@ enum Status {
 export class Dispute extends Typegoose {
 
   @prop({ required: true })
-  public author: Ref<UserModel>;
+  public author: Ref<User>;
 
   @prop({ required: true })
   public title: string;
@@ -22,7 +24,7 @@ export class Dispute extends Typegoose {
   public description: string;
 
   @prop({ required: true })
-  public community: Ref<CommunityModel>;
+  public community: Ref<Community>;
 
   @prop({ enum: Status, default: Status.OPEN })
   public status: Status;
@@ -31,19 +33,17 @@ export class Dispute extends Typegoose {
   public arbitersNeed?: number;
 
   @prop({ })
-  public document?: Ref<DocumentModel>;
+  public document?: Ref<Document>;
 
   @prop({ required: true })
   public ethAddress: string;
 
-  @arrayProp({ items: VoteModel, default: [] })
-  public arbiters: VoteModel[];
+  @arrayProp({ items: Vote, default: [] })
+  public arbiters: Vote[];
 
   @instanceMethod
   getUserVote(this: InstanceType<Dispute>, userId: string) {
-    console.log('GET USER VOTE', userId, this.arbiters);
     this.arbiters.find(vote => {
-      console.log('CHECK', typeof(vote.user), typeof(userId));
       return vote.user == userId
     });
     return this.arbiters.find(vote => vote.user.toString() == userId);
@@ -56,7 +56,28 @@ export class Dispute extends Typegoose {
   }
 
   @instanceMethod
-  getExportJSON(this: InstanceType<Dispute>, userId: string) {
+  async setArbiters(this) {
+    //select all users assigned with community
+    let users = await CommunityModel.getUsers(this.community.toString());
+    //remove author from users list
+    users = users.filter(user => user._id.toString() !== this.author._id);
+    console.log('setArbiters3', users);
+    //make user array with id's
+    const userIds = users.map(user => user._id);
+    //select arbiters from users list
+    console.log('setArbiters5',userIds);
+    const selected = selectArbiters(userIds, this._id, this.arbitersNeed);
+    if (!selected) return false;
+
+    const arbiters = selected.map(userId => new VoteModel({user: userId}));
+    this.arbiters = arbiters;
+
+    await this.save();
+    return true;
+  }
+
+  @instanceMethod
+  getExportJSON(this, userId: string) {
     const document = this.document ? this.document.toJSON() : null;
     const fileName = document && document.metadata ? document.metadata.fileName : null;
     const vote = this.getUserVote(userId);

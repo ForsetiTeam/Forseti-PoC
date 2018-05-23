@@ -13,13 +13,15 @@ const router = express.Router();
 
 async function getList(req: Request, res: Response, next: NextFunction) {
   const params = req.query;
-  const filter = {};
+  const filter = {author: undefined, status: undefined};
   if (params.owner) {
     filter.author = req.user._id;
   }
   if (params.status) {
     filter.status = params.status;
   }
+  if (!filter.author) delete filter.author;
+  if (!filter.status) delete filter.status;
 
   let list = await populateDispute(DisputeModel.find(filter)).exec();
   res.json(list.map(item => item.getExportJSON(req.user._id.toString())));
@@ -28,11 +30,17 @@ async function getList(req: Request, res: Response, next: NextFunction) {
 async function get(req: Request, res: Response, next: NextFunction) {
   const disputeId = req.params.id;
   return populateDispute(DisputeModel.findById(disputeId)).exec()
-    .then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
+    //.then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
+    .then(async dispute => {
+      console.log('DISPUTE', dispute);
+      const resul = await dispute.setArbiters();
+      console.log('RESUL', resul);
+      res.json(dispute.getExportJSON(req.user._id.toString()))
+    })
     .catch(() => res.responses.notFoundResource("Dispute not found"));
 }
 
-async function create(req: Request, res: Response, next: NextFunction) {
+async function create(req, res: Response, next: NextFunction) {
   const disputeRaw = req.body;
   const dispute = new DisputeModel({
     author: req.user._id,
@@ -53,7 +61,7 @@ async function getDocument(req: Request, res: Response, next: NextFunction) {
   //get dispute and document name
   const disputeId = req.params.id;
   DisputeModel.findById(disputeId).populate({path: 'document', model: DocumentModel}).exec()
-    .then(dispute => {
+    .then((dispute: any) => {
       if (!dispute.document) return res.responses.notFoundResource("Document not found");
 
       const fileData = dispute.document.toJSON();

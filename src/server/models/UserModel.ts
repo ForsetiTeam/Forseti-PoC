@@ -1,10 +1,8 @@
-import { prop, arrayProp, instanceMethod, Typegoose, ModelType, InstanceType, Ref } from "typegoose";
+import { prop, arrayProp, instanceMethod, staticMethod, Typegoose, ModelType, InstanceType, Ref } from "typegoose";
 
-import Community from './CommunityModel';
+import CommunityModel, { Community } from './CommunityModel';
 
 export class User extends Typegoose {
-  /*@prop({ required: false })
-  public name: string;*/
 
   @prop({ required: true, unique: true })
   public email: string;
@@ -19,20 +17,33 @@ export class User extends Typegoose {
   public communities: Ref<Community>[];
 
   @instanceMethod
+  async toggleCommunity(this: InstanceType<User>, communityId: string) {
+    const pos = this.communities.findIndex(community => community.toString() === communityId);
+    if (pos != -1) {
+      this.communities.splice(pos, 1);
+    } else {
+      this.communities.push(communityId);
+    }
+    await this.save();
+    await CommunityModel.updateUserCount(communityId);
+  }
+
+  @instanceMethod
   getExportJSON(this: InstanceType<User>) {
     return UserModel.getExportJSON(this);
+  }
+
+  @staticMethod
+  static getExportJSON(user) {
+    return {
+      id: user._id,
+      email: user.email,
+      account: user.account,
+      communities: user.communities.map(community => community.name)
+    }
   }
 }
 
 const UserModel = new User().getModelForClass(User);
-
-UserModel.getExportJSON = function(user: InstanceType<User>) {
-  return {
-    id: user._id,
-    email: user.email,
-    account: user.account,
-    communities: user.communities.map(community => community.name)
-  }
-};
 
 export default UserModel;
