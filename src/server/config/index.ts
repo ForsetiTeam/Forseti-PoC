@@ -11,7 +11,7 @@ const config = convict({
         port: {
           doc: "Http listening port",
           format: "port",
-          default: 8063,
+          default: 8060,
           env: "APP_PORT"  ,
         },
     },

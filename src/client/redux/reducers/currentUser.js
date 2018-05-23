@@ -10,6 +10,9 @@ import {
   REQUEST_LOGIN_FAILURE
 } from '../actions/auth/authLogin';
 import {
+  LOGOUT
+} from '../actions/auth/authLogout';
+import {
   REQUEST_COMMUNITY_JOIN_LOADING,
   REQUEST_COMMUNITY_JOIN_SUCCESS,
   REQUEST_COMMUNITY_JOIN_FAILURE
@@ -55,6 +58,14 @@ export default function (state = initialState, action) {
       newState.loading = false;
       newState.error = action.error;
       return newState;
+    }
+    case LOGOUT: {
+      return {
+        user: null,
+        loaded: false,
+        loading: false,
+        error: false
+      };
     }
     default:
       return state;

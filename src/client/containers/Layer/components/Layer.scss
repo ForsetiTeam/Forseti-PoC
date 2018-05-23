@@ -1,31 +1,47 @@
 .Layer {
   $margin: 30px;
-  $tabsWidth: 150px;
+  $tabsWidth: 240px;
+  $headerHeight: 60px;
 
-  position: absolute;
-  top: $margin;
-  bottom: $margin;
-  left: $margin + $tabsWidth;
-  right: $margin;
+  position: relative;
 
-  &__tabs {
-    position: absolute;
-    top: 30px;
-    left: -$tabsWidth + 3;
+  &__sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    height: 100vh;
     width: $tabsWidth;
+    background-color: white;
+    border-right: 1px solid grey;
+    padding-top: $headerHeight;
+  }
+  &__tabs {
+
+  }
+  &__topbar {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: $headerHeight;
+    z-index: 100;
+    background-color: white;
+    border-bottom: 1px solid black;
   }
 
   &__content {
     position: relative;
     height: 100%;
     z-index: 1;
-    background-color: white;
+    padding-top: $headerHeight;
+    padding-left: $tabsWidth;
   }
 
   &__version {
     position: absolute;
-    bottom: -$margin;
-    left: -$margin - $tabsWidth;
+    bottom: 0;
+    left: 0;
     padding-left: 10px;
   }
 }

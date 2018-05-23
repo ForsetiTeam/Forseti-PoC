@@ -45,7 +45,7 @@ function shouldFetchLogin(state) {
   return !state.currentUser.loading && !state.currentUser.user;
 }
 
-function fetchLoginDo(account, sig) {
+export function fetchLoginDo(account, sig) {
   return dispatch => {
     console.log('Fetch: Login');
     dispatch(requestLogin());

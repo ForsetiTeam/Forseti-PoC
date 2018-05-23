@@ -37,10 +37,11 @@ async function create(req: Request, res: Response, next: NextFunction) {
   const dispute = new DisputeModel({
     author: req.user._id,
     title: disputeRaw.title,
-    description: disputeRaw.description,
+    description: disputeRaw.description || null,
     community: disputeRaw.community,
     arbitersNeed: disputeRaw.arbitersNeed,
-    document: req.file.id,
+    document: req.file ? req.file.id : null,
+    ethAddress: disputeRaw.ethAddress,
   });
 
   return dispute.save()

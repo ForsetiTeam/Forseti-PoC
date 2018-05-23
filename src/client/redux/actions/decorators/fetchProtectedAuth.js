@@ -1,14 +1,10 @@
-import { logOut }  from '../auth/authLogout';
+import { fetchLogout }  from '../auth/authLogout';
 
 export default function decoratorAuthCheck(resp, dispatch) {
   return resp
     .then(res => {
       if (res.status === 401) {
-        if (dispatch) {
-          dispatch(logOut());
-        } else {
-          logOut();
-        }
+        dispatch(fetchLogout());
         return Promise.reject({ response: { data: 'Unauthorized' } });
       }
       return res;

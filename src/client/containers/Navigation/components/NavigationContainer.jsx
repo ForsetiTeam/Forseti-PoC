@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Navigation from './Navigation';
-import { checkPlugin, getAccount } from '../../../services/metamask';
-import { DISPUTE_FILTER_MY, DISPUTE_FILTER_OPEN, DISPUTE_FILTER_CLOSED } from '../../../roterConsts';
+import { DISPUTE_FILTER_MY, DISPUTE_FILTER_OPEN, DISPUTE_FILTER_CLOSED } from '../../../consts';
 
 class NavigationContainer extends Component {
   static propTypes = {
@@ -12,20 +11,17 @@ class NavigationContainer extends Component {
   };
 
   calculateTabs() {
-    if (!checkPlugin() || !this.props.isMetamaskLoaded || !getAccount()) {
-      return [];
-    }
     if (this.props.isLogged) {
       return [
         { title: 'Communities', uri: '/community/' },
         { title: 'My Disputes', uri: `/dispute/filter/${DISPUTE_FILTER_MY}` },
         { title: 'Ongoing Disputes', uri: `/dispute/filter/${DISPUTE_FILTER_OPEN}` },
-        { title: 'Finished Disputes', uri: `/dispute/filter/${DISPUTE_FILTER_CLOSED}` }
+        { title: 'Finished Disputes', uri: `/dispute/filter/${DISPUTE_FILTER_CLOSED}` },
+        { title: 'About', uri: '/about' }
       ];
     }
     return [
       { title: 'Register', uri: '/register' },
-      { title: 'Login', uri: '/login' },
       { title: 'About', uri: '/about' }
     ];
   }

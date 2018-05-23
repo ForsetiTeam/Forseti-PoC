@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 class DisputesItem extends Component {
   static propTypes = {
-    dispute: PropTypes.shape
+    dispute: PropTypes.shape()
   };
 
   render() {

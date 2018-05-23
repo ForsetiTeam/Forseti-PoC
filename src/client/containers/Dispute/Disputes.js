@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Disputes from './components/Disputes';
 
 import { fetchDisputeList } from '../../redux/actions/dispute/getDisputeList';
-import { DISPUTE_FILTER_MY, DISPUTE_FILTER_OPEN, DISPUTE_FILTER_CLOSED } from '../../roterConsts';
+import { DISPUTE_FILTER_MY, DISPUTE_FILTER_OPEN, DISPUTE_FILTER_CLOSED } from '../../consts';
 
 function mapStateToProps(state, props) {
   const filterRaw = props.match.params.filter;

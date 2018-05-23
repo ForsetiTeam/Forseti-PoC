@@ -1,28 +1,50 @@
 import {
-  REQUEST_METAMASK_LOADING,
-  REQUEST_METAMASK_SUCCESS
-} from '../actions/metamask/loadMetaMask';
+  METAMASK_FAILURE,
+  METAMASK_ACCOUNT_SUCCESS,
+  METAMASK_SIG_REQUEST,
+  METAMASK_SIG_SUCCESS
+} from '../actions/metamask/processMetamask';
 
 const initialState = {
-  loaded: false,
-  loading: false
+  loading: false,
+  account: null,
+  error: null,
+  sig: null
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case REQUEST_METAMASK_LOADING: {
-      const newState = { ...state };
-
-      newState.loaded = false;
-      newState.loading = true;
-      return newState;
+    case METAMASK_FAILURE: {
+      return {
+        loading: false,
+        account: state.account,
+        error: action.error,
+        sig: null
+      };
     }
-    case REQUEST_METAMASK_SUCCESS: {
-      const newState = { ...state };
-
-      newState.loaded = true;
-      newState.loading = false;
-      return newState;
+    case METAMASK_ACCOUNT_SUCCESS: {
+      return {
+        loading: false,
+        account: action.account,
+        error: null,
+        sig: null
+      };
+    }
+    case METAMASK_SIG_REQUEST: {
+      return {
+        loading: true,
+        account: state.account,
+        error: null,
+        sig: null
+      };
+    }
+    case METAMASK_SIG_SUCCESS: {
+      return {
+        loading: false,
+        account: state.account,
+        error: null,
+        sig: action.sig
+      };
     }
     default:
       return state;

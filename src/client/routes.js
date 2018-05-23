@@ -6,7 +6,6 @@ import { getUser } from './services/localStore';
 
 import About from './containers/About';
 import Register from './containers/Register';
-import Login from './containers/Login';
 import { Communities, Community } from './containers/Community';
 import { Disputes, Dispute, NewDispute } from './containers/Dispute';
 
@@ -22,7 +21,6 @@ const Main = () => {
       <Switch>
         <Redirect exact from='/' to={defPage} />
         <Route path='/about' component={About} />
-        <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
         <PrivateRoute path='/community/:communityName/dispute/new' component={NewDispute} isLogged={isLogged} />
         <PrivateRoute path='/community/:communityName' component={Community} isLogged={isLogged} />

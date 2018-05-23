@@ -1,1 +1,6 @@
-{}
+{
+  "db": {
+    "uri": "mongodb://admin:p1230h6t34qd4i7ex@forseti_mongodb:27017/forseti?authSource=admin",
+    "autoApplyMigrations": true
+  }
+}
