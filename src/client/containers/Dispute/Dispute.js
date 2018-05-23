@@ -15,7 +15,7 @@ function mapStateToProps(state, props) {
 
 const mapDispatchToProps = dispatch => ({
   fetchDispute: disputeId => dispatch(fetchDispute(disputeId)),
-  fetchVoteDispute: (disputeId, vote) => dispatch(fetchVoteDispute(disputeId, vote))
+  fetchVoteDispute: (disputeId, decision) => dispatch(fetchVoteDispute(disputeId, decision))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dispute);

@@ -1,13 +1,22 @@
 import MongoDb from '../../mongodb';
-import CommunityModel from '../../models/CommunityModel';
+
+import UserModel from './models/UserModel';
+import CommunityModel from './models/CommunityModel';
+import DisputeModel from './models/DisputeModel';
 
 const db = new MongoDb();
-
-function initCommunities() {
-  CommunityModel.remove();
-
-  const collection = [
+const storedData = {};
+const rawData = {
+  User: [
     {
+      email: 'some@user.me',
+      account: '12345',
+      sig: 'sig'
+    }
+  ],
+  Community: [
+    {
+      poolAddress: '0x472a1ac7e06358c0ad2a14a72acb000f7adcc05e',
       name: 'web',
       title: 'Web Developers',
       description: 'Community for Dispute resolution in Web Development',
@@ -16,6 +25,7 @@ function initCommunities() {
       membersActive: 43
     },
     {
+      poolAddress: 'poolAddress',
       name: 'blockchain',
       title: 'Blockchain developers',
       description: 'Community for Dispute resolution in BC Development',
@@ -23,14 +33,66 @@ function initCommunities() {
       disputesSolved: 43,
       membersActive: 15
     }
-  ];
+  ],
+  Dispute: [
+    {
+      author: () => storedData.User[0]._id,
+      title: 'Some open dispute',
+      description: 'I make this dispute in web comunity',
+      community: () => storedData.Community[0]._id,
+      status: 'open',
+      arbitersNeed: 7,
+      ethAddress: 'test'
+    },
+    {
+      author: () => storedData.User[0]._id,
+      title: 'Closed dispute',
+      description: 'For web comunity',
+      community: () => storedData.Community[0]._id,
+      status: 'closed',
+      arbitersNeed: 5,
+      ethAddress: 'test'
+    },
+    {
+      author: () => storedData.User[0]._id,
+      title: 'Another dispute',
+      description: 'some tasks in blockchain',
+      community: () => storedData.Community[1]._id,
+      status: 'closed',
+      arbitersNeed: 10,
+      ethAddress: 'test'
+    }
+  ]
+};
 
-  collection.forEach(data => new CommunityModel(data).save());
+function fillCollection(model) {
+  return new Promise(async resolve => {
+    const modelName = model.modelName;
+    await model.remove({});
+
+    const collection = rawData[modelName];
+    for (const i in collection) {
+      const data = collection[i];
+      for (const prop in data) {
+        if (typeof (data[prop]) === 'function') {
+          data[prop] = data[prop]();
+        }
+      }
+      const inst = await (new model(data)).save();
+      storedData[modelName] = storedData[modelName] || [];
+      storedData[modelName].push(inst);
+    }
+    resolve();
+  });
 }
 
 function migrate() {
   return Promise.resolve()
-    .then(initCommunities);
+    .then(async () => {
+      await fillCollection(UserModel);
+      await fillCollection(CommunityModel);
+      await fillCollection(DisputeModel);
+    });
 }
 
 function getInfo() {

@@ -14,7 +14,7 @@ export class ResponseFactory {
     return this.res.status(code).json(responseMessage) as Response;
   }
 
-  public requestError(message: string, options): Response {
+  public requestError(message: string, options = {}): Response {
     const code = 400;
     const responseMessage: ResponseMessage = {
       message: message || http.STATUS_CODES[code],

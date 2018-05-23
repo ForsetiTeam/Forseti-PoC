@@ -31,19 +31,11 @@ function failureVoteDispute(error) {
   };
 }
 
-export function fetchVoteDispute(dispute, community) {
-  return (dispatch, getState) => {
-    if (shouldFetchVoteDispute(getState())) {
-      return dispatch(fetchVoteDisputeDo(dispute, community));
-    }
-  };
+export function fetchVoteDispute(dispute, decision) {
+  return (dispatch) => dispatch(fetchVoteDisputeDo(dispute, decision));
 }
 
-function shouldFetchVoteDispute(state) {
-  return !state.dispute.loading;
-}
-
-function fetchVoteDisputeDo(disputeId, vote) {
+function fetchVoteDisputeDo(disputeId, decision) {
   return async dispatch => {
     console.log('Fetch: VoteDispute');
     dispatch(requestVoteDispute());
@@ -53,7 +45,7 @@ function fetchVoteDisputeDo(disputeId, vote) {
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      request('post', apiRoutes.disputeVote(disputeId), { vote })
+      request('post', apiRoutes.disputeVote(disputeId), { decision })
     )
       .then(res => {
         dispatch(receiveVoteDispute(res.data));
