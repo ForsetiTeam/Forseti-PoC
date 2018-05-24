@@ -47,3 +47,8 @@ export class User extends Typegoose {
 const UserModel = new User().getModelForClass(User);
 
 export default UserModel;
+
+export function populateUser(query) {
+  return query
+    .populate({path: 'communities', model: CommunityModel});
+}

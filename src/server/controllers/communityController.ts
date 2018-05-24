@@ -3,7 +3,7 @@ import * as passport from "passport";
 
 import {NextFunction, Request, Response} from "../types/ExpressExtended";
 
-import UserModel from "../models/UserModel";
+import UserModel, { populateUser } from "../models/UserModel";
 import CommunityModel from "../models/CommunityModel";
 
 
@@ -35,9 +35,9 @@ async function join(req: Request, res: Response, next: NextFunction) {
     user.communities.push(community);
   }
 
-  const newUser = await UserModel.findByIdAndUpdate(user._id, { communities: user.communities }, {new: true})
-    .populate({path: 'communities', model: CommunityModel})
-    .exec();
+  const newUser = await populateUser(
+    UserModel.findByIdAndUpdate(user._id, { communities: user.communities }, {new: true})
+  ).exec();
 
   return res.json({message: "Success", user: newUser.getExportJSON()});
 }
