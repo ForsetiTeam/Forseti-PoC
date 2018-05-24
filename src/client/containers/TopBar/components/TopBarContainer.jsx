@@ -22,7 +22,7 @@ class TopBarContainer extends Component {
         hasPlugin={this.props.hasPlugin}
         {...this.props.metamask}
         isLogging={this.props.currentUser.loading}
-        isLogged={this.props.currentUser.user}
+        isLogged={!!this.props.currentUser.user}
         logginError={this.props.currentUser.error}
         onSign={this.handleRequestSig}
       />

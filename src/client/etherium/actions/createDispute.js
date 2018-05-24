@@ -1,13 +1,9 @@
 import getSmartContract from '../contracts/getSmartContract';
-import config from '../../config/config';
-import { getAccount } from '../../services/metamask';
 
-export default function createDispute(dispute) {
+export default function createDispute(dispute, myAccount, poolAddress) {
   return new Promise((resolve, reject) => {
     const drm = getSmartContract('DRM');
 
-    const myAccount = getAccount();
-    const poolAddress = config.get('metamask.poolAddress');
     const weirdHash = poolAddress;
     const arbitersNeed = dispute.arbitersNeed;
 

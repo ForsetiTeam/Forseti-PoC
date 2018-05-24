@@ -8,6 +8,11 @@ import {
   REQUEST_DISPUTE_SUCCESS,
   REQUEST_DISPUTE_FAILURE
 } from '../actions/dispute/getDispute';
+import {
+  REQUEST_VOTE_DISPUTE_LOADING,
+  REQUEST_VOTE_DISPUTE_SUCCESS,
+  REQUEST_VOTE_DISPUTE_FAILURE
+} from '../actions/dispute/voteDispute';
 
 const initialState = {
   list: [],
@@ -19,7 +24,8 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case REQUEST_DISPUTE_LIST_LOADING:
-    case REQUEST_DISPUTE_LOADING: {
+    case REQUEST_DISPUTE_LOADING:
+    case REQUEST_VOTE_DISPUTE_LOADING: {
       const newState = { ...state };
 
       newState.list = [];
@@ -36,7 +42,8 @@ export default function (state = initialState, action) {
       newState.loading = false;
       return newState;
     }
-    case REQUEST_DISPUTE_SUCCESS: {
+    case REQUEST_DISPUTE_SUCCESS:
+    case REQUEST_VOTE_DISPUTE_SUCCESS: {
       const newState = { ...state };
 
       newState.list = [ action.dispute ];
@@ -45,7 +52,8 @@ export default function (state = initialState, action) {
       return newState;
     }
     case REQUEST_DISPUTE_LIST_FAILURE:
-    case REQUEST_DISPUTE_FAILURE: {
+    case REQUEST_DISPUTE_FAILURE:
+    case REQUEST_VOTE_DISPUTE_FAILURE: {
       const newState = { ...state };
 
       newState.loading = false;

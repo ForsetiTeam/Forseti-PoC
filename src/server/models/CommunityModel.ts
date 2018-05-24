@@ -1,6 +1,11 @@
-import { prop, Typegoose } from "typegoose";
+import {instanceMethod, InstanceType, prop, staticMethod, Typegoose} from "typegoose";
+import UserModel, {User} from "./UserModel";
 
 export class Community extends Typegoose {
+
+  @prop({ required: true, unique: true })
+  public poolAddress: string;
+
   @prop({ required: true, unique: true })
   public name: string;
 
@@ -17,7 +22,18 @@ export class Community extends Typegoose {
   public disputesSolved: number;
 
   @prop({ })
-  public membersActive: number;
+  public usersActive: number;
+
+  @staticMethod
+  static async getUsers(communityId: string) {
+    return await UserModel.find({communities: communityId});
+  }
+
+  @staticMethod
+  static async updateUserCount(communityId: string) {
+    const members = await this.getUsers(communityId);
+    await CommunityModel.update({_id: communityId}, {usersActive: members.length});
+  }
 }
 
 const CommunityModel = new Community().getModelForClass(Community);

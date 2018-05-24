@@ -18,9 +18,10 @@ function requestRegister() {
   };
 }
 
-function receiveRegister() {
+function receiveRegister(user) {
   return {
-    type: REQUEST_REGISTER_SUCCESS
+    type: REQUEST_REGISTER_SUCCESS,
+    user
   };
 }
 
@@ -57,7 +58,7 @@ function fetchRegisterDo(user) {
       .then((res) => {
         setUser(res.data.user);
         setToken(res.data.token);
-        dispatch(receiveRegister());
+        dispatch(receiveRegister(res.data.user));
         dispatch(push('/'));
       })
       .catch(err => {

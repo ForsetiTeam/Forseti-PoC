@@ -2,7 +2,7 @@ import * as express from "express";
 import * as passport from "passport";
 import * as VError from "verror";
 import config from "../config";
-import UserModel from "../models/UserModel";
+import UserModel, { populateUser } from "../models/UserModel";
 import {NextFunction, Request, Response} from "../types/ExpressExtended";
 import validate from "../middlewares/validateSchema";
 import {
@@ -37,7 +37,9 @@ async function login(req: Request, res: Response, next: NextFunction) {
       req.logIn(user, (loginErr) => {
         if (loginErr) { return next(new VError(err, "Auth error")); }
         res.cookie("jwt", token, {httpOnly: true});
-        return res.json({message: "Success", user: UserModel.getExportJSON(user), token});
+        populateUser(UserModel.findById(user._id)).exec()
+          .then(user => res.json({message: "Success", user: user.getExportJSON(), token}))
+          .catch(err => res.responses.notFoundResource("User not found"));
       });
 
     })(req, res, next);

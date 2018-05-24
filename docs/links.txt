@@ -1,0 +1,6 @@
+Контракты
+https://docs.google.com/document/d/1rPsNzJuQBkRk6EZc4PtzMjlYBEdaQ1anQT_7qX8Q3Xk/edit#heading=h.y8yu2edoeku9
+Схемы
+https://docs.google.com/document/d/1-8IB2fi5QjO_66fMMvUhArZuL-FoNMXUOq2XDQMiibY/edit#heading=h.excw6dsgza16
+Чето с подписями
+https://github.com/ForsetiTeam/Forseti/blob/master/test/testSigning.js

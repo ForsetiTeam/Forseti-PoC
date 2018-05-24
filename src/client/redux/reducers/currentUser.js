@@ -24,7 +24,7 @@ const initialState = {
   user,
   loaded: !!user,
   loading: false,
-  error: false
+  error: null
 };
 
 export default function (state = initialState, action) {

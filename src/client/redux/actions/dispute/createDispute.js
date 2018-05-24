@@ -40,7 +40,8 @@ export function fetchCreateDispute(dispute, community) {
   console.log('fetchCreateDispute', dispute, community);
   return (dispatch, getState) => {
     if (shouldFetchCreateDispute(getState())) {
-      return dispatch(fetchCreateDisputeDo(dispute, community));
+      const account = getState().metamask.account;
+      return dispatch(fetchCreateDisputeDo(dispute, community, account));
     }
   };
 }
@@ -49,7 +50,7 @@ function shouldFetchCreateDispute(state) {
   return !state.dispute.loading;
 }
 
-function fetchCreateDisputeDo(dispute, community) {
+function fetchCreateDisputeDo(dispute, community, account) {
   return async dispatch => {
     console.log('Fetch: CreateDispute');
     dispatch(requestCreateDispute());
@@ -61,7 +62,7 @@ function fetchCreateDisputeDo(dispute, community) {
     let ethAddress;
 
     try {
-      ethAddress = await createDispute(dispute);
+      ethAddress = await createDispute(dispute, account, community.poolAddress);
     } catch (err) {
       console.log('ERR', err);
       return;

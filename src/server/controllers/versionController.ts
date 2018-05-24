@@ -4,7 +4,7 @@ import VersionModel from "../models/VersionModel";
 
 const router = express.Router();
 
-async function getVersion(req: Request, res: Response, next: NextFunction): Promise<Response> {
+async function getVersion(req: Request, res: Response, next: NextFunction) {
   const currentVersion = (await VersionModel.find().limit(1).sort({$natural:-1}))[0];
   res.json({ version: currentVersion.version });
 }

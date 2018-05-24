@@ -21,7 +21,7 @@ class CommunitiesItem extends Component {
           <div className='clearfix'>
             <p className='mt-3'>{comm.description}</p>
             <div>Solved dispute: {comm.disputesSolved}</div>
-            <div>Active members: {comm.membersActive}</div>
+            <div>Active members: {comm.usersActive}</div>
           </div>
           <div className='text-center mt-3'>
             <Link to={`/community/${comm.name}`} className='btn btn-info'>More info</Link>
