@@ -9,16 +9,19 @@ import {
   DISPUTE_DECISION_ABSTAIN,
   DISPUTE_STATUS_OPEN
 } from '../../../consts';
+import SpinnerWaiter from "../../../components/SpinnerWaiter";
 
 class Dispute extends Component {
   static propTypes = {
     id: PropTypes.string,
     dispute: PropTypes.shape(),
-    currentUser: PropTypes.shape(),
+    isAuthor: PropTypes.bool,
     documentLink: PropTypes.string,
+    isLoading: PropTypes.bool,
 
     fetchDispute: PropTypes.func,
-    fetchVoteDispute: PropTypes.func
+    fetchVoteDispute: PropTypes.func,
+    fetchStartDispute: PropTypes.func
   };
 
   state = {
@@ -29,9 +32,14 @@ class Dispute extends Component {
     this.props.fetchDispute(this.props.id);
   }
 
-  handleOpen = e => {
+  handleToggle = e => {
     e.preventDefault();
     this.setState({ isToggled: !this.state.isToggled });
+  };
+
+  handleStart = e => {
+    e.preventDefault();
+    this.props.fetchStartDispute(this.props.dispute);
   };
 
   handleDownloadDocument = e => {
@@ -51,27 +59,63 @@ class Dispute extends Component {
   renderButtons() {
     const dispute = this.props.dispute;
 
-    if (dispute.status === DISPUTE_STATUS_OPEN && dispute.userIsArbiter && !dispute.userDecision) {
-      if (this.state.isToggled) {
+    if (this.props.isAuthor) {
+      if (!dispute.ethAddress) {
         return (
           <div>
-            <button className='btn btn-danger m-1' data-decision={DISPUTE_DECISION_DISAPPROVE} onClick={this.handleVote}>
-              Disaprove
+            <button
+              className='btn btn-success m-1'
+              onClick={this.handleStart}
+              disabled={this.props.isLoading}
+            >
+              Start
             </button>
-            <button className='btn btn-success m-1' data-decision={DISPUTE_DECISION_APPROVE} onClick={this.handleVote}>
-              Aprove
-            </button>
+            <SpinnerWaiter isLoading={this.props.isLoading}/>
           </div>
         );
-      } else {
-        return (
-          <div>
-            <button className='btn btn-warning m-1' data-decision={DISPUTE_DECISION_ABSTAIN} onClick={this.handleVote}>
-              Abstain
-            </button>
-            <button className='btn btn-info m-1' onClick={this.handleOpen}>Resolve</button>
-          </div>
-        );
+      }
+    } else {
+      if (!dispute.ethAddress) return;
+      if (!dispute.userIsArbiter) return;
+      if (dispute.status === DISPUTE_STATUS_OPEN && !dispute.userDecision) {
+        if (this.state.isToggled) {
+          return (
+            <div>
+              <button
+                className='btn btn-danger m-1'
+                data-decision={DISPUTE_DECISION_DISAPPROVE}
+                onClick={this.handleVote}
+              >
+                Disaprove
+              </button>
+              <button
+                className='btn btn-success m-1'
+                data-decision={DISPUTE_DECISION_APPROVE}
+                onClick={this.handleVote}
+              >
+                Aprove
+              </button>
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              <button
+                className='btn btn-warning m-1'
+                data-decision={DISPUTE_DECISION_ABSTAIN}
+                onClick={this.handleVote}
+              >
+                Abstain
+              </button>
+              <button
+                className='btn btn-info m-1'
+                onClick={this.handleToggle}
+              >
+                Resolve
+              </button>
+            </div>
+          );
+        }
       }
     }
   }

@@ -14,5 +14,6 @@ export default {
   disputeList:      ()              => '/api/dispute',
   dispute:          (disputeId)     => `/api/dispute/${disputeId}`,
   disputeDocument:  (disputeId)     => `/api/dispute/${disputeId}/document`,
-  disputeVote:      (disputeId)     => `/api/dispute/${disputeId}/vote`
+  disputeVote:      (disputeId)     => `/api/dispute/${disputeId}/vote`,
+  disputeStart:     (disputeId)     => `/api/dispute/${disputeId}/start`
 };

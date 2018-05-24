@@ -46,14 +46,11 @@ async function create(req, res: Response, next: NextFunction) {
     community: disputeRaw.community,
     arbitersNeed: disputeRaw.arbitersNeed,
     document: req.file ? req.file.id : null,
-    ethAddress: disputeRaw.ethAddress,
+    //ethAddress: disputeRaw.ethAddress,
   });
 
   return dispute.save()
-    .then(async dispute => {
-      await dispute.setArbiters();
-      res.json(dispute.getExportJSON(req.user._id.toString()))
-    })
+    .then(async dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
     .catch(err => res.responses.requestError("Can't save dispute", null));
 }
 
@@ -88,6 +85,21 @@ function vote(req: Request, res: Response, next: NextFunction) {
     .catch(() => res.responses.notFoundResource("Dispute not found"));
 }
 
+function start(req: Request, res: Response, next: NextFunction) {
+  //get dispute and document name
+  const disputeId = req.params.id;
+  const ethAddress = req.body.ethAddress;
+
+  console.log(disputeId, ethAddress);
+
+  populateDispute(DisputeModel.findByIdAndUpdate(disputeId, { ethAddress }, { new: true })).exec()
+    .then(async dispute => {
+      await dispute.setArbiters();
+      res.json(dispute.getExportJSON(req.user._id.toString()))
+    })
+    .catch(() => res.responses.notFoundResource("Dispute not found"));
+}
+
 router.get("/", passport.authenticate("jwt", { session: false }), getList);
 router.get("/:id/document", passport.authenticate("jwt", { session: false }), getDocument);
 router.get("/:id", passport.authenticate("jwt", { session: false }), get);
@@ -95,5 +107,6 @@ router.get("/:id", passport.authenticate("jwt", { session: false }), get);
 const upload = getFileUploader();
 router.post("/", passport.authenticate("jwt", { session: false }), upload.single('document'), create);
 router.post("/:id/vote", passport.authenticate("jwt", { session: false }), vote);
+router.post("/:id/start", passport.authenticate("jwt", { session: false }), start);
 
 export default router;

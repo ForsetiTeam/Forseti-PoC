@@ -13,7 +13,7 @@ const initialState = {
   list: [],
   loaded: false,
   loading: false,
-  error: false
+  error: null
 };
 
 export default function (state = initialState, action) {

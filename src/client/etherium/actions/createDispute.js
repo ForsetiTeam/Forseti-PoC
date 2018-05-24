@@ -1,10 +1,10 @@
 import getSmartContract from '../contracts/getSmartContract';
 
-export default function createDispute(dispute, myAccount, poolAddress) {
+export default function createDispute(dispute, myAccount) {
   return new Promise((resolve, reject) => {
     const drm = getSmartContract('DRM');
 
-    const weirdHash = poolAddress;
+    const weirdHash = dispute.poolAddress;
     const arbitersNeed = dispute.arbitersNeed;
 
     drm.DisputeCreate().watch((err, response) => {
@@ -13,7 +13,7 @@ export default function createDispute(dispute, myAccount, poolAddress) {
       resolve(response.args._dispute);
     });
 
-    drm.createDispute(poolAddress, weirdHash, arbitersNeed, { from: myAccount }, (err, response) => {
+    drm.createDispute(dispute.poolAddress, weirdHash, arbitersNeed, { from: myAccount }, (err, response) => {
       if (err) return reject(err);
       console.log('Transaction sent', err, response);
     });

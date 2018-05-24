@@ -64,7 +64,7 @@ export default function (state = initialState, action) {
         user: null,
         loaded: false,
         loading: false,
-        error: false
+        error: null
       };
     }
     default:
