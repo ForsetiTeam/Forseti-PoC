@@ -48,14 +48,10 @@ class Dispute extends Component {
     this.setState({ isToggled: false });
   };
 
-  isArbiter() {
-    return this.props.currentUser && this.props.dispute.author !== this.props.currentUser.id;
-  }
-
   renderButtons() {
     const dispute = this.props.dispute;
 
-    if (dispute.status === DISPUTE_STATUS_OPEN && this.isArbiter() && !dispute.userDecision) {
+    if (dispute.status === DISPUTE_STATUS_OPEN && dispute.userIsArbiter && !dispute.userDecision) {
       if (this.state.isToggled) {
         return (
           <div>

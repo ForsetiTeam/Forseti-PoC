@@ -32,9 +32,6 @@ async function get(req: Request, res: Response, next: NextFunction) {
   return populateDispute(DisputeModel.findById(disputeId)).exec()
     //.then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
     .then(async dispute => {
-      console.log('DISPUTE', dispute);
-      const resul = await dispute.setArbiters();
-      console.log('RESUL', resul);
       res.json(dispute.getExportJSON(req.user._id.toString()))
     })
     .catch(() => res.responses.notFoundResource("Dispute not found"));
@@ -53,7 +50,10 @@ async function create(req, res: Response, next: NextFunction) {
   });
 
   return dispute.save()
-    .then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
+    .then(async dispute => {
+      await dispute.setArbiters();
+      res.json(dispute.getExportJSON(req.user._id.toString()))
+    })
     .catch(err => res.responses.requestError("Can't save dispute", null));
 }
 
@@ -78,14 +78,9 @@ function vote(req: Request, res: Response, next: NextFunction) {
   DisputeModel.findById(disputeId).populate({path: 'document', model: DocumentModel}).exec()
     .then(dispute => {
 
-      console.log('DISPUTE', dispute);
-      console.log('DECISION', req.body.decision);
-      console.log('USER', req.user);
       const vote = dispute.getUserVote(req.user._id.toString());
-      console.log('VOTE', vote);
-      if (vote) return res.responses.requestError("Already voted");
-      dispute.addVote(req.user._id, req.body.decision);
-      console.log('VOTES', dispute.arbiters);
+      if (!vote) return res.responses.requestError("User is not an arbiter");
+      vote.decision = req.body.decision;
       dispute.save()
         .then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
         .catch(error => res.responses.requestError(error));

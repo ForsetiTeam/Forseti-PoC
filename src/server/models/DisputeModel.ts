@@ -43,9 +43,6 @@ export class Dispute extends Typegoose {
 
   @instanceMethod
   getUserVote(this: InstanceType<Dispute>, userId: string) {
-    this.arbiters.find(vote => {
-      return vote.user == userId
-    });
     return this.arbiters.find(vote => vote.user.toString() == userId);
   }
 
@@ -91,6 +88,8 @@ export class Dispute extends Typegoose {
       status: this.status,
       arbitersNeed: this.arbitersNeed,
       document: fileName,
+
+      userIsArbiter: !!vote,
       userDecision: vote ? vote.decision : null
     }
   }
@@ -98,11 +97,11 @@ export class Dispute extends Typegoose {
 
 const DisputeModel = new Dispute().getModelForClass(Dispute);
 
+export default DisputeModel;
+
 export function populateDispute(query) {
   return query
     .populate({path: 'community', model: CommunityModel})
     .populate({path: 'document', model: DocumentModel});
   //.populate({path: 'author', model: UserModel});
 }
-
-export default DisputeModel;
