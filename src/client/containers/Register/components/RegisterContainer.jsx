@@ -39,7 +39,7 @@ class RegisterContainer extends Component {
   };
 
   isFormValid() {
-    return !!this.state.email && this.props.metamask.sig;
+    return !!this.state.email && !!this.props.metamask.sig;
   }
 
   render() {

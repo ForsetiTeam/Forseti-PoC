@@ -106,11 +106,9 @@ function fillCollection(model) {
 function assignUsersToCommunities() {
   storedData.User.forEach(async user => {
     if (Math.random() < 0.5) {
-      user.communities.push(storedData.Community[0]._id);
       await user.toggleCommunity(storedData.Community[0]._id);
     }
     if (Math.random() < 0.5) {
-      user.communities.push(storedData.Community[1]._id);
       await user.toggleCommunity(storedData.Community[1]._id);
     }
   });

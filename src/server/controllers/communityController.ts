@@ -35,7 +35,7 @@ async function join(req: Request, res: Response, next: NextFunction) {
     user.communities.push(community);
   }
 
-  const newUser = await UserModel.findByIdAndUpdate(user._id, { communities }, {new: true})
+  const newUser = await UserModel.findByIdAndUpdate(user._id, { communities: user.communities }, {new: true})
     .populate({path: 'communities', model: CommunityModel})
     .exec();
 
