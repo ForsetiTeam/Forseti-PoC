@@ -35,7 +35,7 @@ export class Dispute extends Typegoose {
   @prop({ })
   public document?: Ref<Document>;
 
-  @prop({ required: true })
+  @prop({ })
   public ethAddress: string;
 
   @arrayProp({ items: Vote, default: [] })
@@ -54,15 +54,14 @@ export class Dispute extends Typegoose {
 
   @instanceMethod
   async setArbiters(this) {
+    console.log('SET ARBITERS', this);
     //select all users assigned with community
-    let users = await CommunityModel.getUsers(this.community.toString());
+    let users = await CommunityModel.getUsers(this.community._id.toString());
     //remove author from users list
-    users = users.filter(user => user._id.toString() !== this.author._id);
-    console.log('setArbiters3', users);
+    users = users.filter(user => user._id.toString() !== this.author.toString());
     //make user array with id's
     const userIds = users.map(user => user._id);
     //select arbiters from users list
-    console.log('setArbiters5',userIds);
     const selected = selectArbiters(userIds, this._id, this.arbitersNeed);
     if (!selected) return false;
 
@@ -88,6 +87,9 @@ export class Dispute extends Typegoose {
       status: this.status,
       arbitersNeed: this.arbitersNeed,
       document: fileName,
+      ethAddress: this.ethAddress,
+
+      poolAddress: this.community.poolAddress,
 
       userIsArbiter: !!vote,
       userDecision: vote ? vote.decision : null

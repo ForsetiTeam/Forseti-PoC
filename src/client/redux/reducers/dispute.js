@@ -13,22 +13,35 @@ import {
   REQUEST_VOTE_DISPUTE_SUCCESS,
   REQUEST_VOTE_DISPUTE_FAILURE
 } from '../actions/dispute/voteDispute';
+import {
+  REQUEST_START_DISPUTE_LOADING,
+  REQUEST_START_DISPUTE_SUCCESS,
+  REQUEST_START_DISPUTE_FAILURE
+} from '../actions/dispute/startDispute';
 
 const initialState = {
   list: [],
   loaded: false,
   loading: false,
-  error: false
+  error: null
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case REQUEST_DISPUTE_LIST_LOADING:
-    case REQUEST_DISPUTE_LOADING:
-    case REQUEST_VOTE_DISPUTE_LOADING: {
+    case REQUEST_DISPUTE_LOADING: {
       const newState = { ...state };
 
       newState.list = [];
+      newState.loaded = false;
+      newState.loading = true;
+      newState.error = null;
+      return newState;
+    }
+    case REQUEST_VOTE_DISPUTE_LOADING:
+    case REQUEST_START_DISPUTE_LOADING: {
+      const newState = { ...state };
+
       newState.loaded = false;
       newState.loading = true;
       newState.error = null;
@@ -43,7 +56,8 @@ export default function (state = initialState, action) {
       return newState;
     }
     case REQUEST_DISPUTE_SUCCESS:
-    case REQUEST_VOTE_DISPUTE_SUCCESS: {
+    case REQUEST_VOTE_DISPUTE_SUCCESS:
+    case REQUEST_START_DISPUTE_SUCCESS: {
       const newState = { ...state };
 
       newState.list = [ action.dispute ];
@@ -53,7 +67,8 @@ export default function (state = initialState, action) {
     }
     case REQUEST_DISPUTE_LIST_FAILURE:
     case REQUEST_DISPUTE_FAILURE:
-    case REQUEST_VOTE_DISPUTE_FAILURE: {
+    case REQUEST_VOTE_DISPUTE_FAILURE:
+    case REQUEST_START_DISPUTE_FAILURE: {
       const newState = { ...state };
 
       newState.loading = false;
