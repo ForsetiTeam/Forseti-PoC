@@ -37,8 +37,7 @@ function failureCommunityJoin(error) {
 export function fetchCommunityJoin(community) {
   return (dispatch, getState) => {
     if (shouldFetchCommunityJoin(getState())) {
-      const account = getState().metamask.account;
-      return dispatch(fetchCommunityJoinDo(community, account));
+      return dispatch(fetchCommunityJoinDo(community));
     }
   };
 }
@@ -47,12 +46,12 @@ function shouldFetchCommunityJoin() {
   return true;
 }
 
-function fetchCommunityJoinDo(community, account) {
+function fetchCommunityJoinDo(community) {
   return async dispatch => {
     console.log('Fetch: CommunityJoin');
     dispatch(requestCommunityJoin());
 
-    const error = await joinPool(community.poolAddress, account);
+    const error = await joinPool(community.poolAddress);
     if (error) return dispatch(failureCommunityJoin('Not signed'));
 
     return fetchDecorator(
