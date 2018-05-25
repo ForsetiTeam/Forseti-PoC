@@ -53,7 +53,7 @@ function fetchCreateDisputeDo(dispute, community) {
 
     const disputeForm = jsonToFormData(dispute);
 
-    disputeForm.append('community', community._id);
+    disputeForm.append('community', community.id);
 
     return fetchDecorator(
       [

@@ -8,20 +8,26 @@ import DocumentModel from "../models/DocumentModel";
 
 import getFileUploader from './utils/getFileUploader';
 import sendFile from './utils/sendFile';
+import {Types} from "mongoose";
 
 const router = express.Router();
 
 async function getList(req: Request, res: Response, next: NextFunction) {
-  const params = req.query;
-  const filter = {author: undefined, status: undefined};
-  if (params.owner) {
+  const filterRaw = req.query;
+
+  const filter = {};
+  if (filterRaw.author == 'true') {
     filter.author = req.user._id;
   }
-  if (params.status) {
-    filter.status = params.status;
+  if (filterRaw.arbiter == 'true') {
+    filter.arbiters = {$elemMatch: { user: Types.ObjectId(req.user._id) }};
+    if (filterRaw.hasOwnProperty('answered')) {
+      filter.arbiters.$elemMatch.decision = { $exists: filterRaw.answered == 'true' };
+    }
   }
-  if (!filter.author) delete filter.author;
-  if (!filter.status) delete filter.status;
+  if (filterRaw.status) {
+    filter.status = filterRaw.status;
+  }
 
   let list = await populateDispute(DisputeModel.find(filter)).exec();
   res.json(list.map(item => item.getExportJSON(req.user._id.toString())));
@@ -30,7 +36,6 @@ async function getList(req: Request, res: Response, next: NextFunction) {
 async function get(req: Request, res: Response, next: NextFunction) {
   const disputeId = req.params.id;
   return populateDispute(DisputeModel.findById(disputeId)).exec()
-    //.then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
     .then(async dispute => {
       res.json(dispute.getExportJSON(req.user._id.toString()))
     })

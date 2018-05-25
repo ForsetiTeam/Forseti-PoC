@@ -31,11 +31,11 @@ function failureDisputeList(error) {
   };
 }
 
-export function fetchDisputeList(owner, status) {
-  console.log('fetchDisputeList(', owner, status);
+export function fetchDisputeList(filter) {
+  console.log('fetchDisputeList(', filter);
   return (dispatch, getState) => {
     if (shouldFetchDisputeList(getState())) {
-      return dispatch(fetchDisputeListDo(owner, status));
+      return dispatch(fetchDisputeListDo(filter));
     }
   };
 }
@@ -44,7 +44,7 @@ function shouldFetchDisputeList() {
   return true;
 }
 
-function fetchDisputeListDo(owner, status) {
+function fetchDisputeListDo(filter) {
   return dispatch => {
     console.log('Fetch: DisputeList');
     dispatch(requestDisputeList());
@@ -54,7 +54,7 @@ function fetchDisputeListDo(owner, status) {
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      request('get', apiRoutes.disputeList(), { owner, status })
+      request('get', apiRoutes.disputeList(), filter)
     )
       .then(res => {
         dispatch(receiveDisputeList(res.data));

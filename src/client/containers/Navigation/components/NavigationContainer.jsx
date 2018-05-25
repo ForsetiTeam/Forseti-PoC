@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Navigation from './Navigation';
-import { DISPUTE_FILTER_MY, DISPUTE_FILTER_OPEN, DISPUTE_FILTER_CLOSED } from '../../../consts';
+import { DISPUTE_FILTER_MY, DISPUTE_FILTER_UNANSWERED, DISPUTE_FILTER_ANSWERED } from '../../../consts';
 
 class NavigationContainer extends Component {
   static propTypes = {
@@ -15,8 +15,8 @@ class NavigationContainer extends Component {
       return [
         { title: 'Communities', uri: '/community/' },
         { title: 'My Disputes', uri: `/dispute/filter/${DISPUTE_FILTER_MY}` },
-        { title: 'Ongoing Disputes', uri: `/dispute/filter/${DISPUTE_FILTER_OPEN}` },
-        { title: 'Finished Disputes', uri: `/dispute/filter/${DISPUTE_FILTER_CLOSED}` },
+        { title: 'New Disputes', uri: `/dispute/filter/${DISPUTE_FILTER_UNANSWERED}` },
+        { title: 'Answered Disputes', uri: `/dispute/filter/${DISPUTE_FILTER_ANSWERED}` },
         { title: 'About', uri: '/about' }
       ];
     }

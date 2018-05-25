@@ -10,7 +10,7 @@ function mapStateToProps(state, props) {
   const id = props.match.params.disputeId;
   const dispute = state.dispute.list.find(disputeI => disputeI.id === id);
   const currentUser = state.currentUser.user;
-  const isAuthor = dispute && currentUser.id === dispute.author;
+  const isAuthor = dispute && currentUser && currentUser.id === dispute.author;
   const isLoading = state.dispute.loading;
 
   return { id, dispute, isAuthor, isLoading };

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import equal from 'fast-deep-equal';
 
 import DisputesItem from './DisputesItem';
 
@@ -7,18 +8,16 @@ class Disputes extends Component {
   static propTypes = {
     list: PropTypes.array,
     fetchDisputeList: PropTypes.func,
-    // filters
-    owner: PropTypes.bool,
-    status: PropTypes.string
+    filter: PropTypes.object
   };
 
   componentDidMount() {
-    this.props.fetchDisputeList(this.props.owner, this.props.status);
+    this.props.fetchDisputeList(this.props.filter);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.owner === nextProps.owner && this.props.status === nextProps.status) return;
-    this.props.fetchDisputeList(nextProps.owner, nextProps.status);
+    if (equal(this.props.filter, nextProps.filter)) return;
+    this.props.fetchDisputeList(nextProps.filter);
   }
 
   render() {
