@@ -76,7 +76,7 @@ export default (app: Express): void => {
   passport.use(new JwtStrategy(
     jwtStrategyOpts,
     async (jwtPayload, next) => {
-      const user = await UserModel.findOne({ _id: jwtPayload.userId }).lean();
+      const user = await UserModel.findOne({ _id: jwtPayload.userId });
       if (!user) {
         return next(null, false);
       }

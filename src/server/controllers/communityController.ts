@@ -11,14 +11,14 @@ const router = express.Router();
 
 async function getList(req: Request, res: Response, next: NextFunction) {
   let list = await CommunityModel.find();
-  res.json(list);
+  res.json(list.map(community => community.getExportJSON()));
 }
 
 async function get(req: Request, res: Response, next: NextFunction) {
   const communityName = req.params.communityName;
   let community = await CommunityModel.findOne({name: communityName});
   if (!community) return res.responses.notFoundResource("Community not found");
-  res.json(community);
+  res.json(community.getExportJSON());
 }
 
 async function join(req: Request, res: Response, next: NextFunction) {
@@ -28,18 +28,10 @@ async function join(req: Request, res: Response, next: NextFunction) {
   let community = await CommunityModel.findOne({name: communityName});
   if (!community) return res.responses.notFoundResource("Community not found");
 
-  const pos = user.communities.map(community => String(community)).indexOf(String(community._id));
-  if (pos != -1) {
-    user.communities.splice(pos, 1);
-  } else {
-    user.communities.push(community);
-  }
+  const error = await user.toggleCommunity(community._id);
+  if (error) return res.responses.requestError("Can't toggle community");
 
-  const newUser = await populateUser(
-    UserModel.findByIdAndUpdate(user._id, { communities: user.communities }, {new: true})
-  ).exec();
-
-  return res.json({message: "Success", user: newUser.getExportJSON()});
+  return res.json({user: user.getExportJSON()});
 }
 
 router.get("/", passport.authenticate("jwt", { session: false }), getList);

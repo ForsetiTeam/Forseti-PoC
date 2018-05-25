@@ -10,8 +10,9 @@ class Community extends Component {
     communityName: PropTypes.string,
     community: PropTypes.shape(),
     isJoined: PropTypes.bool,
+
     fetchCommunity: PropTypes.func,
-    onJoin: PropTypes.func
+    fetchCommunityJoin: PropTypes.func
   };
 
   componentDidMount() {
@@ -19,7 +20,7 @@ class Community extends Component {
   }
 
   handleJoin = () => {
-    this.props.onJoin(this.props.communityName);
+    this.props.fetchCommunityJoin(this.props.community);
   };
 
   render() {

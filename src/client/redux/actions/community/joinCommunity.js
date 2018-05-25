@@ -8,6 +8,8 @@ import {
   fetchProtectedAuth
 } from '../decorators/index';
 
+import joinPool from '../../../etherium/actions/joinPool';
+
 export const REQUEST_COMMUNITY_JOIN_LOADING = 'REQUEST_COMMUNITY_JOIN_LOADING';
 export const REQUEST_COMMUNITY_JOIN_SUCCESS = 'REQUEST_COMMUNITY_JOIN_SUCCESS';
 export const REQUEST_COMMUNITY_JOIN_FAILURE = 'REQUEST_COMMUNITY_JOIN_FAILURE';
@@ -32,10 +34,11 @@ function failureCommunityJoin(error) {
   };
 }
 
-export function fetchCommunityJoin(communityName) {
+export function fetchCommunityJoin(community) {
   return (dispatch, getState) => {
     if (shouldFetchCommunityJoin(getState())) {
-      return dispatch(fetchCommunityJoinDo(communityName));
+      const account = getState().metamask.account;
+      return dispatch(fetchCommunityJoinDo(community, account));
     }
   };
 }
@@ -44,10 +47,13 @@ function shouldFetchCommunityJoin() {
   return true;
 }
 
-function fetchCommunityJoinDo(communityName) {
-  return dispatch => {
+function fetchCommunityJoinDo(community, account) {
+  return async dispatch => {
     console.log('Fetch: CommunityJoin');
     dispatch(requestCommunityJoin());
+
+    const error = await joinPool(community.poolAddress, account);
+    if (error) return dispatch(failureCommunityJoin('Not signed'));
 
     return fetchDecorator(
       [
@@ -55,7 +61,7 @@ function fetchCommunityJoinDo(communityName) {
         fetchSuccessStatusDecorator
       ],
 
-      request('post', apiRoutes.communityJoin(communityName), null, { 'Content-Type': 'application/json' })
+      request('post', apiRoutes.communityJoin(community.name), null, { 'Content-Type': 'application/json' })
     )
       .then(res => {
         setUser(res.data.user);

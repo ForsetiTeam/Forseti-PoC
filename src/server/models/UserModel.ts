@@ -18,14 +18,15 @@ export class User extends Typegoose {
 
   @instanceMethod
   async toggleCommunity(this: InstanceType<User>, communityId: string) {
-    const pos = this.communities.findIndex(community => community.toString() === communityId);
+    console.log()
+    const pos = this.communities.findIndex(community => community.toString() === communityId.toString());
     if (pos != -1) {
       this.communities.splice(pos, 1);
     } else {
       this.communities.push(communityId);
     }
     await this.save();
-    await CommunityModel.updateUserCount(communityId);
+    return await CommunityModel.updateUserCount(communityId);
   }
 
   @instanceMethod
@@ -39,7 +40,7 @@ export class User extends Typegoose {
       id: user._id,
       email: user.email,
       account: user.account,
-      communities: user.communities.map(community => community.name)
+      communities: user.communities//.map(community => community.name)
     }
   }
 }
@@ -50,5 +51,5 @@ export default UserModel;
 
 export function populateUser(query) {
   return query
-    .populate({path: 'communities', model: CommunityModel});
+    //.populate({path: 'communities', model: CommunityModel});
 }

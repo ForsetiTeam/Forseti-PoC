@@ -34,6 +34,21 @@ export class Community extends Typegoose {
     const members = await this.getUsers(communityId);
     await CommunityModel.update({_id: communityId}, {usersActive: members.length});
   }
+
+  @instanceMethod
+  getExportJSON(this) {
+
+    return {
+      id: this._id,
+      poolAddress: this.poolAddress,
+      name: this.name,
+      title: this.title,
+      description: this.description,
+      icon: this.icon,
+      disputesSolved: this.disputesSolved,
+      usersActive: this.usersActive,
+    }
+  }
 }
 
 const CommunityModel = new Community().getModelForClass(Community);
