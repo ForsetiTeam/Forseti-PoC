@@ -1,8 +1,9 @@
 import getSmartContract from '../contracts/getSmartContract';
 
-export default function createDispute(dispute, myAccount) {
+export default function createDispute(dispute) {
   return new Promise((resolve, reject) => {
     const drm = getSmartContract('DRM');
+    const myAccount = window.web3.eth.coinbase;
 
     const weirdHash = dispute.poolAddress;
     const arbitersNeed = dispute.arbitersNeed;

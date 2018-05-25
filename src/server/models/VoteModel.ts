@@ -8,6 +8,9 @@ export class Vote extends Typegoose {
 
   @prop({ })
   public decision: string;
+
+  @prop({ })
+  public sign: string;
 }
 
 const VoteModel = new Vote().getModelForClass(Vote);

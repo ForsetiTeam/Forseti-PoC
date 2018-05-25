@@ -39,8 +39,7 @@ export function fetchStartDispute(dispute) {
   console.log('fetchStartDispute', dispute);
   return (dispatch, getState) => {
     if (shouldFetchStartDispute(getState())) {
-      const account = getState().metamask.account;
-      return dispatch(fetchStartDisputeDo(dispute, account));
+      return dispatch(fetchStartDisputeDo(dispute));
     }
   };
 }
@@ -49,12 +48,12 @@ function shouldFetchStartDispute(state) {
   return !state.dispute.loading;
 }
 
-function fetchStartDisputeDo(dispute, account) {
+function fetchStartDisputeDo(dispute) {
   return async dispatch => {
     console.log('Fetch: StartDispute');
     dispatch(requestStartDispute());
 
-    const ethAddress = await createDispute(dispute, account);
+    const ethAddress = await createDispute(dispute);
     if (!ethAddress) return dispatch(failureStartDispute('Not signed'));
 
     return fetchDecorator(

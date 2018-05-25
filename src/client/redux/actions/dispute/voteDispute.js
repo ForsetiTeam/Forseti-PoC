@@ -6,6 +6,7 @@ import {
   fetchSuccessStatusDecorator,
   fetchProtectedAuth
 } from '../decorators/index';
+import signMessage from '../../../etherium/actions/signMessage';
 
 export const REQUEST_VOTE_DISPUTE_LOADING = 'REQUEST_VOTE_DISPUTE_LOADING';
 export const REQUEST_VOTE_DISPUTE_SUCCESS = 'REQUEST_VOTE_DISPUTE_SUCCESS';
@@ -40,12 +41,15 @@ function fetchVoteDisputeDo(disputeId, decision) {
     console.log('Fetch: VoteDispute');
     dispatch(requestVoteDispute());
 
+    const sign = await signMessage(decision);
+    if (!sign) return dispatch(failureVoteDispute('Not signed'));
+
     return fetchDecorator(
       [
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      request('post', apiRoutes.disputeVote(disputeId), { decision })
+      request('post', apiRoutes.disputeVote(disputeId), { decision, sign })
     )
       .then(res => {
         dispatch(receiveVoteDispute(res.data));

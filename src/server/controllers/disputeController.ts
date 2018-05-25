@@ -82,7 +82,10 @@ function vote(req: Request, res: Response, next: NextFunction) {
 
       const vote = dispute.getUserVote(req.user._id.toString());
       if (!vote) return res.responses.requestError("User is not an arbiter");
+
       vote.decision = req.body.decision;
+      vote.sign = req.body.sign;
+
       dispute.save()
         .then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
         .catch(error => res.responses.requestError(error));
