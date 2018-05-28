@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as passport from "passport";
+import {Types} from "mongoose";
 
 import {NextFunction, Request, Response} from "../types/ExpressExtended";
 
@@ -8,12 +9,20 @@ import DocumentModel from "../models/DocumentModel";
 
 import getFileUploader from './utils/getFileUploader';
 import sendFile from './utils/sendFile';
-import {Types} from "mongoose";
+
+import validate from "../middlewares/validateSchema";
+import {
+  validateGetDisputeList,
+  validateCreateDispute,
+  validateVoteDispute,
+  validateStartDispute
+} from "../validators/disputeSchemas";
 
 const router = express.Router();
 
 async function getList(req: Request, res: Response, next: NextFunction) {
   const filterRaw = req.query;
+  console.log('filterRaw', filterRaw);
 
   const filter = {};
   if (filterRaw.author == 'true') {
@@ -60,7 +69,6 @@ async function create(req, res: Response, next: NextFunction) {
 }
 
 async function getDocument(req: Request, res: Response, next: NextFunction) {
-  //get dispute and document name
   const disputeId = req.params.id;
   DisputeModel.findById(disputeId).populate({path: 'document', model: DocumentModel}).exec()
     .then((dispute: any) => {
@@ -75,7 +83,6 @@ async function getDocument(req: Request, res: Response, next: NextFunction) {
 }
 
 function vote(req: Request, res: Response, next: NextFunction) {
-  //get dispute and document name
   const disputeId = req.params.id;
   DisputeModel.findById(disputeId).populate({path: 'document', model: DocumentModel}).exec()
     .then(dispute => {
@@ -84,7 +91,7 @@ function vote(req: Request, res: Response, next: NextFunction) {
       if (!vote) return res.responses.requestError("User is not an arbiter");
 
       vote.decision = req.body.decision;
-      vote.sign = req.body.sign;
+      vote.sig = req.body.sig;
 
       dispute.save()
         .then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
@@ -94,7 +101,6 @@ function vote(req: Request, res: Response, next: NextFunction) {
 }
 
 function start(req: Request, res: Response, next: NextFunction) {
-  //get dispute and document name
   const disputeId = req.params.id;
   const ethAddress = req.body.ethAddress;
 
@@ -108,13 +114,30 @@ function start(req: Request, res: Response, next: NextFunction) {
     .catch(() => res.responses.notFoundResource("Dispute not found"));
 }
 
-router.get("/", passport.authenticate("jwt", { session: false }), getList);
-router.get("/:id/document", passport.authenticate("jwt", { session: false }), getDocument);
-router.get("/:id", passport.authenticate("jwt", { session: false }), get);
+router.get("/",
+  passport.authenticate("jwt", { session: false }),
+  validate(validateGetDisputeList),
+  getList);
+router.get("/:id/document",
+  passport.authenticate("jwt", { session: false }),
+  getDocument);
+router.get("/:id",
+  passport.authenticate("jwt", { session: false }),
+  get);
 
 const upload = getFileUploader();
-router.post("/", passport.authenticate("jwt", { session: false }), upload.single('document'), create);
-router.post("/:id/vote", passport.authenticate("jwt", { session: false }), vote);
-router.post("/:id/start", passport.authenticate("jwt", { session: false }), start);
+router.post("/",
+  passport.authenticate("jwt", { session: false }),
+  validate(validateCreateDispute),
+  upload.single('document'),
+  create);
+router.post("/:id/vote",
+  passport.authenticate("jwt", { session: false }),
+  validate(validateVoteDispute),
+  vote);
+router.post("/:id/start",
+  passport.authenticate("jwt", { session: false }),
+  validate(validateStartDispute),
+  start);
 
 export default router;

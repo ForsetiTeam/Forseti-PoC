@@ -72,7 +72,6 @@ function isCustomPhone(phone) {
   return /^\d{0,15}$/.test(phone);
 }
 
-
 async function isUserExistsByAccount(account) {
     if (!account) { return Promise.resolve(); }
     const existingUser = await UserModel.findOne({account});
@@ -81,6 +80,12 @@ async function isUserExistsByAccount(account) {
     }
     return Promise.resolve();
 }
+
+function isIn(value, {list}) {
+  console.log('IS IN', value, list)
+  return list.includes(value);
+}
+
 
 function setupValidator() {
   return expressValidator({
@@ -96,7 +101,8 @@ function setupValidator() {
       isCustomPhone,
       isUserExistsByEmailUpdate,
 
-      isUserExistsByAccount
+      isUserExistsByAccount,
+      isIn
     },
   });
 }

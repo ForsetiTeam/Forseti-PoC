@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import NewDispute from './components/NewDispute';
+import NewDisputeContainer from './components/NewDisputeContainer';
 
 import { fetchCommunity } from '../../redux/actions/community/getCommunity';
 import { fetchCreateDispute } from '../../redux/actions/dispute/createDispute';
@@ -17,4 +17,4 @@ const mapDispatchToProps = dispatch => ({
   fetchCreateDispute: (dispute, community) => dispatch(fetchCreateDispute(dispute, community))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewDispute);
+export default connect(mapStateToProps, mapDispatchToProps)(NewDisputeContainer);

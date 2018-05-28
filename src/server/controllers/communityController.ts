@@ -3,9 +3,7 @@ import * as passport from "passport";
 
 import {NextFunction, Request, Response} from "../types/ExpressExtended";
 
-import UserModel, { populateUser } from "../models/UserModel";
 import CommunityModel from "../models/CommunityModel";
-
 
 const router = express.Router();
 
@@ -34,8 +32,14 @@ async function join(req: Request, res: Response, next: NextFunction) {
   return res.json({user: user.getExportJSON()});
 }
 
-router.get("/", passport.authenticate("jwt", { session: false }), getList);
-router.get("/:communityName", passport.authenticate("jwt", { session: false }), get);
-router.post("/:communityName/join", passport.authenticate("jwt", { session: false }), join);
+router.get("/",
+  passport.authenticate("jwt", { session: false }),
+  getList);
+router.get("/:communityName",
+  passport.authenticate("jwt", { session: false }),
+  get);
+router.post("/:communityName/join",
+  passport.authenticate("jwt", { session: false }),
+  join);
 
 export default router;

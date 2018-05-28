@@ -75,6 +75,6 @@ async function register(req: Request, res: Response, next: NextFunction) {
 
 router.post("/register", validate(signUpSchema), register);
 router.post("/login", validate(signInSchema), login);
-router.post("/logout", validate(signInSchema), login);
+router.post("/logout", logout);
 
 export default router;
