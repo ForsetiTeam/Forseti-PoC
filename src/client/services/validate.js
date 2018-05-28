@@ -1,6 +1,6 @@
 const validate = (value, validators) => {
   for (const validator in validators) {
-    if (!validator.hasOwnProperty(validator)) continue;
+    if (!validators.hasOwnProperty(validator)) continue;
 
     const validatorValue = validators[validator];
 
@@ -10,19 +10,39 @@ const validate = (value, validators) => {
           return { isValid: false, error: 'Field is required' };
         }
         break;
-      case 'maxLength':
-        if (value.length > validatorValue) {
-          return { isValid: false, error: `Max ${validatorValue} characters` };
-        }
-        break;
       case 'minLength':
         if (value.length < validatorValue) {
           return { isValid: false, error: `Min ${validatorValue} characters` };
         }
         break;
+      case 'maxLength':
+        if (value.length > validatorValue) {
+          return { isValid: false, error: `Max ${validatorValue} characters` };
+        }
+        break;
       case 'equalsTo':
         if (value !== validatorValue) {
           return { isValid: false, error: 'Values not equal' };
+        }
+        break;
+      case 'number':
+        if (isNaN(+value)) {
+          return { isValid: false, error: 'Not a number' };
+        }
+        break;
+      case 'integer':
+        if (+value !== parseInt(value, 10)) {
+          return { isValid: false, error: 'Not an integer' };
+        }
+        break;
+      case 'minValue':
+        if (+value < validatorValue) {
+          return { isValid: false, error: `Min value is ${validatorValue}` };
+        }
+        break;
+      case 'maxValue':
+        if (+value > validatorValue) {
+          return { isValid: false, error: `Max value is ${validatorValue}` };
         }
         break;
       case 'email':
