@@ -3,7 +3,7 @@ import {arrayProp, instanceMethod, InstanceType, prop, Ref, Typegoose} from "typ
 import { User } from "./UserModel";
 import CommunityModel, { Community } from './CommunityModel';
 import DocumentModel, { Document } from './DocumentModel';
-import VoteModel, { Vote } from './VoteModel';
+import VoteModel, { Vote, Decision } from './VoteModel';
 
 import selectArbiters from '../lib/selectArbiters';
 
@@ -78,9 +78,8 @@ export class Dispute extends Typegoose {
   getExportJSON(this, userId: string) {
     const document = this.document ? this.document.toJSON() : null;
     const fileName = document && document.metadata ? document.metadata.fileName : null;
-    const vote = this.getUserVote(userId);
 
-    return {
+    let exportData = {
       id: this._id,
       author: this.author,
       title: this.title,
@@ -92,10 +91,28 @@ export class Dispute extends Typegoose {
       ethAddress: this.ethAddress,
 
       poolAddress: this.community.poolAddress,
+    };
 
-      userIsArbiter: !!vote,
-      userDecision: vote ? vote.decision : null
+    if (this.author.toString() === userId.toString()) {
+      //author or pool-master
+      exportData = Object.assign(exportData,
+        this.arbiters.reduce((summary, arbiter) => {
+          if (arbiter.decision === Decision.ABSTAIN) summary.usersRejected++;
+          if (arbiter.decision === Decision.APPROVE || arbiter.decision === Decision.DISAPPROVE) summary.usersVoted++;
+          return summary;
+        }, { usersRejected: 0, usersVoted: 0 })
+      );
+    } else {
+      //other
+      const vote = this.getUserVote(userId);
+
+      exportData = Object.assign(exportData, {
+        userIsArbiter: !!vote,
+        userDecision: vote ? vote.decision : null
+      })
     }
+
+    return exportData;
   }
 }
 

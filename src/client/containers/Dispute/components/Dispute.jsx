@@ -100,7 +100,10 @@ class Dispute extends Component {
             <p>Description: {dispute.description}</p>
             <p>Arbiters count: {dispute.arbitersNeed}</p>
             <p>Status: {dispute.status}</p>
-            {dispute.userDecision &&
+            {dispute.hasOwnProperty('usersVoted') &&
+              <p>Vote summary: {dispute.usersVoted} voted, {dispute.usersRejected} rejected</p>
+            }
+            {dispute.hasOwnProperty('userDecision') &&
               <p className='font-weight-bold'>Your decision: {dispute.userDecision}</p>
             }
             {dispute.document &&
