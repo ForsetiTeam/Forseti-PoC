@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Dispute from './components/Dispute';
+import DisputeController from './components/DisputeController';
 
 import { fetchDispute } from '../../redux/actions/dispute/getDispute';
 import { fetchVoteDispute } from '../../redux/actions/dispute/voteDispute';
@@ -22,4 +22,4 @@ const mapDispatchToProps = dispatch => ({
   fetchStartDispute: dispute => dispatch(fetchStartDispute(dispute))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dispute);
+export default connect(mapStateToProps, mapDispatchToProps)(DisputeController);

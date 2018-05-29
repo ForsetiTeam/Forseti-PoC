@@ -75,6 +75,7 @@ class NewDisputeContainer extends Component {
         community={this.props.community}
         formValid={this.state.formValid}
         errors={this.state}
+
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
       />

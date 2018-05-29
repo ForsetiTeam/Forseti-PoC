@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { request, downloadFile } from '../../../redux/actions/utils/axios';
-import apiRoutes from '../../../redux/apiRoutes';
 
 import {
   DISPUTE_DECISION_APPROVE,
@@ -9,51 +7,19 @@ import {
   DISPUTE_DECISION_ABSTAIN,
   DISPUTE_STATUS_OPEN
 } from '../../../consts';
-import SpinnerWaiter from "../../../components/SpinnerWaiter";
+import SpinnerWaiter from '../../../components/SpinnerWaiter';
 
 class Dispute extends Component {
   static propTypes = {
-    id: PropTypes.string,
     dispute: PropTypes.shape(),
     isAuthor: PropTypes.bool,
-    documentLink: PropTypes.string,
     isLoading: PropTypes.bool,
+    isToggled: PropTypes.bool,
 
-    fetchDispute: PropTypes.func,
-    fetchVoteDispute: PropTypes.func,
-    fetchStartDispute: PropTypes.func
-  };
-
-  state = {
-    isToggled: false
-  };
-
-  componentDidMount() {
-    this.props.fetchDispute(this.props.id);
-  }
-
-  handleToggle = e => {
-    e.preventDefault();
-    this.setState({ isToggled: !this.state.isToggled });
-  };
-
-  handleStart = e => {
-    e.preventDefault();
-    this.props.fetchStartDispute(this.props.dispute);
-  };
-
-  handleDownloadDocument = e => {
-    e.preventDefault();
-    request('get', apiRoutes.disputeDocument(this.props.id)).then(response => downloadFile(response));
-  };
-
-  handleVote = e => {
-    e.preventDefault();
-    const decision = e.target.dataset.decision;
-
-    this.props.fetchVoteDispute(this.props.id, decision);
-
-    this.setState({ isToggled: false });
+    onToggle: PropTypes.func,
+    onVote: PropTypes.func,
+    onStart: PropTypes.func,
+    onDownloadDocument: PropTypes.func
   };
 
   renderButtons() {
@@ -65,7 +31,7 @@ class Dispute extends Component {
           <div>
             <button
               className='btn btn-success m-1'
-              onClick={this.handleStart}
+              onClick={this.props.onStart}
               disabled={this.props.isLoading}
             >
               Start
@@ -78,20 +44,20 @@ class Dispute extends Component {
       if (!dispute.ethAddress) return;
       if (!dispute.userIsArbiter) return;
       if (dispute.status === DISPUTE_STATUS_OPEN && !dispute.userDecision) {
-        if (this.state.isToggled) {
+        if (this.props.isToggled) {
           return (
             <div>
               <button
                 className='btn btn-danger m-1'
                 data-decision={DISPUTE_DECISION_DISAPPROVE}
-                onClick={this.handleVote}
+                onClick={this.props.onVote}
               >
                 Disaprove
               </button>
               <button
                 className='btn btn-success m-1'
                 data-decision={DISPUTE_DECISION_APPROVE}
-                onClick={this.handleVote}
+                onClick={this.props.onVote}
               >
                 Aprove
               </button>
@@ -103,13 +69,13 @@ class Dispute extends Component {
               <button
                 className='btn btn-warning m-1'
                 data-decision={DISPUTE_DECISION_ABSTAIN}
-                onClick={this.handleVote}
+                onClick={this.props.onVote}
               >
                 Abstain
               </button>
               <button
                 className='btn btn-info m-1'
-                onClick={this.handleToggle}
+                onClick={this.props.onToggle}
               >
                 Resolve
               </button>
@@ -138,7 +104,7 @@ class Dispute extends Component {
               <p className='font-weight-bold'>Your decision: {dispute.userDecision}</p>
             }
             {dispute.document &&
-              <p><a href='#' onClick={this.handleDownloadDocument}>Download document</a></p>
+              <p><a href='#' onClick={this.props.onDownloadDocument}>Download document</a></p>
             }
           </div>
         </div>
