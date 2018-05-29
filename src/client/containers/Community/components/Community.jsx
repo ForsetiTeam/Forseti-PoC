@@ -43,9 +43,7 @@ class Community extends Component {
         </div>
         <div className='text-center'>
           <button className='btn m-1 btn-primary' onClick={this.handleJoin}>{this.props.isJoined ? 'Leave' : 'Join'}</button>
-          {this.props.isJoined &&
-            <Link to={`/community/${comm.name}/dispute/new`} className='btn m-1 btn-info'>Add dispute</Link>
-          }
+          <Link to={`/community/${comm.name}/dispute/new`} className='btn m-1 btn-info'>Add dispute</Link>
         </div>
       </div>
     );
