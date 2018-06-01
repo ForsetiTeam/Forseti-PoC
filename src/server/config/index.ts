@@ -47,11 +47,16 @@ const config = convict({
       },
     },
     metamask: {
-        sigPhrase: {
-            doc: "String for signing metamask",
-            format: String,
-            default: "Forseti greets you!",
-        },
+      sigPhrase: {
+        doc: "String for signing metamask",
+        format: String,
+        default: "Forseti greets you!",
+      },
+      poolMasterAccount: {
+        doc: "Pool master account",
+        format: String,
+        default: '0x88373C8ce5213bfD1530C83e409B4Bc024586202'
+      }
     },
 
 });

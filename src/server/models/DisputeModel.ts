@@ -1,10 +1,12 @@
 import {arrayProp, instanceMethod, InstanceType, prop, Ref, Typegoose} from "typegoose";
 
-import { User } from "./UserModel";
+import UserModel, { User } from "./UserModel";
 import CommunityModel, { Community } from './CommunityModel';
 import DocumentModel, { Document } from './DocumentModel';
 import VoteModel, { Vote, Decision } from './VoteModel';
 
+import getPoolActiveArbiters from '../etherium/pool/getPoolActiveArbiters';
+import getPoolReputationById from '../etherium/pool/getPoolReputationById';
 import selectArbiters from '../lib/selectArbiters';
 
 export enum Status {
@@ -54,17 +56,17 @@ export class Dispute extends Typegoose {
 
   @instanceMethod
   async setArbiters(this) {
+    // get author
+    const author = await UserModel.findById(this.author);
+
     //select all users assigned with community
-    let users = await CommunityModel.getUsers(this.community._id.toString());
+    let users = await getPoolActiveArbiters(this.community.poolAddress);
 
     //remove author from users list
-    users = users.filter(user => user._id.toString() !== this.author.toString());
-
-    //make user array with id's
-    const userIds = users.map(user => user._id);
+    users = users.filter(user => user.address.toLowerCase() !== author.account.toLowerCase());
 
     //select arbiters from users list
-    const selected = selectArbiters(userIds, this._id, this.arbitersNeed);
+    const selected = selectArbiters(users, this._id, this.arbitersNeed);
     if (!selected) return false;
 
     const arbiters = selected.map(userId => new VoteModel({user: userId}));
