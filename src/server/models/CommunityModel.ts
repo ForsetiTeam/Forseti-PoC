@@ -24,18 +24,9 @@ export class Community extends Typegoose {
   @prop({ })
   public disputesSolved: number;
 
-  @prop({ })
-  public usersActive: number;
-
   @staticMethod
   static async getUsers(communityId: string) {
     return await UserModel.find({communities: communityId});
-  }
-
-  @staticMethod
-  static async updateUserCount(communityId: string) {
-    const members = await this.getUsers(communityId);
-    await CommunityModel.update({_id: communityId}, {usersActive: members.length});
   }
 
   @instanceMethod
@@ -49,7 +40,6 @@ export class Community extends Typegoose {
       description: this.description,
       icon: this.icon,
       disputesSolved: this.disputesSolved,
-      usersActive: this.usersActive,
     }
   }
 }

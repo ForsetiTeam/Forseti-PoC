@@ -1,4 +1,4 @@
-import contractUtils from '../contractUtils';
+import contractUtils from '../../contractUtils';
 
 export default function joinPool(poolAddress) {
   return new Promise((resolve, reject) => {

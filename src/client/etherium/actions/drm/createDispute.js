@@ -1,5 +1,5 @@
-import contractUtils from '../contractUtils';
-import web3 from '../getWeb3';
+import contractUtils from '../../contractUtils';
+import web3 from '../../getWeb3';
 
 export default function createDispute(dispute) {
   return new Promise((resolve, reject) => {

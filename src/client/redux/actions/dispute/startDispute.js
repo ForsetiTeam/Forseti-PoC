@@ -9,7 +9,7 @@ import {
   fetchProtectedAuth
 } from '../decorators/index';
 
-import createDispute from '../../../etherium/actions/createDispute';
+import createDispute from '../../../etherium/actions/drm/createDispute';
 
 export const REQUEST_START_DISPUTE_LOADING = 'REQUEST_START_DISPUTE_LOADING';
 export const REQUEST_START_DISPUTE_SUCCESS = 'REQUEST_START_DISPUTE_SUCCESS';

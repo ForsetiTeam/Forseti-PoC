@@ -8,7 +8,8 @@ import {
   fetchSuccessStatusDecorator,
   fetchProtectedAuth
 } from '../decorators/index';
-import getPoolReputation from "../../../etherium/actions/getPoolReputation";
+import getPoolReputationByAddress from '../../../etherium/actions/pool/getPoolReputationByAddress';
+import getPoolActiveArbiters from '../../../etherium/actions/pool/getPoolActiveArbiters';
 
 export const REQUEST_COMMUNITY_LOADING = 'REQUEST_COMMUNITY_LOADING';
 export const REQUEST_COMMUNITY_SUCCESS = 'REQUEST_COMMUNITY_SUCCESS';
@@ -58,10 +59,9 @@ function fetchCommunityDo(communityName) {
       ],
       request('get', apiRoutes.community(communityName))
     )
-      .then(res => {
-        updateCommunityJoin(res.data)
-          .then(community => dispatch(receiveCommunity(community)));
-      })
+      .then(res => updateCommunityJoin(res.data))
+      .then(community => updateCommunityActiveArbiters(community))
+      .then(community => dispatch(receiveCommunity(community)))
       .catch(err => {
         dispatch(failureCommunity(err));
         dispatch(push('/'));
@@ -71,9 +71,20 @@ function fetchCommunityDo(communityName) {
 
 export function updateCommunityJoin(community) {
   return new Promise((resolve, reject) => {
-    getPoolReputation(community.poolAddress, window.web3.eth.coinbase)
+    getPoolReputationByAddress(community.poolAddress, window.web3.eth.coinbase)
       .then(reputation => {
         community.isJoined = !!reputation;
+        resolve(community);
+      })
+      .catch(reject);
+  });
+}
+
+export function updateCommunityActiveArbiters(community) {
+  return new Promise((resolve, reject) => {
+    getPoolActiveArbiters(community.poolAddress)
+      .then(list => {
+        community.usersActive = list.length;
         resolve(community);
       })
       .catch(reject);
