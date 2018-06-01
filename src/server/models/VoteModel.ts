@@ -12,7 +12,7 @@ export class Vote extends Typegoose {
   @prop({ required: true })
   public user: Ref<User>;
 
-  @prop({ enum: Decision, required: true })
+  @prop({ enum: Decision })
   public decision: Decision;
 
   @prop({ })

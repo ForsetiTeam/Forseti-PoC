@@ -1,14 +1,6 @@
-import { request } from '../utils/axios';
-import apiRoutes from '../../apiRoutes';
-
-import { setUser } from '../../../services/localStore';
-import {
-  fetchDecorator,
-  fetchSuccessStatusDecorator,
-  fetchProtectedAuth
-} from '../decorators/index';
-
 import joinPool from '../../../etherium/actions/joinPool';
+import leavePool from '../../../etherium/actions/leavePool';
+import { updateCommunityJoin } from './getCommunity';
 
 export const REQUEST_COMMUNITY_JOIN_LOADING = 'REQUEST_COMMUNITY_JOIN_LOADING';
 export const REQUEST_COMMUNITY_JOIN_SUCCESS = 'REQUEST_COMMUNITY_JOIN_SUCCESS';
@@ -20,10 +12,10 @@ function requestCommunityJoin() {
   };
 }
 
-function receiveCommunityJoin(user) {
+function receiveCommunityJoin(community) {
   return {
     type: REQUEST_COMMUNITY_JOIN_SUCCESS,
-    user
+    community
   };
 }
 
@@ -51,20 +43,18 @@ function fetchCommunityJoinDo(community) {
     console.log('Fetch: CommunityJoin');
     dispatch(requestCommunityJoin());
 
-    const error = await joinPool(community.poolAddress);
-    if (error) return dispatch(failureCommunityJoin('Not signed'));
+    const toggle = community.isJoined ? leavePool : joinPool;
 
-    return fetchDecorator(
-      [
-        resp => fetchProtectedAuth(resp, dispatch),
-        fetchSuccessStatusDecorator
-      ],
-
-      request('post', apiRoutes.communityJoin(community.name), null, { 'Content-Type': 'application/json' })
-    )
-      .then(res => {
-        setUser(res.data.user);
-        dispatch(receiveCommunityJoin(res.data.user));
+    toggle(community.poolAddress)
+      .then((anydata) => {
+        console.log(anydata);
+        updateCommunityJoin(community)
+          .then(community => {
+            dispatch(receiveCommunityJoin(community));
+          })
+          .catch(err => {
+            dispatch(failureCommunityJoin(err));
+          });
       })
       .catch(err => {
         dispatch(failureCommunityJoin(err));

@@ -4,11 +4,13 @@ import {Types} from "mongoose";
 
 import {NextFunction, Request, Response} from "../types/ExpressExtended";
 
-import DisputeModel, { populateDispute } from "../models/DisputeModel"
+import DisputeModel, { populateDispute, Status } from "../models/DisputeModel"
 import DocumentModel from "../models/DocumentModel";
 
 import getFileUploader from './utils/getFileUploader';
 import sendFile from './utils/sendFile';
+
+import finishDispute from '../etherium/actions/finishDispute';
 
 import validate from "../middlewares/validateSchema";
 import {
@@ -44,9 +46,11 @@ async function getList(req: Request, res: Response, next: NextFunction) {
 
 async function get(req: Request, res: Response, next: NextFunction) {
   const disputeId = req.params.id;
+  console.log('disputeId', disputeId);
+
   return populateDispute(DisputeModel.findById(disputeId)).exec()
     .then(async dispute => {
-      res.json(dispute.getExportJSON(req.user._id.toString()))
+      res.json(dispute.getExportJSON(req.user._id.toString()));
     })
     .catch(() => res.responses.notFoundResource("Dispute not found"));
 }
@@ -59,8 +63,7 @@ async function create(req, res: Response, next: NextFunction) {
     description: disputeRaw.description || null,
     community: disputeRaw.community,
     arbitersNeed: disputeRaw.arbitersNeed,
-    document: req.file ? req.file.id : null,
-    //ethAddress: disputeRaw.ethAddress,
+    document: req.file ? req.file.id : null
   });
 
   return dispute.save()
@@ -104,14 +107,30 @@ function start(req: Request, res: Response, next: NextFunction) {
   const disputeId = req.params.id;
   const ethAddress = req.body.ethAddress;
 
-  console.log(disputeId, ethAddress);
-
   populateDispute(DisputeModel.findByIdAndUpdate(disputeId, { ethAddress }, { new: true })).exec()
     .then(async dispute => {
       await dispute.setArbiters();
       res.json(dispute.getExportJSON(req.user._id.toString()))
     })
     .catch(() => res.responses.notFoundResource("Dispute not found"));
+}
+
+function finish(req: Request, res: Response, next: NextFunction) {
+  const disputeId = req.params.id;
+
+  populateDispute(DisputeModel.findById(disputeId)).exec()
+    .then(dispute => {
+      const result = dispute.calcResult();
+      finishDispute(dispute.ethAddress, dispute.community.poolMasterAddress, dispute.arbiters, result)
+        .then(async (transaction) => {
+          console.log('transaction', transaction)
+          dispute.status = Status.CLOSED;
+          await dispute.save();
+          res.responses.success("Success");
+        })
+        .catch(err => res.responses.requestError("Can't finish dispute"));
+    })
+    .catch(err => res.responses.notFoundResource("Dispute not found" + err));
 }
 
 router.get("/",
@@ -128,8 +147,8 @@ router.get("/:id",
 const upload = getFileUploader();
 router.post("/",
   passport.authenticate("jwt", { session: false }),
-  validate(validateCreateDispute),
   upload.single('document'),
+  validate(validateCreateDispute),
   create);
 router.post("/:id/vote",
   passport.authenticate("jwt", { session: false }),
@@ -139,5 +158,8 @@ router.post("/:id/start",
   passport.authenticate("jwt", { session: false }),
   validate(validateStartDispute),
   start);
+router.post("/:id/finish",
+  passport.authenticate("jwt", { session: false }),
+  finish);
 
 export default router;

@@ -3,6 +3,7 @@ export default (schemaFactory) => {
     const schema = schemaFactory(req);
     const paramsBackup = {...req.params};
     req.params = {...req.body, ...req.query, ...req.params};
+    console.log('req.params', req.params)
     req.checkParams(schema);
     req.asyncValidationErrors(true)
       .then(() => {

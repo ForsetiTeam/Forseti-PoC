@@ -5,7 +5,7 @@ import {
   DISPUTE_DECISION_APPROVE,
   DISPUTE_DECISION_DISAPPROVE,
   DISPUTE_DECISION_ABSTAIN,
-  DISPUTE_STATUS_OPEN
+  DISPUTE_STATUS_OPEN, DISPUTE_STATUS_CLOSED
 } from '../../../consts';
 import SpinnerWaiter from '../../../components/SpinnerWaiter';
 
@@ -19,6 +19,7 @@ class Dispute extends Component {
     onToggle: PropTypes.func,
     onVote: PropTypes.func,
     onStart: PropTypes.func,
+    onFinish: PropTypes.func,
     onDownloadDocument: PropTypes.func
   };
 
@@ -37,6 +38,18 @@ class Dispute extends Component {
               Start
             </button>
             <SpinnerWaiter isLoading={this.props.isLoading}/>
+          </div>
+        );
+      }
+      if (dispute.status !== DISPUTE_STATUS_CLOSED) {
+        return (
+          <div>
+            <button
+              className='btn btn-success m-1'
+              onClick={this.props.onFinish}
+            >
+              Finish
+            </button>
           </div>
         );
       }
@@ -100,7 +113,7 @@ class Dispute extends Component {
             <p>Description: {dispute.description}</p>
             <p>Arbiters count: {dispute.arbitersNeed}</p>
             <p>Status: {dispute.status}</p>
-            {dispute.hasOwnProperty('usersVoted') &&
+            {this.props.isAuthor &&
               <p>Vote summary: {dispute.usersVoted} voted, {dispute.usersRejected} rejected</p>
             }
             {dispute.hasOwnProperty('userDecision') &&

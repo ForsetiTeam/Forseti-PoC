@@ -40,7 +40,7 @@ export function validateCreateDispute(req) {
     },
     community: {
       isLength: {
-        options: addressLength,
+        options: 24,
         errorMessage: 'Invalid length'
       },
     },

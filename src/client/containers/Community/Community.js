@@ -8,10 +8,10 @@ import { fetchCommunityJoin } from '../../redux/actions/community/joinCommunity'
 function mapStateToProps(state, props) {
   const communityName = props.match.params.communityName;
   const community = state.community.list.find(comm => comm.name === communityName);
-  const currentUser = state.currentUser.user;
-  const isJoined = currentUser && community && currentUser.communities.includes(community.id);
+  const isJoining = state.community.joining;
+  const isMetamaskLoaded = !!state.metamask.account;
 
-  return { communityName, community, isJoined };
+  return { communityName, community, isJoining, isMetamaskLoaded };
 }
 
 const mapDispatchToProps = dispatch => ({

@@ -1,13 +1,9 @@
-import getSmartContract from '../contracts/getSmartContract';
+import contractUtils from '../contractUtils';
 
-export default function joinPool(poolContract) {
-  return new Promise(resolve => {
-    const pool = getSmartContract('Pool', poolContract);
-    const myAccount = window.web3.eth.coinbase;
+export default function joinPool(poolAddress) {
+  return new Promise((resolve, reject) => {
+    const pool = contractUtils.getSmartContract('Pool', poolAddress);
 
-    pool.becomeNewMember({ from: myAccount }, err => {
-      if (err) return resolve(err);
-      resolve();
-    });
+    contractUtils.runSignedTillResolve(pool, 'becomeNewMember', [], resolve, reject);
   });
 }

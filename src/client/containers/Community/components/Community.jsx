@@ -4,19 +4,29 @@ import { Link } from 'react-router-dom';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/fontawesome-free-solid';
+import SpinnerWaiter from "../../../components/SpinnerWaiter";
 
 class Community extends Component {
   static propTypes = {
     communityName: PropTypes.string,
     community: PropTypes.shape(),
-    isJoined: PropTypes.bool,
+    isJoining: PropTypes.bool,
+    isMetamaskLoaded: PropTypes.bool,
 
     fetchCommunity: PropTypes.func,
     fetchCommunityJoin: PropTypes.func
   };
 
   componentDidMount() {
-    this.props.fetchCommunity(this.props.communityName);
+    if (this.props.isMetamaskLoaded) {
+      this.props.fetchCommunity(this.props.communityName);
+    }
+  }
+
+  componentWillUpdate(newProps) {
+    if (!this.props.isMetamaskLoaded && newProps.isMetamaskLoaded) {
+      this.props.fetchCommunity(this.props.communityName);
+    }
   }
 
   handleJoin = () => {
@@ -42,7 +52,10 @@ class Community extends Component {
           </div>
         </div>
         <div className='text-center'>
-          <button className='btn m-1 btn-primary' onClick={this.handleJoin}>{this.props.isJoined ? 'Leave' : 'Join'}</button>
+          <button className='btn m-1 btn-primary' onClick={this.handleJoin} disabled={this.props.isJoining}>
+            {comm.isJoined ? 'Leave' : 'Join'}
+          </button>
+          <SpinnerWaiter isLoading={this.props.isJoining} />
           <Link to={`/community/${comm.name}/dispute/new`} className='btn m-1 btn-info'>Add dispute</Link>
         </div>
       </div>

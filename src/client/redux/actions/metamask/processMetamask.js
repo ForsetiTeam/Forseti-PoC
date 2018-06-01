@@ -86,6 +86,7 @@ function listenAccount(onChange) {
       const account = (accounts || [])[0];
       if (account !== currentAccount) {
         currentAccount = account;
+        console.log('GET METAMASK ACCOUNT', account);
         onChange(null, account);
       }
       setTimeout(() => loadAccountWithTimeout(), 1000);

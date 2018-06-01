@@ -9,11 +9,11 @@ export default {
   // community
   communityList:    ()              => '/api/community',
   community:        (communityName) => `/api/community/${communityName}`,
-  communityJoin:    (communityName) => `/api/community/${communityName}/join`,
   // dispute
   disputeList:      ()              => '/api/dispute',
   dispute:          (disputeId)     => `/api/dispute/${disputeId}`,
   disputeDocument:  (disputeId)     => `/api/dispute/${disputeId}/document`,
   disputeVote:      (disputeId)     => `/api/dispute/${disputeId}/vote`,
-  disputeStart:     (disputeId)     => `/api/dispute/${disputeId}/start`
+  disputeStart:     (disputeId)     => `/api/dispute/${disputeId}/start`,
+  disputeFinish:    (disputeId)     => `/api/dispute/${disputeId}/finish`
 };

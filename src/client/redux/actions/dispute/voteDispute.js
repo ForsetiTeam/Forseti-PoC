@@ -41,15 +41,15 @@ function fetchVoteDisputeDo(disputeId, decision) {
     console.log('Fetch: VoteDispute');
     dispatch(requestVoteDispute());
 
-    const sign = await signMessage(decision);
-    if (!sign) return dispatch(failureVoteDispute('Not signed'));
+    const sig = await signMessage(decision);
+    if (!sig) return dispatch(failureVoteDispute('Not signed'));
 
     return fetchDecorator(
       [
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      request('post', apiRoutes.disputeVote(disputeId), { decision, sign })
+      request('post', apiRoutes.disputeVote(disputeId), { decision, sig })
     )
       .then(res => {
         dispatch(receiveVoteDispute(res.data));

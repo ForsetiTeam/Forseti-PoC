@@ -15,7 +15,8 @@ class DisputeController extends Component {
 
     fetchDispute: PropTypes.func,
     fetchVoteDispute: PropTypes.func,
-    fetchStartDispute: PropTypes.func
+    fetchStartDispute: PropTypes.func,
+    fetchFinishDispute: PropTypes.func
   };
 
   state = {
@@ -34,6 +35,11 @@ class DisputeController extends Component {
   handleStart = e => {
     e.preventDefault();
     this.props.fetchStartDispute(this.props.dispute);
+  };
+
+  handleFinish = e => {
+    e.preventDefault();
+    this.props.fetchFinishDispute(this.props.dispute);
   };
 
   handleDownloadDocument = e => {
@@ -61,6 +67,7 @@ class DisputeController extends Component {
         onToggle={this.handleToggle}
         onVote={this.handleVote}
         onStart={this.handleStart}
+        onFinish={this.handleFinish}
         onDownloadDocument={this.handleDownloadDocument}
       />
     );

@@ -5,6 +5,7 @@ import DisputeController from './components/DisputeController';
 import { fetchDispute } from '../../redux/actions/dispute/getDispute';
 import { fetchVoteDispute } from '../../redux/actions/dispute/voteDispute';
 import { fetchStartDispute } from '../../redux/actions/dispute/startDispute';
+import { fetchFinishDispute } from '../../redux/actions/dispute/finishDispute';
 
 function mapStateToProps(state, props) {
   const id = props.match.params.disputeId;
@@ -19,7 +20,8 @@ function mapStateToProps(state, props) {
 const mapDispatchToProps = dispatch => ({
   fetchDispute: disputeId => dispatch(fetchDispute(disputeId)),
   fetchVoteDispute: (disputeId, decision) => dispatch(fetchVoteDispute(disputeId, decision)),
-  fetchStartDispute: dispute => dispatch(fetchStartDispute(dispute))
+  fetchStartDispute: dispute => dispatch(fetchStartDispute(dispute)),
+  fetchFinishDispute: dispute => dispatch(fetchFinishDispute(dispute))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DisputeController);

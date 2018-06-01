@@ -6,6 +6,9 @@ export class Community extends Typegoose {
   @prop({ required: true, unique: true })
   public poolAddress: string;
 
+  @prop({ required: true })
+  public poolMasterAddress: string;
+
   @prop({ required: true, unique: true })
   public name: string;
 

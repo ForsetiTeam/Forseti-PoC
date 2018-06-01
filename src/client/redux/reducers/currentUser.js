@@ -12,11 +12,6 @@ import {
 import {
   LOGOUT
 } from '../actions/auth/authLogout';
-import {
-  REQUEST_COMMUNITY_JOIN_LOADING,
-  REQUEST_COMMUNITY_JOIN_SUCCESS,
-  REQUEST_COMMUNITY_JOIN_FAILURE
-} from '../actions/community/joinCommunity';
 
 const user = getUser();
 
@@ -30,35 +25,20 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case REQUEST_REGISTER_LOADING:
-    case REQUEST_LOGIN_LOADING:
-    case REQUEST_COMMUNITY_JOIN_LOADING: {
+    case REQUEST_LOGIN_LOADING: {
       const newState = { ...state };
 
       newState.loaded = false;
       newState.loading = true;
+      newState.joining = false;
       newState.user = null;
       newState.error = null;
       return newState;
     }
     case REQUEST_REGISTER_SUCCESS:
     case REQUEST_LOGIN_SUCCESS:
-    case REQUEST_COMMUNITY_JOIN_SUCCESS: {
-      const newState = { ...state };
-
-      newState.loaded = true;
-      newState.loading = false;
-      newState.user = action.user;
-      return newState;
-    }
     case REQUEST_REGISTER_FAILURE:
     case REQUEST_LOGIN_FAILURE:
-    case REQUEST_COMMUNITY_JOIN_FAILURE: {
-      const newState = { ...state };
-
-      newState.loading = false;
-      newState.error = action.error;
-      return newState;
-    }
     case LOGOUT: {
       return {
         user: null,

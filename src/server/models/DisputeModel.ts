@@ -7,7 +7,7 @@ import VoteModel, { Vote, Decision } from './VoteModel';
 
 import selectArbiters from '../lib/selectArbiters';
 
-enum Status {
+export enum Status {
   OPEN = 'open',
   CLOSED = 'closed',
 }
@@ -70,8 +70,25 @@ export class Dispute extends Typegoose {
     const arbiters = selected.map(userId => new VoteModel({user: userId}));
     this.arbiters = arbiters;
 
-    await this.save();
+    try {
+      await this.save();
+    } catch (e) {
+      return false;
+    }
     return true;
+  }
+
+  @instanceMethod
+  calcResult(this) {
+    const {approve, disapprove} = this.arbiters.reduce((summary, vote) => {
+      if (vote.decision === Decision.APPROVE) summary.approve++;
+      if (vote.decision === Decision.DISAPPROVE) summary.disapprove++;
+      return summary;
+    }, {approve: 0, disapprove: 0});
+
+    if (this.arbitersNeed > approve + disapprove) return Decision.ABSTAIN;
+
+    return approve > disapprove ? Decision.APPROVE : Decision.DISAPPROVE;
   }
 
   @instanceMethod
@@ -91,6 +108,7 @@ export class Dispute extends Typegoose {
       ethAddress: this.ethAddress,
 
       poolAddress: this.community.poolAddress,
+      poolMasterAddress: this.community.poolMasterAddress
     };
 
     if (this.author.toString() === userId.toString()) {

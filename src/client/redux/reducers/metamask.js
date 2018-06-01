@@ -23,6 +23,7 @@ export default function (state = initialState, action) {
       };
     }
     case METAMASK_ACCOUNT_SUCCESS: {
+      console.log('METAMASK_ACCOUNT_SUCCESS');
       return {
         loading: false,
         account: action.account,

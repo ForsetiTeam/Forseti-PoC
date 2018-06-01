@@ -19,27 +19,11 @@ async function get(req: Request, res: Response, next: NextFunction) {
   res.json(community.getExportJSON());
 }
 
-async function join(req: Request, res: Response, next: NextFunction) {
-  const user = req.user;
-  const communityName = req.params.communityName;
-
-  let community = await CommunityModel.findOne({name: communityName});
-  if (!community) return res.responses.notFoundResource("Community not found");
-
-  const error = await user.toggleCommunity(community._id);
-  if (error) return res.responses.requestError("Can't toggle community");
-
-  return res.json({user: user.getExportJSON()});
-}
-
 router.get("/",
   passport.authenticate("jwt", { session: false }),
   getList);
 router.get("/:communityName",
   passport.authenticate("jwt", { session: false }),
   get);
-router.post("/:communityName/join",
-  passport.authenticate("jwt", { session: false }),
-  join);
 
 export default router;

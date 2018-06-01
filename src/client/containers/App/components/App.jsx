@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Layer from '../../Layer/index';
+import Layer from '../../Layer';
 import Main from '../../../routes';
 
 class App extends Component {

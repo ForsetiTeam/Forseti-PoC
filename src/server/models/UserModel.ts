@@ -13,22 +13,6 @@ export class User extends Typegoose {
   @prop({ required: true })
   public sig: string;
 
-  @arrayProp({ itemsRef: Community })
-  public communities: Ref<Community>[];
-
-  @instanceMethod
-  async toggleCommunity(this: InstanceType<User>, communityId: string) {
-    console.log()
-    const pos = this.communities.findIndex(community => community.toString() === communityId.toString());
-    if (pos != -1) {
-      this.communities.splice(pos, 1);
-    } else {
-      this.communities.push(communityId);
-    }
-    await this.save();
-    return await CommunityModel.updateUserCount(communityId);
-  }
-
   @instanceMethod
   getExportJSON(this: InstanceType<User>) {
     return UserModel.getExportJSON(this);

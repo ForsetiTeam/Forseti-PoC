@@ -8,6 +8,7 @@ import {
   fetchSuccessStatusDecorator,
   fetchProtectedAuth
 } from '../decorators/index';
+import getPoolReputation from "../../../etherium/actions/getPoolReputation";
 
 export const REQUEST_COMMUNITY_LOADING = 'REQUEST_COMMUNITY_LOADING';
 export const REQUEST_COMMUNITY_SUCCESS = 'REQUEST_COMMUNITY_SUCCESS';
@@ -58,11 +59,23 @@ function fetchCommunityDo(communityName) {
       request('get', apiRoutes.community(communityName))
     )
       .then(res => {
-        dispatch(receiveCommunity(res.data));
+        updateCommunityJoin(res.data)
+          .then(community => dispatch(receiveCommunity(community)));
       })
       .catch(err => {
         dispatch(failureCommunity(err));
         dispatch(push('/'));
       });
   };
+}
+
+export function updateCommunityJoin(community) {
+  return new Promise((resolve, reject) => {
+    getPoolReputation(community.poolAddress, window.web3.eth.coinbase)
+      .then(reputation => {
+        community.isJoined = !!reputation;
+        resolve(community);
+      })
+      .catch(reject);
+  });
 }
