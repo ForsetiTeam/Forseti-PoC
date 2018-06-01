@@ -1,5 +1,5 @@
-import joinPool from '../../../etherium/actions/pool/joinPool';
-import leavePool from '../../../etherium/actions/pool/leavePool';
+import joinPool from '../../../etherium/pool/joinPool';
+import leavePool from '../../../etherium/pool/leavePool';
 import { updateCommunityJoin } from './getCommunity';
 
 export const REQUEST_COMMUNITY_JOIN_LOADING = 'REQUEST_COMMUNITY_JOIN_LOADING';

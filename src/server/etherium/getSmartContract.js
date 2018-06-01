@@ -1,4 +1,4 @@
-import contracts from '../../etherium/contracts/index';
+import contracts from '../../etherium/index';
 import web3 from './getWeb3';
 
 export default function getSmartContract(contractName, address) {

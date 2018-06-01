@@ -1,4 +1,4 @@
-import web3 from '../getWeb3';
+import { web3 } from './contractUtils';
 
 export default function signMessage(message) {
   return new Promise(resolve => {

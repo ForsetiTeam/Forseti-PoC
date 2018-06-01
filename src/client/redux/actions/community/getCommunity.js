@@ -8,8 +8,8 @@ import {
   fetchSuccessStatusDecorator,
   fetchProtectedAuth
 } from '../decorators/index';
-import getPoolReputationByAddress from '../../../etherium/actions/pool/getPoolReputationByAddress';
-import getPoolActiveArbiters from '../../../etherium/actions/pool/getPoolActiveArbiters';
+import getPoolReputationByAddress from '../../../etherium/pool/getPoolReputationByAddress';
+import getPoolActiveArbiters from '../../../etherium/pool/getPoolActiveArbiters';
 
 export const REQUEST_COMMUNITY_LOADING = 'REQUEST_COMMUNITY_LOADING';
 export const REQUEST_COMMUNITY_SUCCESS = 'REQUEST_COMMUNITY_SUCCESS';

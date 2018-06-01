@@ -1,4 +1,4 @@
-import contractUtils from '../../contractUtils';
+import contractUtils from '../contractUtils';
 
 export default function getPoolReputationByAddress(poolAddress, accountAddress) {
   return new Promise((resolve, reject) => {

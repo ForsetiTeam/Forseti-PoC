@@ -1,5 +1,5 @@
-import contracts from '../../etherium/contracts/index';
-import web3 from './getWeb3';
+import contracts from '../../etherium/index';
+const web3 = window.web3;
 
 function getSmartContract(contractName, address) {
   const contractData = contracts[contractName];
@@ -46,4 +46,4 @@ function runSignedTillResolve(contract, methodName, params, resolve, reject) {
     getTransactionFinish(transactionAddress, resolve, reject), reject);
 }
 
-export default { getSmartContract, runSigned, runSignedTillResolve };
+export default { web3, getSmartContract, runSigned, runSignedTillResolve };

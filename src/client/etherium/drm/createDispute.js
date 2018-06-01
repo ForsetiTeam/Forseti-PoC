@@ -1,10 +1,9 @@
-import contractUtils from '../../contractUtils';
-import web3 from '../../getWeb3';
+import contractUtils from '../contractUtils';
 
 export default function createDispute(dispute) {
   return new Promise((resolve, reject) => {
     const drm = contractUtils.getSmartContract('DRM');
-    const myAccount = web3.eth.coinbase;
+    const myAccount = contractUtils.web3.eth.coinbase;
 
     const weirdHash = dispute.poolAddress;
     const arbitersNeed = dispute.arbitersNeed;

@@ -1,5 +1,4 @@
-import contractUtils from '../../contractUtils';
-// import web3 from '../getWeb3';
+import contractUtils from '../contractUtils';
 
 export default function createPool() {
   return new Promise((resolve, reject) => {
