@@ -1,5 +1,3 @@
-import { push } from 'react-router-redux';
-
 import { request } from '../utils/axios';
 import apiRoutes from '../../apiRoutes';
 
@@ -64,7 +62,6 @@ function fetchCommunityDo(communityName) {
       .then(community => dispatch(receiveCommunity(community)))
       .catch(err => {
         dispatch(failureCommunity(err));
-        dispatch(push('/'));
       });
   };
 }

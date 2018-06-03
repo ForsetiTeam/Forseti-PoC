@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/fontawesome-free-solid';
 import SpinnerWaiter from "../../../components/SpinnerWaiter";
+import ErrorRequest from "../../../components/ErrorRequest";
 
 class Community extends Component {
   static propTypes = {
     communityName: PropTypes.string,
     community: PropTypes.shape(),
     isJoining: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    error: PropTypes.string,
     isMetamaskLoaded: PropTypes.bool,
 
     fetchCommunity: PropTypes.func,
@@ -34,8 +37,10 @@ class Community extends Component {
   };
 
   render() {
-    const comm = this.props.community;
+    if (this.props.isLoading) return <SpinnerWaiter isLoading={this.props.isLoading} />;
+    if (this.props.error) return <ErrorRequest error={this.props.error} />;
 
+    const comm = this.props.community;
     if (!comm) return <div />;
     return (
       <div>
