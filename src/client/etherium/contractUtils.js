@@ -32,11 +32,12 @@ function getTransactionFinish(transactionAddress, resolve, reject) {
 /* eslint-disable max-params */
 function runSigned(contract, methodName, params, resolve, reject) {
   const myAccount = web3.eth.coinbase;
+  console.log(`req transaction: address - ${contract.address}, method - ${methodName}, params - ${JSON.stringify(params)}`);
   contract[methodName](...params, { from: myAccount }, (err, response) => {
     console.log(
       `get transaction: address - ${contract.address}, method - ${methodName}, params - ${JSON.stringify(params)}`,
       err, response);
-    if (err) return reject(err);
+    if (err) return reject(err.message);
     resolve(response);
   });
 }
