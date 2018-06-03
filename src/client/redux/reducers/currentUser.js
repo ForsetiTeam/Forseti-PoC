@@ -36,7 +36,14 @@ export default function (state = initialState, action) {
       return newState;
     }
     case REQUEST_REGISTER_SUCCESS:
-    case REQUEST_LOGIN_SUCCESS:
+    case REQUEST_LOGIN_SUCCESS: {
+      return {
+        user: action.user,
+        loaded: true,
+        loading: false,
+        error: null
+      };
+    }
     case REQUEST_REGISTER_FAILURE:
     case REQUEST_LOGIN_FAILURE:
     case LOGOUT: {
