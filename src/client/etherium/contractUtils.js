@@ -37,7 +37,7 @@ function runSigned(contract, methodName, params, resolve, reject) {
     console.log(
       `get transaction: address - ${contract.address}, method - ${methodName}, params - ${JSON.stringify(params)}`,
       err, response);
-    if (err) return reject(err.message);
+    if (err) return reject(err.message.substring(0, 100));
     resolve(response);
   });
 }

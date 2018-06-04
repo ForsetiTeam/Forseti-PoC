@@ -107,12 +107,15 @@ function start(req: Request, res: Response, next: NextFunction) {
   const disputeId = req.params.id;
   const ethAddress = req.body.ethAddress;
 
-  populateDispute(DisputeModel.findByIdAndUpdate(disputeId, { ethAddress }, { new: true })).exec()
-    .then(async dispute => {
-      await dispute.setArbiters();
-      res.json(dispute.getExportJSON(req.user._id.toString()))
+  populateDispute(DisputeModel.findById(disputeId)).exec()
+    .catch(() => res.responses.notFoundResource("Dispute not found"))
+    .then(dispute => dispute.setArbiters())
+    .then(dispute => {
+      dispute.ethAddress = ethAddress;
+      return dispute.save();
     })
-    .catch(() => res.responses.notFoundResource("Dispute not found"));
+    .then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
+    .catch(error => res.responses.requestError(error));
 }
 
 function finish(req: Request, res: Response, next: NextFunction) {
@@ -128,9 +131,9 @@ function finish(req: Request, res: Response, next: NextFunction) {
           await dispute.save();
           res.responses.success("Success");
         })
-        .catch(err => res.responses.requestError("Can't finish dispute"));
+        .catch(() => res.responses.requestError("Can't finish dispute"));
     })
-    .catch(err => res.responses.notFoundResource("Dispute not found" + err));
+    .catch(() => res.responses.notFoundResource("Dispute not found"));
 }
 
 router.get("/",

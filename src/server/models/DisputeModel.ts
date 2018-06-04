@@ -55,29 +55,23 @@ export class Dispute extends Typegoose {
   }
 
   @instanceMethod
-  async setArbiters(this) {
-    // get author
-    const author = await UserModel.findById(this.author);
+  setArbiters(this) {
+    return UserModel.findById(this.author)
+      .then(author => Promise.all([
+        author,
+        getPoolActiveArbiters(this.community.poolAddress)
+      ]))
+      .then(([author, users]) => {
+        //remove author from users list
+        users = users.filter(user => user.address.toLowerCase() !== author.account.toLowerCase());
 
-    //select all users assigned with community
-    let users = await getPoolActiveArbiters(this.community.poolAddress);
+        //select arbiters from users list
+        const selected = selectArbiters(users, this._id, this.arbitersNeed);
+        if (!selected) return Promise.reject('Not enough arbiters in the pool');
 
-    //remove author from users list
-    users = users.filter(user => user.address.toLowerCase() !== author.account.toLowerCase());
-
-    //select arbiters from users list
-    const selected = selectArbiters(users, this._id, this.arbitersNeed);
-    if (!selected) return false;
-
-    const arbiters = selected.map(userId => new VoteModel({user: userId}));
-    this.arbiters = arbiters;
-
-    try {
-      await this.save();
-    } catch (e) {
-      return false;
-    }
-    return true;
+        const arbiters = selected.map(userId => new VoteModel({user: userId}));
+        this.arbiters = arbiters;
+      })
   }
 
   @instanceMethod

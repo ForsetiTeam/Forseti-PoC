@@ -1,5 +1,3 @@
-import { push } from 'react-router-redux';
-
 import { request } from '../utils/axios';
 import apiRoutes from '../../apiRoutes';
 
@@ -49,27 +47,24 @@ function shouldFetchStartDispute(state) {
 }
 
 function fetchStartDisputeDo(dispute) {
-  return async dispatch => {
+  return dispatch => {
     console.log('Fetch: StartDispute');
     dispatch(requestStartDispute());
 
-    const ethAddress = await createDispute(dispute);
-    if (!ethAddress) return dispatch(failureStartDispute('Not signed'));
-
-    return fetchDecorator(
-      [
-        resp => fetchProtectedAuth(resp, dispatch),
-        fetchSuccessStatusDecorator
-      ],
-      request('post', apiRoutes.disputeStart(dispute.id), { ethAddress })
-    )
-      .then(async res => {
-        dispatch(receiveStartDispute(res.data));
-        dispatch(push(`/dispute/${res.data.id}`));
+    createDispute(dispute)
+      .then(ethAddress => {
+        return fetchDecorator(
+          [
+            resp => fetchProtectedAuth(resp, dispatch),
+            fetchSuccessStatusDecorator
+          ],
+          request('post', apiRoutes.disputeStart(dispute.id), { ethAddress })
+        )
+          .then(res => dispatch(receiveStartDispute(res.data)))
+          .catch(err => dispatch(failureStartDispute(err)));
       })
       .catch(err => {
         dispatch(failureStartDispute(err));
-        dispatch(push('/'));
       });
   };
 }

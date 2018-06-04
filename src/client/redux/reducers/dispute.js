@@ -23,7 +23,7 @@ const initialState = {
   list: [],
   loaded: false,
   loading: false,
-  error: null
+  error: ''
 };
 
 export default function (state = initialState, action) {
@@ -35,7 +35,7 @@ export default function (state = initialState, action) {
       newState.list = [];
       newState.loaded = false;
       newState.loading = true;
-      newState.error = null;
+      newState.error = '';
       return newState;
     }
     case REQUEST_VOTE_DISPUTE_LOADING:
@@ -44,7 +44,7 @@ export default function (state = initialState, action) {
 
       newState.loaded = false;
       newState.loading = true;
-      newState.error = null;
+      newState.error = '';
       return newState;
     }
     case REQUEST_DISPUTE_LIST_SUCCESS: {

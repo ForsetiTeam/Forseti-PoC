@@ -8,6 +8,7 @@ import {
   DISPUTE_STATUS_OPEN, DISPUTE_STATUS_CLOSED
 } from '../../../consts';
 import SpinnerWaiter from '../../../components/SpinnerWaiter';
+import ErrorRequest from '../../../components/ErrorRequest';
 
 class Dispute extends Component {
   static propTypes = {
@@ -15,6 +16,7 @@ class Dispute extends Component {
     isAuthor: PropTypes.bool,
     isLoading: PropTypes.bool,
     isToggled: PropTypes.bool,
+    error: PropTypes.string,
 
     onToggle: PropTypes.func,
     onVote: PropTypes.func,
@@ -38,6 +40,7 @@ class Dispute extends Component {
               Start
             </button>
             <SpinnerWaiter isLoading={this.props.isLoading}/>
+            <ErrorRequest error={this.props.error}/>
           </div>
         );
       }
@@ -113,7 +116,7 @@ class Dispute extends Component {
             <p>Description: {dispute.description}</p>
             <p>Arbiters count: {dispute.arbitersNeed}</p>
             <p>Status: {dispute.status}</p>
-            {this.props.isAuthor &&
+            {dispute.ethAddress && this.props.isAuthor &&
               <p>Vote summary: {dispute.usersVoted} voted, {dispute.usersRejected} rejected</p>
             }
             {dispute.hasOwnProperty('userDecision') &&

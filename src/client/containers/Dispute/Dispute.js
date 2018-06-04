@@ -13,8 +13,9 @@ function mapStateToProps(state, props) {
   const currentUser = state.currentUser.user;
   const isAuthor = dispute && currentUser && currentUser.id === dispute.author;
   const isLoading = state.dispute.loading;
+  const error = state.dispute.error;
 
-  return { id, dispute, isAuthor, isLoading };
+  return { id, dispute, isAuthor, isLoading, error };
 }
 
 const mapDispatchToProps = dispatch => ({
