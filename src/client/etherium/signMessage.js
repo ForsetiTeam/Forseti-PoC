@@ -1,7 +1,6 @@
-import { web3 } from './contractUtils';
-
 export default function signMessage(message) {
   return new Promise(resolve => {
+    const web3 = window.web3;
     const myAccount = web3.eth.coinbase;
     const hex = web3.toHex(message);
 

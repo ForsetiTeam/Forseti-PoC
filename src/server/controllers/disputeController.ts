@@ -94,7 +94,7 @@ function vote(req: Request, res: Response, next: NextFunction) {
   DisputeModel.findById(disputeId).populate({path: 'document', model: DocumentModel}).exec()
     .then(dispute => {
 
-      const vote = dispute.getUserVote(req.user._id.toString());
+      const vote = dispute.getUserVote(req.user.account);
       if (!vote) return res.responses.requestError("User is not an arbiter");
 
       vote.decision = req.body.decision;
