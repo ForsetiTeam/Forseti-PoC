@@ -22,8 +22,6 @@ export function request(method, url, data = {}, headers = {}) {
     return status < 500;
   };
 
-  axios(config).then(console.log).catch(console.log);
-
   return axios(config);
 }
 
