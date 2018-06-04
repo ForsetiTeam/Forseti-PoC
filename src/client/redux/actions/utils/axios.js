@@ -18,8 +18,11 @@ export function request(method, url, data = {}, headers = {}) {
   if (data) config[method === 'get' ? 'params' : 'data'] = data;
   config.headers = Object.assign(config.headers || {}, headers);
   config.validateStatus = status => {
-    return status >= 200 && status < 300 || status === 304;
+    // return status >= 200 && status < 300 || status === 304;
+    return status < 500;
   };
+
+  axios(config).then(console.log).catch(console.log);
 
   return axios(config);
 }
