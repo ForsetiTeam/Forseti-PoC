@@ -69,7 +69,7 @@ async function register(req: Request, res: Response, next: NextFunction) {
   req.logIn(user, (loginErr) => {
     if (loginErr) { return next(new VError("Auth error")); }
     res.cookie("jwt", token, {httpOnly: true});
-    return res.json({message: "Success", user: user, token});
+    return res.json({message: "Success", user: user.getExportJSON(), token});
   });
 }
 

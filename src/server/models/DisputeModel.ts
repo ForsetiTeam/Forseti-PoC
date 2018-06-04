@@ -44,8 +44,8 @@ export class Dispute extends Typegoose {
   public arbiters: Vote[];
 
   @instanceMethod
-  getUserVote(this: InstanceType<Dispute>, userId: string) {
-    return this.arbiters.find(vote => vote.user.toString() == userId);
+  getUserVote(this: InstanceType<Dispute>, userAddress: string) {
+    return this.arbiters.find(vote => vote.userAddress == userAddress);
   }
 
   @instanceMethod
@@ -64,13 +64,15 @@ export class Dispute extends Typegoose {
       .then(([author, users]) => {
         //remove author from users list
         users = users.filter(user => user.address.toLowerCase() !== author.account.toLowerCase());
+        console.log('users', users);
 
         //select arbiters from users list
         const selected = selectArbiters(users, this._id, this.arbitersNeed);
         if (!selected) return Promise.reject('Not enough arbiters in the pool');
+        console.log('selected', selected);
 
-        const arbiters = selected.map(userId => new VoteModel({user: userId}));
-        this.arbiters = arbiters;
+        this.arbiters = selected.map(user => new VoteModel({userAddress: user.address.toLowerCase()}));
+        return this;
       })
   }
 
@@ -88,7 +90,7 @@ export class Dispute extends Typegoose {
   }
 
   @instanceMethod
-  getExportJSON(this, userId: string) {
+  getExportJSON(this, user) {
     const document = this.document ? this.document.toJSON() : null;
     const fileName = document && document.metadata ? document.metadata.fileName : null;
 
@@ -107,7 +109,7 @@ export class Dispute extends Typegoose {
       poolMasterAddress: this.community.poolMasterAddress
     };
 
-    if (this.author.toString() === userId.toString()) {
+    if (this.author.toString() === user._id.toString()) {
       //author or pool-master
       exportData = Object.assign(exportData,
         this.arbiters.reduce((summary, arbiter) => {
@@ -118,8 +120,7 @@ export class Dispute extends Typegoose {
       );
     } else {
       //other
-      const vote = this.getUserVote(userId);
-
+      const vote = this.getUserVote(user.account);
       exportData = Object.assign(exportData, {
         userIsArbiter: !!vote,
         userDecision: vote ? vote.decision : null

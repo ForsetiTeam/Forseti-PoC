@@ -10,7 +10,7 @@ export enum Decision {
 export class Vote extends Typegoose {
 
   @prop({ required: true })
-  public user: Ref<User>;
+  public userAddress: string;
 
   @prop({ enum: Decision })
   public decision: Decision;

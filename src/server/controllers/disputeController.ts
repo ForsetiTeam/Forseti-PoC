@@ -24,14 +24,13 @@ const router = express.Router();
 
 async function getList(req: Request, res: Response, next: NextFunction) {
   const filterRaw = req.query;
-  console.log('filterRaw', filterRaw);
 
   const filter = {};
   if (filterRaw.author == 'true') {
     filter.author = req.user._id;
   }
   if (filterRaw.arbiter == 'true') {
-    filter.arbiters = {$elemMatch: { user: Types.ObjectId(req.user._id) }};
+    filter.arbiters = { $elemMatch: { userAddress: req.user.account } };
     if (filterRaw.hasOwnProperty('answered')) {
       filter.arbiters.$elemMatch.decision = { $exists: filterRaw.answered == 'true' };
     }
@@ -40,8 +39,13 @@ async function getList(req: Request, res: Response, next: NextFunction) {
     filter.status = filterRaw.status;
   }
 
-  let list = await populateDispute(DisputeModel.find(filter)).exec();
-  res.json(list.map(item => item.getExportJSON(req.user._id.toString())));
+  populateDispute(DisputeModel.find(filter)).exec()
+    .then(list => {
+      console.log(list)
+      res.json(list.map(dispute => dispute.getExportJSON(req.user)))
+    })
+    .catch(() => res.responses.requestError("Can't resolve request"))
+  ;
 }
 
 async function get(req: Request, res: Response, next: NextFunction) {
@@ -50,7 +54,7 @@ async function get(req: Request, res: Response, next: NextFunction) {
 
   return populateDispute(DisputeModel.findById(disputeId)).exec()
     .then(async dispute => {
-      res.json(dispute.getExportJSON(req.user._id.toString()));
+      res.json(dispute.getExportJSON(req.user));
     })
     .catch(() => res.responses.notFoundResource("Dispute not found"));
 }
@@ -67,7 +71,7 @@ async function create(req, res: Response, next: NextFunction) {
   });
 
   return dispute.save()
-    .then(async dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
+    .then(async dispute => res.json(dispute.getExportJSON(req.user)))
     .catch(err => res.responses.requestError("Can't save dispute", null));
 }
 
@@ -97,7 +101,7 @@ function vote(req: Request, res: Response, next: NextFunction) {
       vote.sig = req.body.sig;
 
       dispute.save()
-        .then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
+        .then(dispute => res.json(dispute.getExportJSON(req.user)))
         .catch(error => res.responses.requestError(error));
     })
     .catch(() => res.responses.notFoundResource("Dispute not found"));
@@ -111,10 +115,11 @@ function start(req: Request, res: Response, next: NextFunction) {
     .catch(() => res.responses.notFoundResource("Dispute not found"))
     .then(dispute => dispute.setArbiters())
     .then(dispute => {
+      console.log('SAVE');
       dispute.ethAddress = ethAddress;
       return dispute.save();
     })
-    .then(dispute => res.json(dispute.getExportJSON(req.user._id.toString())))
+    .then(dispute => res.json(dispute.getExportJSON(req.user)))
     .catch(error => res.responses.requestError(error));
 }
 
