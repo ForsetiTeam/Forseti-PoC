@@ -12,7 +12,7 @@ class DisputeController extends Component {
     isAuthor: PropTypes.bool,
     documentLink: PropTypes.string,
     isLoading: PropTypes.bool,
-    error: PropTypes.error,
+    error: PropTypes.string,
 
     fetchDispute: PropTypes.func,
     fetchVoteDispute: PropTypes.func,
