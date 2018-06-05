@@ -17,8 +17,7 @@ function getWeb3() {
   console.log(account, phrase);
   web3.eth.personal.unlockAccount(account, phrase, 1e6)
     .then(result => console.log('UNLOCKED', result))
-    .catch(console.log);
-    */
+    .catch(console.log);*/
 
   return web3;
 }
@@ -54,11 +53,19 @@ function getTransactionFinish(transactionAddress, resolve, reject) {
 /* eslint-disable max-params */
 function runSigned(contract, methodName, params, resolve, reject) {
   const myAccount = config.get('metamask.poolMasterAccount');
+  const logParams = { address: contract._address, methodName, params };
 
+  console.log('req transaction', logParams);
   contract.methods[methodName](...params)
-    .send({ from: myAccount })
-    .then(resolve)
-    .catch(reject);
+    .call({ from: myAccount })
+    .then(response => {
+      console.log('get transaction - success', logParams, response);
+      resolve(response);
+    })
+    .catch(error => {
+      console.log('get transaction - error', logParams, error);
+      reject(error);
+    });
 }
 
 function runSignedTillResolve(contract, methodName, params, resolve, reject) {

@@ -64,12 +64,10 @@ export class Dispute extends Typegoose {
       .then(([author, users]) => {
         //remove author from users list
         users = users.filter(user => user.address.toLowerCase() !== author.account.toLowerCase());
-        console.log('users', users);
 
         //select arbiters from users list
         const selected = selectArbiters(users, this._id, this.arbitersNeed);
         if (!selected) return Promise.reject('Not enough arbiters in the pool');
-        console.log('selected', selected);
 
         this.arbiters = selected.map(user => new VoteModel({userAddress: user.address.toLowerCase()}));
         return this;

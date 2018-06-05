@@ -71,8 +71,8 @@ async function create(req, res: Response, next: NextFunction) {
   });
 
   return dispute.save()
-    .then(async dispute => res.json(dispute.getExportJSON(req.user)))
-    .catch(err => res.responses.requestError("Can't save dispute", null));
+    .then(dispute => res.json(dispute.getExportJSON(req.user)))
+    .catch(err => res.responses.requestError("Can't save dispute"));
 }
 
 async function getDocument(req: Request, res: Response, next: NextFunction) {
