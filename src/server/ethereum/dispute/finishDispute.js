@@ -24,8 +24,8 @@ export default function finishDispute(disputeAddress, poolMasterAddress, votes, 
     console.log('disputeAddress', disputeAddress)
     console.log('setArbitratorsAndVotes', h, v, r, s, result)
 
-    contractUtils.runSigned(dispute, 'validate', [h[0], v[0], r[0], s[0]], xxx => {
-    // contractUtils.runSigned(dispute, 'setArbitratorsAndVotes', [h, v, r, s], xxx => {
+    // contractUtils.runSigned(dispute, 'validate', [h[0], v[0], r[0], s[0]], xxx => {
+    contractUtils.runSigned(dispute, 'setArbitratorsAndVotes', [h, v, r, s], xxx => {
       console.log('xxx', xxx);
       resolve(xxx);
     }, err => {

@@ -9,6 +9,8 @@ import {
   fetchProtectedAuth
 } from '../decorators/index';
 
+import isDisputeClosed from '../../../ethereum/dispute/isDisputeClosed';
+
 export const REQUEST_DISPUTE_LOADING = 'REQUEST_DISPUTE_LOADING';
 export const REQUEST_DISPUTE_SUCCESS = 'REQUEST_DISPUTE_SUCCESS';
 export const REQUEST_DISPUTE_FAILURE = 'REQUEST_DISPUTE_FAILURE';
@@ -58,7 +60,16 @@ function fetchDisputeDo(id) {
       request('get', apiRoutes.dispute(id))
     )
       .then(res => {
-        dispatch(receiveDispute(res.data));
+        const dispute = res.data;
+        isDisputeClosed(dispute.ethAddress)
+          .then(isClosed => {
+            dispute.isClosed = isClosed;
+            dispatch(receiveDispute(dispute));
+          })
+          .catch(() => {
+            dispatch(failureDispute('Can`t get data from blockchain'));
+            dispatch(push('/'));
+          });
       })
       .catch(err => {
         dispatch(failureDispute(err));
