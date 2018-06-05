@@ -6,7 +6,7 @@ import {
   fetchSuccessStatusDecorator,
   fetchProtectedAuth
 } from '../decorators/index';
-import signMessage from '../../../etherium/signMessage';
+import signMessage from '../../../ethereum/signMessage';
 
 export const REQUEST_VOTE_DISPUTE_LOADING = 'REQUEST_VOTE_DISPUTE_LOADING';
 export const REQUEST_VOTE_DISPUTE_SUCCESS = 'REQUEST_VOTE_DISPUTE_SUCCESS';

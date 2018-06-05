@@ -6,8 +6,8 @@ import {
   fetchSuccessStatusDecorator,
   fetchProtectedAuth
 } from '../decorators/index';
-import getPoolReputationByAddress from '../../../etherium/pool/getPoolReputationByAddress';
-import getPoolActiveArbiters from '../../../etherium/pool/getPoolActiveArbiters';
+import getPoolReputationByAddress from '../../../ethereum/pool/getPoolReputationByAddress';
+import getPoolActiveArbiters from '../../../ethereum/pool/getPoolActiveArbiters';
 
 export const REQUEST_COMMUNITY_LOADING = 'REQUEST_COMMUNITY_LOADING';
 export const REQUEST_COMMUNITY_SUCCESS = 'REQUEST_COMMUNITY_SUCCESS';

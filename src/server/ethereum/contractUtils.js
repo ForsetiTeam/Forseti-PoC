@@ -1,4 +1,4 @@
-import contracts from '../../etherium/index';
+import contracts from '../../ethereum/index';
 import config from '../config';
 
 const Web3 = require('web3');

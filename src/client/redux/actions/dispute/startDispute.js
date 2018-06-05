@@ -7,7 +7,7 @@ import {
   fetchProtectedAuth
 } from '../decorators/index';
 
-import createDispute from '../../../etherium/drm/createDispute';
+import createDispute from '../../../ethereum/drm/createDispute';
 
 export const REQUEST_START_DISPUTE_LOADING = 'REQUEST_START_DISPUTE_LOADING';
 export const REQUEST_START_DISPUTE_SUCCESS = 'REQUEST_START_DISPUTE_SUCCESS';

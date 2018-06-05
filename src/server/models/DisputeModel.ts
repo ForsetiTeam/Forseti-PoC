@@ -5,8 +5,8 @@ import CommunityModel, { Community } from './CommunityModel';
 import DocumentModel, { Document } from './DocumentModel';
 import VoteModel, { Vote, Decision } from './VoteModel';
 
-import getPoolActiveArbiters from '../etherium/pool/getPoolActiveArbiters';
-import getPoolReputationById from '../etherium/pool/getPoolReputationById';
+import getPoolActiveArbiters from '../ethereum/pool/getPoolActiveArbiters';
+import getPoolReputationById from '../ethereum/pool/getPoolReputationById';
 import selectArbiters from '../lib/selectArbiters';
 
 export enum Status {

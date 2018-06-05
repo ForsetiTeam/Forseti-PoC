@@ -22,5 +22,3 @@ export {
   migrate,
   getInfo
 };
-
-

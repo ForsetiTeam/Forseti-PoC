@@ -10,7 +10,7 @@ import DocumentModel from "../models/DocumentModel";
 import getFileUploader from './utils/getFileUploader';
 import sendFile from './utils/sendFile';
 
-import finishDispute from '../etherium/dispute/finishDispute';
+import finishDispute from '../ethereum/dispute/finishDispute';
 
 import validate from "../middlewares/validateSchema";
 import {

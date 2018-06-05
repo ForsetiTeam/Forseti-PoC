@@ -1,4 +1,4 @@
-import contracts from '../../etherium/index';
+import contracts from '../../ethereum/index';
 const web3 = window.web3;
 
 function getSmartContract(contractName, address) {
