@@ -6,10 +6,19 @@ const Web3 = require('web3');
 function getWeb3() {
   const web3 = new Web3();
 
-  // web3.setProvider(new web3.providers.HttpProvider('http://rinkeby.infura.io'));
+  // web3.setProvider(new web3.providers.HttpProvider('https://rinkeby.infura.io/'));
   // web3.setProvider(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws'));
   web3.setProvider(new Web3.providers.HttpProvider('http://ethereum-test.aspirity.com:80'));
-  web3.eth.personal.unlockAccount('0x88373C8ce5213bfD1530C83e409B4Bc024586202', '');
+
+  /*
+  const account = config.get('metamask.poolMasterAccount');
+  const phrase = config.get('metamask.poolMasterPassword');
+
+  console.log(account, phrase);
+  web3.eth.personal.unlockAccount(account, phrase, 1e6)
+    .then(result => console.log('UNLOCKED', result))
+    .catch(console.log);
+    */
 
   return web3;
 }
@@ -46,7 +55,8 @@ function getTransactionFinish(transactionAddress, resolve, reject) {
 function runSigned(contract, methodName, params, resolve, reject) {
   const myAccount = config.get('metamask.poolMasterAccount');
 
-  contract.methods[methodName](...params).call({ from: myAccount })
+  contract.methods[methodName](...params)
+    .send({ from: myAccount })
     .then(resolve)
     .catch(reject);
 }
