@@ -42,6 +42,7 @@ function fetchVoteDisputeDo(disputeId, decision) {
     dispatch(requestVoteDispute());
 
     const sig = await signMessage(decision);
+
     if (!sig) return dispatch(failureVoteDispute('Not signed'));
 
     return fetchDecorator(

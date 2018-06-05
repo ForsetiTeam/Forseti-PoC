@@ -54,6 +54,7 @@ function processAccount(dispatch, getState) {
     dispatch(successMetamaskAccount(account));
 
     const storedData = getMetamask();
+
     if (storedData && storedData.account === account) {
       dispatch(successMetamaskSig(storedData.sig));
     } else {
@@ -84,6 +85,7 @@ function listenAccount(onChange) {
     window.web3.eth.getAccounts((error, accounts) => {
       if (error) return onChange(error);
       const account = (accounts || [])[0];
+
       if (account !== currentAccount) {
         currentAccount = account;
         console.log('GET METAMASK ACCOUNT', account);

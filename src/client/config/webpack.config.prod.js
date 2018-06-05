@@ -69,9 +69,10 @@ module.exports = {
     alias: {
       'react-native': 'react-native-web',
     },
+    /*
     plugins: [
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-    ],
+    ],*/
   },
   module: {
     strictExportPresence: true,

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/fontawesome-free-solid';
-import SpinnerWaiter from "../../../components/SpinnerWaiter";
-import ErrorRequest from "../../../components/ErrorRequest";
+import SpinnerWaiter from '../../../components/SpinnerWaiter';
+import ErrorRequest from '../../../components/ErrorRequest';
 
 class Community extends Component {
   static propTypes = {
@@ -41,6 +41,7 @@ class Community extends Component {
     if (this.props.error) return <ErrorRequest error={this.props.error} />;
 
     const comm = this.props.community;
+
     if (!comm) return <div />;
     return (
       <div>

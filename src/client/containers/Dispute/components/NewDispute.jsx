@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ErrorRequest from "../../../components/ErrorRequest";
+import ErrorRequest from '../../../components/ErrorRequest';
 
 class NewDispute extends Component {
   static propTypes = {

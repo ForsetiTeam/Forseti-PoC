@@ -5,6 +5,7 @@ function getSmartContract(contractName, address) {
   const contractData = contracts[contractName];
 
   const abi = contractData.abi;
+
   address = address || contractData.address;
 
   return web3.eth.contract(abi).at(address);

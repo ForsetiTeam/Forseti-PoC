@@ -61,6 +61,7 @@ function fetchDisputeDo(id) {
     )
       .then(res => {
         const dispute = res.data;
+
         isDisputeClosed(dispute.ethAddress)
           .then(isClosed => {
             dispute.isClosed = isClosed;

@@ -21,11 +21,13 @@ class TopBar extends Component {
     const accountMessage = this.props.account || <span className='text-danger'>MetaMask account not selected</span>;
 
     let sigMessage = '';
+
     if (this.props.sig) sigMessage = 'received';
     else if (this.props.loading) sigMessage = 'waiting';
     else sigMessage = <button onClick={this.props.onSign}>Sign</button>;
 
     let userMessage = 'not done';
+
     if (this.props.isLogged) userMessage = 'done';
     if (this.props.isLogging) userMessage = 'waiting';
     if (this.props.logginError) userMessage = this.props.logginError;
