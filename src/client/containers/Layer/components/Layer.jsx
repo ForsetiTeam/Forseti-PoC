@@ -31,6 +31,7 @@ class Layer extends Component {
     return (
       <div className='Layer'>
         <div className='Layer__sidebar'>
+          <div className='Layer__logo' />
           <div className='Layer__tabs'>
             <Navigation />
           </div>

@@ -76,6 +76,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
     "react-s-alert": "^1.4.1",
+    "react-sidenav": "github:NABiryukov/react-sidenav",
     "react-spinkit": "^3.0.0",
     "react-textfit": "^1.1.0",
     "react-tooltip": "^3.5.0",

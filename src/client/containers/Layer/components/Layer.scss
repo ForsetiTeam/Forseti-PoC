@@ -1,7 +1,7 @@
 .Layer {
   $margin: 30px;
   $tabsWidth: 240px;
-  $headerHeight: 60px;
+  $headerHeight: 108px;
 
   position: relative;
 
@@ -13,21 +13,26 @@
     height: 100vh;
     width: $tabsWidth;
     background-color: white;
-    border-right: 1px solid grey;
-    padding-top: $headerHeight;
+    box-shadow: 0 1px 30px 0 rgba(0, 0, 0, 0.1);
+    color: rgba(37, 37, 37, 0.5);
+  }
+  &__logo {
+    width: 176px;
+    height: 100px;
+    background: url('../../../sources/images/logo_small.png');
+    margin: 25px auto 25px;
   }
   &__tabs {
 
   }
   &__topbar {
     width: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
     height: $headerHeight;
-    z-index: 100;
+    position: fixed;
+    left: $tabsWidth;
+    top: 0;
     background-color: white;
-    border-bottom: 1px solid black;
+    box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.1);
   }
 
   &__content {
