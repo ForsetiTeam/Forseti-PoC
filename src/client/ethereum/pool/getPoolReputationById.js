@@ -1,6 +1,6 @@
 import contractUtils from '../contractUtils';
 
-export default function getPoolReputationByAddress(poolAddress, id) {
+export default function getPoolReputationById(poolAddress, id) {
   return new Promise((resolve, reject) => {
     const pool = contractUtils.getSmartContract('Pool', poolAddress);
 
