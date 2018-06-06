@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Navigation from '../../Navigation';
-import TopBar from '../../TopBar';
 import { checkPlugin } from '../../../services/metamask';
 import NoMetamask from '../../Layer/components/noMetamask';
 
@@ -35,17 +34,13 @@ class Layer extends Component {
           <div className='Layer__tabs'>
             <Navigation />
           </div>
-          <div className='Layer__version'>V {this.props.version || '...'}</div>
         </div>
-        <div className='Layer__topbar'>
-          <TopBar />
-        </div>
-        <div className='Layer__content border'>
-          <div className='p-3'>
-            {page}
+        <div className='Layer__center'>
+          {page}
+          <div className='Layer__footer'>
+            2018 © Forseti. v{this.props.version || '...'}
           </div>
         </div>
-
       </div>
     );
   }

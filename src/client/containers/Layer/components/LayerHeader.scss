@@ -1,0 +1,13 @@
+.LayerHeader {
+
+  margin: auto 0;
+
+  &__topic {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  &__comment {
+    color: $mutedcolor;
+  }
+}

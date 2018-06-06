@@ -4,6 +4,7 @@
   $headerHeight: 108px;
 
   position: relative;
+  font-size: 16px;
 
   &__sidebar {
     position: fixed;
@@ -12,41 +13,58 @@
     z-index: 99;
     height: 100vh;
     width: $tabsWidth;
-    background-color: white;
-    box-shadow: 0 1px 30px 0 rgba(0, 0, 0, 0.1);
+    background-color: $layercolor;
+    box-shadow: 0 1px 30px 0 $shadowcolor;
     color: rgba(37, 37, 37, 0.5);
   }
+
   &__logo {
     width: 176px;
     height: 100px;
     background: url('../../../sources/images/logo_small.png');
     margin: 25px auto 25px;
   }
+
   &__tabs {
 
   }
+
   &__topbar {
+    display: flex;
     width: 100%;
-    height: $headerHeight;
     position: fixed;
+    z-index: 1;
+    height: $headerHeight;
     left: $tabsWidth;
     top: 0;
-    background-color: white;
-    box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.1);
+    padding-left: 25px;
+    background-color: $layercolor;
+    box-shadow: 0 2px 15px 0 $shadowcolor;
+  }
+
+  &__footer {
+    position: fixed;
+    bottom: 0;
+    left: $tabsWidth;
+    right: 0;
+    text-align: center;
+    background-color: $layercolor;
+    box-shadow: 0 -2px 15px 0 $shadowcolor;
+  }
+
+  &__center {
+    position: relative;
+    height: 100%;
+    z-index: 1;
+    padding-left: $tabsWidth;
   }
 
   &__content {
     position: relative;
-    height: 100%;
-    z-index: 1;
     padding-top: $headerHeight;
-    padding-left: $tabsWidth;
   }
 
-  &__version {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding-left: 10px;
+  &__page {
+    padding: 25px;
   }
 }

@@ -1,0 +1,19 @@
+.Cards {
+  $cardspadding: 12px;
+
+  display: flex;
+  flex-wrap: wrap;
+  /*<div className='d-flex flex-wrap'>*/
+  margin: -$cardspadding;
+
+  &__item {
+    width: 388px;
+    position: relative;
+    background-color: $layercolor;
+    box-shadow: 0 0 15px 0 $shadowcolor;
+    margin: $cardspadding;
+  }
+  &__itemtitle {
+    font-size: 30px;
+  }
+}
