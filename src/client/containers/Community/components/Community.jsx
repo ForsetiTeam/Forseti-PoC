@@ -346,64 +346,62 @@ contract PoolFactory {
 
           <hr/>
 
-          <div>
+          <div className='Community__subtitle clearfix'>
             <div className='float-right'>
               <Link to={`/community/${comm.name}/dispute/new`} className='btn m-1 btn-info'>Add dispute</Link>
             </div>
             <span className='Card__title'>Recent solved disputes</span>
           </div>
           <div>
-            <div>
-              <ReactTable
-                data={data}
-                columns={[
-                  {
-                    Header: 'Date',
-                    accessor: 'date',
-                    width: 100
-                  },
-                  {
-                    Header: 'Contract address',
-                    accessor: 'disputeAddress'
-                  },
-                  {
-                    Header: 'Respondent address',
-                    accessor: 'respondentAddress'
-                  },
-                  {
-                    Header: 'Applicant address',
-                    accessor: 'applicantAddress'
-                  },
-                  {
-                    Header: 'Trans. sum',
-                    id: 'transactionSum',
-                    accessor: dispute => `${dispute.transactionSum} Eth`,
-                    width: 100
-                  },
-                  {
-                    Header: 'Winner',
-                    id: 'win',
-                    accessor: dispute => dispute.win ?
-                      <span className='badge badge-success'>Respondent</span>
-                      :
-                      <span className='badge badge-danger'>Applicant</span>,
-                    width: 100
-                  }
-                ]}
-                minRows={0}
-                style={{
-                  border: 0
-                }}
-                className='-striped -highlight'
-                showPagination={false}
-                sortable={false}
-              />
-            </div>
+            <ReactTable
+              data={data}
+              columns={[
+                {
+                  Header: 'Date',
+                  accessor: 'date',
+                  width: 100
+                },
+                {
+                  Header: 'Contract address',
+                  accessor: 'disputeAddress'
+                },
+                {
+                  Header: 'Respondent address',
+                  accessor: 'respondentAddress'
+                },
+                {
+                  Header: 'Applicant address',
+                  accessor: 'applicantAddress'
+                },
+                {
+                  Header: 'Trans. sum',
+                  id: 'transactionSum',
+                  accessor: dispute => `${dispute.transactionSum} Eth`,
+                  width: 100
+                },
+                {
+                  Header: 'Winner',
+                  id: 'win',
+                  accessor: dispute => dispute.win ?
+                    <span className='badge badge-success'>Respondent</span>
+                    :
+                    <span className='badge badge-danger'>Applicant</span>,
+                  width: 100
+                }
+              ]}
+              minRows={0}
+              style={{
+                border: 0
+              }}
+              className='-striped -highlight'
+              showPagination={false}
+              sortable={false}
+            />
           </div>
 
           <hr/>
 
-          <div className='Card__title'>Contract source code</div>
+          <div className='Community__subtitle Card__title'>Contract source code</div>
           <div className='Community__code'>
             <SyntaxHighlighter language='solidity' style={docco} showLineNumbers>{contractCode}</SyntaxHighlighter>
           </div>
