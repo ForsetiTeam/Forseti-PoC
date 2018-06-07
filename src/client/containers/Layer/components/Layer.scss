@@ -1,10 +1,14 @@
+$cardspadding: 12px;
+
 .Layer {
   $margin: 30px;
   $tabsWidth: 240px;
   $headerHeight: 108px;
+  $footerHeight: 40px;
 
   position: relative;
   font-size: 16px;
+  height: 100%;
 
   &__sidebar {
     position: fixed;
@@ -30,10 +34,10 @@
   }
 
   &__topbar {
-    display: flex;
-    width: 100%;
     position: fixed;
     z-index: 1;
+    display: flex;
+    width: 100%;
     height: $headerHeight;
     left: $tabsWidth;
     top: 0;
@@ -47,24 +51,30 @@
     bottom: 0;
     left: $tabsWidth;
     right: 0;
+    z-index: 1;
+    height: $footerHeight;
     text-align: center;
+    line-height: $footerHeight;
     background-color: $layercolor;
     box-shadow: 0 -2px 15px 0 $shadowcolor;
   }
 
   &__center {
     position: relative;
-    height: 100%;
     z-index: 1;
+    height: 100%;
     padding-left: $tabsWidth;
   }
 
   &__content {
     position: relative;
-    padding-top: $headerHeight;
+    height: 100%;
+    padding: $headerHeight 0 $footerHeight;
   }
 
   &__page {
-    padding: 25px;
+    height: 100%;
+    padding: $cardspadding;
+    overflow-y: auto;
   }
 }

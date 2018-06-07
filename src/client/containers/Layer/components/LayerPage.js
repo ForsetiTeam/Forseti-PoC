@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import LayerHeader from './LayerHeader';
@@ -12,7 +12,7 @@ class LayerPage extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <div className='Layer__topbar'>
           <LayerHeader
             topic={this.props.topic}
@@ -24,7 +24,7 @@ class LayerPage extends Component {
             {this.props.children}
           </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

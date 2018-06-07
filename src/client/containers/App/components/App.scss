@@ -2,10 +2,37 @@ $mutedcolor: rgba(37, 37, 37, 0.5);
 $layercolor: #fff;
 $shadowcolor: rgba(0, 0, 0, 0.1);
 
-html {
+$frsBlack: #252525;
+$frsRed: #c33727;
+
+body {
+  background-color: #f2f4f7;
+}
+
+html, body, #root, .App{
   height: 100%;
 }
-body {
-  height: 100%;
-  background-color: #f2f4f7;
+
+dt {
+  padding-right: 0.5em!important
+}
+
+dd:after {
+  content: ' ';
+  display: inline-block;
+}
+
+.frsMuted {
+  color: $mutedcolor;
+}
+
+.btn {
+  padding: 10px 25px;
+  background-color: $frsBlack;
+  text-transform: none;
+  color: #fff;
+}
+
+.btn:hover {
+  color: $frsRed;
 }

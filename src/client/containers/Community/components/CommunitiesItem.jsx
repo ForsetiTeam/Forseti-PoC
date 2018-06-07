@@ -15,16 +15,22 @@ class CommunitiesItem extends Component {
     const comm = this.props.community;
 
     return (
-      <div className='text-align-center'>
-        <div className='Card__title'>{comm.title}</div>
-        <FontAwesomeIcon icon={icons[comm.icon]} className='display-1 float-left mr-3'/>
-        <div className='clearfix'>
-          <p className='mt-3'>{comm.description}</p>
-          <div>Solved dispute: {comm.disputesSolved}</div>
-          <div>Active members: {comm.usersActive}</div>
+      <div className='Card__content text-center'>
+        <div>
+          <FontAwesomeIcon icon={icons[comm.icon]} className='display-1'/>
+          <div className='Card__title'>{comm.title}</div>
+          <div className='frsMuted'>
+            <p>{comm.description}</p>
+            <dl className='row no-gutters'>
+              <dt className='col-7 text-right'>Solved dispute:</dt>
+              <dd className='col-5 text-left'>{comm.disputesSolved}</dd>
+              <dt className='col-7 text-right'>Model:</dt>
+              <dd className='col-5 text-left'>Meritocraty</dd>
+            </dl>
+          </div>
         </div>
-        <div className='text-center mt-3'>
-          <Link to={`/community/${comm.name}`} className='btn btn-info'>More info</Link>
+        <div className='Card__bottom'>
+          <Link to={`/community/${comm.name}`} className='btn'>Learn more</Link>
         </div>
       </div>
     );

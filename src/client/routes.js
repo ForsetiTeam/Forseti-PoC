@@ -16,19 +16,17 @@ const Main = () => {
   const defPage = isLogged ? '/community' : '/register';
 
   return (
-    <main>
-      <Switch>
-        <Redirect exact from='/' to={defPage} />
-        <Route path='/about' component={About} />
-        <Route path='/register' component={Register} />
-        <PrivateRoute path='/community/:communityName/dispute/new' component={NewDispute} />
-        <PrivateRoute path='/community/:communityName' component={Community} />
-        <PrivateRoute path='/community' component={Communities} />
-        <PrivateRoute path='/dispute/filter/:filter' component={Disputes} />
-        <PrivateRoute path='/dispute/:disputeId' component={Dispute} />
-        <Redirect from='*' to={defPage} />
-      </Switch>
-    </main>
+    <Switch>
+      <Redirect exact from='/' to={defPage} />
+      <Route path='/about' component={About} />
+      <Route path='/register' component={Register} />
+      <PrivateRoute path='/community/:communityName/dispute/new' component={NewDispute} />
+      <PrivateRoute path='/community/:communityName' component={Community} />
+      <PrivateRoute path='/community' component={Communities} />
+      <PrivateRoute path='/dispute/filter/:filter' component={Disputes} />
+      <PrivateRoute path='/dispute/:disputeId' component={Dispute} />
+      <Redirect from='*' to={defPage} />
+    </Switch>
   );
 };
 

@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/fontawesome-free-solid';
+
+import { LayerPage } from '../../Layer';
+import Page from '../../../components/Page';
+
 import SpinnerWaiter from '../../../components/SpinnerWaiter';
 import ErrorRequest from '../../../components/ErrorRequest';
 
@@ -44,27 +48,32 @@ class Community extends Component {
 
     if (!comm) return <div />;
     return (
-      <div>
-        <h3 className='text-center'>{comm.title}</h3>
-        <div className='row justify-content-center m-3'>
-          <div className='col-3'>
-            <FontAwesomeIcon icon={icons[comm.icon]} className='display-1'/>
+      <LayerPage
+        topic={comm.title}
+        comment={comm.description}
+      >
+        <Page isSingle>
+          <div>
+            <div className='row justify-content-center m-3'>
+              <div className='col-3'>
+                <FontAwesomeIcon icon={icons[comm.icon]} className='display-1'/>
+              </div>
+              <div className='col-6'>
+                <div>Pool address: {comm.poolAddress}</div>
+                <div>Solved dispute: {comm.disputesSolved}</div>
+                <div>Active members: {comm.usersActive}</div>
+              </div>
+            </div>
+            <div className='text-center'>
+              <button className='btn m-1 btn-primary' onClick={this.handleJoin} disabled={this.props.isJoining}>
+                {comm.isJoined ? 'Leave' : 'Join'}
+              </button>
+              <SpinnerWaiter isLoading={this.props.isJoining} />
+              <Link to={`/community/${comm.name}/dispute/new`} className='btn m-1 btn-info'>Add dispute</Link>
+            </div>
           </div>
-          <div className='col-6'>
-            <p>{comm.description}</p>
-            <div>Pool address: {comm.poolAddress}</div>
-            <div>Solved dispute: {comm.disputesSolved}</div>
-            <div>Active members: {comm.usersActive}</div>
-          </div>
-        </div>
-        <div className='text-center'>
-          <button className='btn m-1 btn-primary' onClick={this.handleJoin} disabled={this.props.isJoining}>
-            {comm.isJoined ? 'Leave' : 'Join'}
-          </button>
-          <SpinnerWaiter isLoading={this.props.isJoining} />
-          <Link to={`/community/${comm.name}/dispute/new`} className='btn m-1 btn-info'>Add dispute</Link>
-        </div>
-      </div>
+        </Page>
+      </LayerPage>
     );
   }
 }

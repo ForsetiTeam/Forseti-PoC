@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { LayerPage } from '../../Layer';
 import CommunitiesItem from './CommunitiesItem';
-import Cards from '../../../components/Cards';
+import Page from '../../../components/Page';
 
 class Communities extends Component {
   static propTypes = {
@@ -24,11 +24,11 @@ class Communities extends Component {
         topic='Communities'
         comment='Is atomic unit of domain experts community builded on trust and reputation'
       >
-        <Cards>
+        <Page>
           {list.map(community =>
             <CommunitiesItem key={community.name} community={community}/>
           )}
-        </Cards>
+        </Page>
       </LayerPage>
     );
   }

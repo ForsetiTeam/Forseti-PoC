@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { LayerPage } from '../../Layer';
 import ErrorRequest from '../../../components/ErrorRequest';
 
 class Register extends Component {
@@ -15,8 +16,11 @@ class Register extends Component {
 
   render() {
     return (
-      <div>
-        <h2 className='text-center pt-3'>Registration</h2>
+
+      <LayerPage
+        topic='Registration'
+        comment='First you need register to use Forseti'
+      >
         <form onSubmit={this.props.onSubmit}>
           <div className='form-group row'>
             <label htmlFor='inputEmail' className='col-sm-2 col-form-label'>Email</label>
@@ -29,19 +33,19 @@ class Register extends Component {
                 onChange={this.props.onChange}
               />
               {this.props.errors && this.props.errors.email &&
-                <p className='text-danger'>{this.props.errors.email.msg}</p>
+              <p className='text-danger'>{this.props.errors.email.msg}</p>
               }
             </div>
           </div>
           {this.props.errors && this.props.errors.account &&
-            <p className='text-danger'>{this.props.errors.account.msg}</p>
+          <p className='text-danger'>{this.props.errors.account.msg}</p>
           }
           <button type='submit' className='btn btn-primary' disabled={!this.props.canSubmit}>Submit</button>
           {!this.props.isSigned &&
-            <ErrorRequest error='MetaMask account not signed'/>
+          <ErrorRequest error='MetaMask account not signed'/>
           }
         </form>
-      </div>
+      </LayerPage>
     );
   }
 }
