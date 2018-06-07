@@ -354,35 +354,6 @@ contract PoolFactory {
           </div>
           <div>
             <div>
-              <table className='table table-layout-fixed w-100 Community__disputes' style={{ minЦidth: '600px' }}>
-                <thead>
-                  <tr>
-                    <th style={{ width: '100px' }}>Date</th>
-                    <th>Contract address</th>
-                    <th>Respondent address</th>
-                    <th>Applicant address</th>
-                    <th style={{ width: '110px' }}>Trans. sum</th>
-                    <th className='text-center' style={{ width: '100px' }}>Winner</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map((transaction, i) => (
-                    <tr key={i}>
-                      <td>{transaction.date}</td>
-                      <td className='text-truncate'>{transaction.disputeAddress}</td>
-                      <td className='text-truncate'>{transaction.respondentAddress}</td>
-                      <td className='text-truncate'>{transaction.applicantAddress}</td>
-                      <td>{transaction.transactionSumm}</td>
-                      <td className='text-center'>{transaction.win ?
-                        <span className='badge badge-success'>Respondent</span>
-                        :
-                        <span className='badge badge-danger'>Applicant</span>
-                      }</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
               <ReactTable
                 data={data}
                 columns={[
