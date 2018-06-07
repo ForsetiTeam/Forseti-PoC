@@ -78,6 +78,8 @@
     "react-s-alert": "^1.4.1",
     "react-sidenav": "github:NABiryukov/react-sidenav",
     "react-spinkit": "^3.0.0",
+    "react-syntax-highlighter": "^7.0.4",
+    "react-table": "^6.8.6",
     "react-textfit": "^1.1.0",
     "react-tooltip": "^3.5.0",
     "redux": "^4.0.0",

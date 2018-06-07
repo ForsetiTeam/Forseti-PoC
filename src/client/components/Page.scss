@@ -2,7 +2,7 @@
 .Page {
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
+  min-height: 100%;
 }
 
 .Card {
@@ -15,6 +15,7 @@
 
   &_single {
     width: 100%;
+    padding: 50px;
   }
 
   &__content {
