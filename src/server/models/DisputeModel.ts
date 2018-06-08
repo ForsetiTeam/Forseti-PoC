@@ -94,7 +94,8 @@ export class Dispute extends Typegoose {
 
     let exportData = {
       id: this._id,
-      author: this.author,
+      author: this.author._id,
+      authorAddress: this.author.account,
       title: this.title,
       description: this.description,
       communityName: this.community.name,
@@ -136,6 +137,6 @@ export default DisputeModel;
 export function populateDispute(query) {
   return query
     .populate({path: 'community', model: CommunityModel})
-    .populate({path: 'document', model: DocumentModel});
-  //.populate({path: 'author', model: UserModel});
+    .populate({path: 'document', model: DocumentModel})
+    .populate({path: 'author', model: UserModel});
 }

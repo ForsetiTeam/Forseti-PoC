@@ -1,34 +1,34 @@
 import { connect } from 'react-redux';
 
-import Disputes from './components/Disputes';
+import DisputesController from './components/DisputesController';
 
 import { fetchDisputeList } from '../../redux/actions/dispute/getDisputeList';
 import { DISPUTE_FILTER_MY, DISPUTE_FILTER_ANSWERED, DISPUTE_FILTER_UNANSWERED } from '../../consts';
 
 function mapStateToProps(state, props) {
-  const filterRaw = props.match.params.filter;
+  const filter = props.match.params.filter;
 
-  const filter = {};
+  const filterParams = {};
 
-  switch (filterRaw) {
+  switch (filter) {
     case DISPUTE_FILTER_MY:
-      filter.author = true;
+      filterParams.author = true;
       break;
     case DISPUTE_FILTER_ANSWERED:
-      filter.arbiter = true;
-      filter.answered = true;
+      filterParams.arbiter = true;
+      filterParams.answered = true;
       break;
     case DISPUTE_FILTER_UNANSWERED:
-      filter.arbiter = true;
-      filter.answered = false;
+      filterParams.arbiter = true;
+      filterParams.answered = false;
       break;
     default: // for ESLINT only!
   }
-  return { list: state.dispute.list, filter };
+  return { list: state.dispute.list, filter, filterParams };
 }
 
 const mapDispatchToProps = (dispatch) => ({
   fetchDisputeList: filter => dispatch(fetchDisputeList(filter))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Disputes);
+export default connect(mapStateToProps, mapDispatchToProps)(DisputesController);

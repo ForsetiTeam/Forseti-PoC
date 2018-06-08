@@ -9,17 +9,26 @@ class DisputesItem extends Component {
 
   render() {
     const dispute = this.props.dispute;
+    console.log('DISPUTE', dispute);
 
     return (
-      <div className='col-6 d-inline-block'>
-        <div className='border p-3 h-100'>
-          <h3 className='text-center'>{dispute.title}</h3>
-          <div className='clearfix'>
-            <p className='mt-3'>{dispute.description}</p>
-          </div>
-          <div className='text-center mt-3'>
-            <Link to={`/dispute/${dispute.id}`} className='btn btn-info'>More info</Link>
-          </div>
+      <div className='Card__content text-center'>
+        <div className='Card__title'>{dispute.title}</div>
+        <div className='frsMuted'>
+          <p>{dispute.description}</p>
+          <dl className='row no-gutters text-left'>
+            <dt className='col-4 text-right'>Contract:</dt>
+            <dd className='col-8 text-truncate'>{dispute.ethAddress}</dd>
+            <dt className='col-4 text-right'>Respondent:</dt>
+            <dd className='col-8 text-truncate'>{dispute.authorAddress}</dd>
+            <dt className='col-4 text-right'>Applicant:</dt>
+            <dd className='col-8 text-truncate'>{dispute.authorAddress}</dd>
+            <dt className='col-4 text-right'>Community:</dt>
+            <dd className='col-8'>{dispute.communityName}</dd>
+          </dl>
+        </div>
+        <div className='Card__bottom'>
+          <Link to={`/dispute/${dispute.id}`} className='btn'>Learn more</Link>
         </div>
       </div>
     );

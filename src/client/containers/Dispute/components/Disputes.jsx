@@ -1,34 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import equal from 'fast-deep-equal';
 
+import { LayerPage, Page } from '../../Layer';
 import DisputesItem from './DisputesItem';
 
 class Disputes extends Component {
   static propTypes = {
+    topic: PropTypes.string,
+    comment: PropTypes.string,
+
     list: PropTypes.array,
-    fetchDisputeList: PropTypes.func,
-    filter: PropTypes.object
+    filter: PropTypes.string
   };
 
-  componentDidMount() {
-    this.props.fetchDisputeList(this.props.filter);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (equal(this.props.filter, nextProps.filter)) return;
-    this.props.fetchDisputeList(nextProps.filter);
-  }
-
   render() {
-    if (!this.props.list.length) return <div>No entries</div>;
-
     return (
-      <div className='d-flex flex-wrap'>
-        {this.props.list.map(dispute =>
-          <DisputesItem key={dispute.id} dispute={dispute}/>
-        )}
-      </div>
+      <LayerPage
+        topic={this.props.topic}
+        comment={this.props.comment}
+      >
+        {this.props.list.length ?
+          <Page>
+            {this.props.list.map(dispute =>
+              <DisputesItem key={dispute.id} dispute={dispute}/>
+            )}
+          </Page> :
+          <div>No entries</div>
+        }
+      </LayerPage>
     );
   }
 }
