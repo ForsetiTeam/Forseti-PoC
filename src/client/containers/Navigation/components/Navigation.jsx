@@ -11,13 +11,16 @@ import { DISPUTE_FILTER_MY, DISPUTE_FILTER_UNANSWERED, DISPUTE_FILTER_ANSWERED }
 
 class Navigation extends Component {
   static propTypes = {
-    isLogged: PropTypes.bool
+    isLogged: PropTypes.bool,
+    isMetamaskLoaded: PropTypes.bool
   };
 
   render() {
     const navIconStyle = { width: 25 };
 
-    if (this.props.isLogged) {
+    console.log('Naeev', this.props.isLogged, this.props.isMetamaskLoaded);
+
+    if (this.props.isLogged && this.props.isMetamaskLoaded) {
       return (
         <SideNav highlightColor='#252525' highlightBgColor='rgba(37, 37, 37, 0.05)'>
           <Nav id='community' key='community'>

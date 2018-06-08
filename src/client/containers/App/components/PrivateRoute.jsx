@@ -12,9 +12,9 @@ class PrivateRoute extends Component {
 
   render() {
     const isLogged = checkPlugin() && !!getUser();
-    // const metamaskLoaded = !!window.web3.eth.coinbase;
+    const isMetamaskLoaded = !!window.web3.eth.coinbase;
 
-    if (isLogged) {
+    if (isLogged && isMetamaskLoaded) {
       return <Route path={this.props.path} component={this.props.component}/>;
     }
     return <Redirect from={this.props.path} to={'/'} />;

@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
-import NavigationContainer from './components/NavigationContainer';
+import Navigation from './components/Navigation';
 
 function mapStateToProps(state) {
-  const isMetamaskLoaded = state.metamask.loaded;
+  const isMetamaskLoaded = !!state.metamask.account;
   const isLogged =  state.currentUser.loaded;
 
   return { isMetamaskLoaded, isLogged };
 }
 
-export default connect(mapStateToProps)(NavigationContainer);
+export default connect(mapStateToProps)(Navigation);
