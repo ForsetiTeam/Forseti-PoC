@@ -11,8 +11,7 @@ import 'react-table/react-table.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/fontawesome-free-solid';
 
-import { LayerPage } from '../../Layer';
-import Page from '../../../components/Page';
+import { LayerPage, Page } from '../../Layer';
 
 import SpinnerWaiter from '../../../components/SpinnerWaiter';
 import ErrorRequest from '../../../components/ErrorRequest';

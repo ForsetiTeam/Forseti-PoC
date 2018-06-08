@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { LayerPage } from '../../Layer';
+import { LayerPage, Page } from '../../Layer';
 import CommunitiesItem from './CommunitiesItem';
-import Page from '../../../components/Page';
 
 class Communities extends Component {
   static propTypes = {
