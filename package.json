@@ -48,6 +48,7 @@
     "fs-promise": "^2.0.3",
     "gridfs-stream": "^1.1.1",
     "history": "^4.7.2",
+    "html-truncate": "^1.2.2",
     "html-webpack-plugin": "2.29.0",
     "import-glob-loader": "^1.1.0",
     "jest": "20.0.4",
