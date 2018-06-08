@@ -41,7 +41,6 @@ async function getList(req: Request, res: Response, next: NextFunction) {
 
   populateDispute(DisputeModel.find(filter)).exec()
     .then(list => {
-      console.log(list)
       res.json(list.map(dispute => dispute.getExportJSON(req.user)))
     })
     .catch(() => res.responses.requestError("Can't resolve request"))
@@ -50,7 +49,6 @@ async function getList(req: Request, res: Response, next: NextFunction) {
 
 async function get(req: Request, res: Response, next: NextFunction) {
   const disputeId = req.params.id;
-  console.log('disputeId', disputeId);
 
   return populateDispute(DisputeModel.findById(disputeId)).exec()
     .then(async dispute => {
@@ -115,7 +113,6 @@ function start(req: Request, res: Response, next: NextFunction) {
     .catch(() => res.responses.notFoundResource("Dispute not found"))
     .then(dispute => dispute.setArbiters())
     .then(dispute => {
-      console.log('SAVE');
       dispute.ethAddress = ethAddress;
       return dispute.save();
     })
@@ -131,7 +128,6 @@ function finish(req: Request, res: Response, next: NextFunction) {
       const result = dispute.calcResult();
       finishDispute(dispute.ethAddress, dispute.community.poolMasterAddress, dispute.arbiters, result)
         .then(async (transaction) => {
-          console.log('transaction', transaction)
           dispute.status = Status.CLOSED;
           await dispute.save();
           res.responses.success("Success");

@@ -7,8 +7,6 @@ function selectArbiter(arbitersPool: arbitersPoolType, rand) {
 }
 
 export default function selectArbiters(arbitersPool: arbitersPoolType, seed: String, count: Number): arbitersPoolType {
-  console.log('selectArbiters', arbitersPool, seed, count);
-  console.log(arbitersPool.length, count,arbitersPool.length < count);
   if (arbitersPool.length < count) return;
   const rand = gen(seed);
 

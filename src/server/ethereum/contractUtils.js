@@ -46,7 +46,6 @@ function getTransactionFinish(transactionAddress, resolve, reject) {
           reject(`Fail transaction status ${transaction.status}`);
         }
       }
-      console.log('transaction', transaction);
     }), 1000);
 }
 

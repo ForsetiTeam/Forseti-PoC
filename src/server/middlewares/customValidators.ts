@@ -82,7 +82,6 @@ async function isUserExistsByAccount(account) {
 }
 
 function isIn(value, {list}) {
-  console.log('IS IN', value, list)
   return list.includes(value);
 }
 
