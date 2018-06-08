@@ -37,7 +37,7 @@ class Layer extends Component {
         </div>
         <div className='Layer__center'>
           {page}
-          <div className='Layer__footer'>
+          <div className='Layer__footer frsMuted'>
             2018 © Forseti. v{this.props.version || '...'}
           </div>
         </div>
