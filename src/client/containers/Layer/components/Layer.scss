@@ -1,4 +1,4 @@
-$cardspadding: 12px;
+
 
 .Layer {
   $margin: 30px;
@@ -61,7 +61,6 @@ $cardspadding: 12px;
 
   &__center {
     position: relative;
-    z-index: 1;
     height: 100%;
     padding-left: $tabsWidth;
   }

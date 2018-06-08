@@ -5,6 +5,9 @@ $shadowcolor: rgba(0, 0, 0, 0.1);
 $frsBlack: #252525;
 $frsRed: #c33727;
 
+$borderRadius: 5px;
+$cardspadding: 12px;
+
 body {
   background-color: #f2f4f7;
 }
@@ -20,6 +23,10 @@ dt {
 dd:after {
   content: ' ';
   display: inline-block;
+}
+
+h1 {
+  font-size: 30px;
 }
 
 hr {
@@ -43,4 +50,11 @@ hr {
 
 .btn:hover {
   color: $frsRed;
+}
+
+.popup-content {
+  position: static;
+  background: rgb(255, 255, 255);
+  border: 1px solid rgb(187, 187, 187);
+  padding: 5px;
 }

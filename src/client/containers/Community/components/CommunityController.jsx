@@ -13,7 +13,8 @@ class CommunityController extends Component {
     isMetamaskLoaded: PropTypes.bool,
 
     fetchCommunity: PropTypes.func,
-    fetchCommunityJoin: PropTypes.func
+    fetchCommunityJoin: PropTypes.func,
+    fetchCreateDispute: PropTypes.func
   };
 
   componentDidMount() {
@@ -30,6 +31,10 @@ class CommunityController extends Component {
 
   handleJoin = () => {
     this.props.fetchCommunityJoin(this.props.community);
+  };
+
+  handleCreateDispute = dispute => {
+    this.props.fetchCreateDispute(dispute, this.props.community);
   };
 
   render() {
@@ -298,9 +303,13 @@ contract PoolFactory {
         community={this.props.community}
         disputes={disputes}
         contractCode={contractCode}
+
         isJoining={this.props.isJoining}
         isLoading={this.props.isLoading}
         error={this.props.error}
+
+        onJoin={this.handleJoin}
+        onCreateDispute={this.handleCreateDispute}
       />
     );
   }

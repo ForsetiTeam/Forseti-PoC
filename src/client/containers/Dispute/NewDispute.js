@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 
 import NewDisputeContainer from './components/NewDisputeContainer';
 
-import { fetchCommunity } from '../../redux/actions/community/getCommunity';
 import { fetchCreateDispute } from '../../redux/actions/dispute/createDispute';
 
 function mapStateToProps(state, props) {
@@ -13,7 +12,6 @@ function mapStateToProps(state, props) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchCommunity: communityName => dispatch(fetchCommunity(communityName)),
   fetchCreateDispute: (dispute, community) => dispatch(fetchCreateDispute(dispute, community))
 });
 

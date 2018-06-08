@@ -18,7 +18,7 @@ class CommunitiesItem extends Component {
       <div className='Card__content text-center'>
         <div>
           <FontAwesomeIcon icon={icons[comm.icon]} className='display-1'/>
-          <div className='Card__title'>{comm.title}</div>
+          <h1>{comm.title}</h1>
           <div className='frsMuted'>
             <p>{comm.description}</p>
             <dl className='row no-gutters'>
@@ -30,7 +30,7 @@ class CommunitiesItem extends Component {
           </div>
         </div>
         <div className='Card__bottom'>
-          <Link to={`/community/${comm.name}`} className='btn'>Learn more</Link>
+          <Link to={`/community/${comm.name}`} className='btn btn-primary'>Learn more</Link>
         </div>
       </div>
     );

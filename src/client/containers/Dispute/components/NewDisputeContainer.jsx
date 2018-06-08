@@ -6,10 +6,7 @@ import validate from '../../../services/validate';
 
 class NewDisputeContainer extends Component {
   static propTypes = {
-    communityName: PropTypes.string,
-    community: PropTypes.shape(),
-    fetchCommunity: PropTypes.func,
-    fetchCreateDispute: PropTypes.func
+    onFetchCreateDispute: PropTypes.func
   };
 
   state = {
@@ -31,21 +28,17 @@ class NewDisputeContainer extends Component {
     formValid: false
   };
 
-  componentDidMount() {
-    this.props.fetchCommunity(this.props.communityName);
-  }
-
   handleSubmit = e => {
     e.preventDefault();
 
-    this.props.fetchCreateDispute({
+    this.props.onFetchCreateDispute({
       title: this.state.title,
       contractorAddress: this.state.contractorAddress,
       eth: this.state.eth,
       description: this.state.description,
       arbitersNeed: this.state.arbitersNeed,
       document: this.state.document
-    }, this.props.community);
+    });
   };
 
   handleChange = validators => event => {
@@ -72,7 +65,6 @@ class NewDisputeContainer extends Component {
   render() {
     return (
       <NewDispute
-        community={this.props.community}
         formValid={this.state.formValid}
         errors={this.state}
 

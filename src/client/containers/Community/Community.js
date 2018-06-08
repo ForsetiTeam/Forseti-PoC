@@ -4,6 +4,7 @@ import CommunityController from './components/CommunityController';
 
 import { fetchCommunity } from '../../redux/actions/community/getCommunity';
 import { fetchCommunityJoin } from '../../redux/actions/community/joinCommunity';
+import { fetchCreateDispute } from '../../redux/actions/dispute/createDispute';
 
 function mapStateToProps(state, props) {
   const communityName = props.match.params.communityName;
@@ -18,7 +19,8 @@ function mapStateToProps(state, props) {
 
 const mapDispatchToProps = dispatch => ({
   fetchCommunity: communityName => dispatch(fetchCommunity(communityName)),
-  fetchCommunityJoin: community => dispatch(fetchCommunityJoin(community))
+  fetchCommunityJoin: community => dispatch(fetchCommunityJoin(community)),
+  fetchCreateDispute: (dispute, community) => dispatch(fetchCreateDispute(dispute, community))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommunityController);

@@ -13,7 +13,7 @@ class DisputesItem extends Component {
 
     return (
       <div className='Card__content text-center'>
-        <div className='Card__title'>{dispute.title}</div>
+        <h1>{dispute.title}</h1>
         <div className='frsMuted'>
           <p>{dispute.description}</p>
           <dl className='row no-gutters text-left'>
@@ -28,7 +28,7 @@ class DisputesItem extends Component {
           </dl>
         </div>
         <div className='Card__bottom'>
-          <Link to={`/dispute/${dispute.id}`} className='btn'>Learn more</Link>
+          <Link to={`/dispute/${dispute.id}`} className='btn btn-primary'>Learn more</Link>
         </div>
       </div>
     );

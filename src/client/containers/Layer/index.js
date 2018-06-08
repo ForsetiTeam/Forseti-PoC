@@ -1,7 +1,8 @@
 import Layer from './Layer';
-import LayerHeader from './components/LayerHeader';
 import LayerPage from './components/LayerPage';
 import Page from './components/Page';
+import Window from './components/Window';
+import Popup from './components/Popup';
 
-export { Layer, LayerHeader, LayerPage, Page };
+export { Layer, LayerPage, Page, Window, Popup };
 export default Layer;

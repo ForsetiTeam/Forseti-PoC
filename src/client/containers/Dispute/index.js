@@ -1,5 +1,5 @@
 import Disputes from './Disputes';
 import Dispute from './Dispute';
-import NewDispute from './NewDispute';
+import NewDisputeContainer from './components/NewDisputeContainer';
 
-export { Disputes, Dispute, NewDispute };
+export { Disputes, Dispute, NewDisputeContainer };

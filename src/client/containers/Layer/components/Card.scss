@@ -1,0 +1,30 @@
+
+.Card {
+  position: relative;
+  width: 388px;
+  margin: $cardspadding;
+  padding: 50px 25px;
+  background-color: $layercolor;
+  box-shadow: 0 0 15px 0 $shadowcolor;
+  border-radius: $borderRadius;
+
+  &_single {
+    width: 100%;
+    padding: 50px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  &__title {
+    font-size: 30px;
+  }
+
+  &__bottom {
+    margin-top: auto;
+    padding: 5px 0;
+  }
+}

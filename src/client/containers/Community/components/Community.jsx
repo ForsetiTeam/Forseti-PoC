@@ -2,19 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+// highlight code
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/styles/hljs';
 
+// dispute table
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
+// community pic
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/fontawesome-free-solid';
 
-import { LayerPage, Page } from '../../Layer';
+import { LayerPage, Page, Popup } from '../../Layer';
 
 import SpinnerWaiter from '../../../components/SpinnerWaiter';
 import ErrorRequest from '../../../components/ErrorRequest';
+
+import { NewDisputeContainer } from '../../Dispute';
 
 class Community extends Component {
   static propTypes = {
@@ -24,7 +29,10 @@ class Community extends Component {
 
     isJoining: PropTypes.bool,
     isLoading: PropTypes.bool,
-    error: PropTypes.string
+    error: PropTypes.string,
+
+    onJoin: PropTypes.func,
+    onCreateDispute: PropTypes.func
   };
 
   render() {
@@ -46,10 +54,10 @@ class Community extends Component {
             <FontAwesomeIcon icon={icons[comm.icon]} className='Community__image float-left'/>
             <div className='Community__info'>
               <div>
-                <button className='btn m-1 btn-primary float-right' onClick={this.handleJoin} disabled={this.props.isJoining}>
+                <button className='btn m-1 btn-primary float-right' onClick={this.props.onJoin} disabled={this.props.isJoining}>
                   {comm.isJoined ? 'Leave' : 'Join'}
                 </button>
-                <span className='Card__title'>{comm.title}</span>
+                <h1>{comm.title}</h1>
               </div>
               <p className='frsMuted'>{comm.description}</p>
               <dl className='row frsMuted'>
@@ -69,9 +77,12 @@ class Community extends Component {
 
           <div className='Community__subtitle clearfix'>
             <div className='float-right'>
+              <Popup trigger={<button className='btn btn-primary'>Add dispute</button>}>
+                <NewDisputeContainer onFetchCreateDispute={this.props.onCreateDispute}/>
+              </Popup>
               <Link to={`/community/${comm.name}/dispute/new`} className='btn m-1 btn-info'>Add dispute</Link>
             </div>
-            <span className='Card__title'>Recent solved disputes</span>
+            <h1>Recent solved disputes</h1>
           </div>
           <div>
             <ReactTable
@@ -122,7 +133,7 @@ class Community extends Component {
 
           <hr/>
 
-          <div className='Community__subtitle Card__title'>Contract source code</div>
+          <h1 className='Community__subtitle'>Contract source code</h1>
           <div className='Community__code'>
             <SyntaxHighlighter language='solidity' style={docco} showLineNumbers>{this.props.contractCode}</SyntaxHighlighter>
           </div>

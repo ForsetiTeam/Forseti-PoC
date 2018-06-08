@@ -1,0 +1,31 @@
+.Window {
+
+  background-color: $layercolor;
+  border-radius: $borderRadius;
+  width: 700px;
+
+  &__header {
+    display: flex;
+    height: 80px;
+    padding: 25px;
+    background-color: #EEF2F5;
+    font-size: 24px;
+    align-items: center;
+    border-radius: $borderRadius $borderRadius 0 0;
+    border-bottom: none;
+  }
+
+  &__topic {
+    flex-grow: 1;
+  }
+
+  &__close {
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  &__content {
+    padding: 25px;
+  }
+}
