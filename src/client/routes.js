@@ -12,7 +12,7 @@ import PrivateRoute from './containers/App/components/PrivateRoute';
 
 const Main = () => {
   const isLogged = checkPlugin() && !!getUser();
-  const isMetamaskLoaded = !!window.web3.eth.coinbase;
+  const isMetamaskLoaded = checkPlugin() && !!window.web3.eth.coinbase;
   const defPage = isLogged && isMetamaskLoaded ? '/community' : '/register';
 
   return (

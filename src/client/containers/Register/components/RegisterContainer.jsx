@@ -7,6 +7,7 @@ class RegisterContainer extends Component {
   static propTypes = {
     currentUser: PropTypes.shape(),
     metamask: PropTypes.shape(),
+    isMetamaskInstalled: PropTypes.bool,
 
     onSubmit: PropTypes.func,
     onRequestSig: PropTypes.func,
@@ -39,17 +40,19 @@ class RegisterContainer extends Component {
   };
 
   isFormValid() {
-    return !!this.state.email && !!this.props.metamask.sig;
+    return !!this.state.email && !!this.props.metamask.sig && this.props.isMetamaskInstalled;
   }
 
   render() {
+    console.log('this.props.currentUser.error', this.props.currentUser.error);
     return (
       <Register
         onChange={this.handleChange}
         onSubmit={this.handleSubmit}
         canSubmit={this.isFormValid()}
         isSigned={!!this.props.metamask.sig}
-        errors={this.props.currentUser.error ? this.props.currentUser.error.errors : null}
+        isMetamaskInstalled={this.props.isMetamaskInstalled}
+        error={this.props.currentUser.error}
       />
     );
   }

@@ -1,0 +1,27 @@
+.Register {
+
+  height: 100%;
+  background-color: #252525;
+
+  &__center {
+    display: flex;
+    min-height: 80%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__logo {
+    width: 340px;
+    height: 192px;
+    background: url('../../../sources/images/logo_white.png');
+    margin-bottom: 25px;
+  }
+
+  &__form {
+    width: 600px;
+    padding: 50px;
+    background-color: $layercolor;
+    border-radius: $borderRadius;
+  }
+}

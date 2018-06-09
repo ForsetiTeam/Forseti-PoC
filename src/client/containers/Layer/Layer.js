@@ -7,9 +7,11 @@ import Layer from './components/Layer';
 
 function mapStateToProps(state) {
   const version = state.version.code;
+
+  const isLogged =  state.currentUser.loaded;
   const isMetamaskLoaded = state.metamask.loaded;
 
-  return { isMetamaskLoaded, version };
+  return { isLogged, isMetamaskLoaded, version };
 }
 
 const mapDispatchToProps = dispatch => ({

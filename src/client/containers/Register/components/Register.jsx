@@ -1,51 +1,54 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { LayerPage } from '../../Layer';
 import ErrorRequest from '../../../components/ErrorRequest';
 
 class Register extends Component {
   static propTypes = {
-    onChange: PropTypes.func,
-    onSubmit: PropTypes.func,
-    onRequestSig: PropTypes.func,
     canSubmit: PropTypes.bool,
     isSigned: PropTypes.bool,
-    errors: PropTypes.any
+    isMetamaskInstalled: PropTypes.bool,
+    error: PropTypes.any,
+
+    onChange: PropTypes.func,
+    onSubmit: PropTypes.func,
+    onRequestSig: PropTypes.func
   };
 
   render() {
     return (
-
-      <LayerPage
-        topic='Registration'
-        comment='First you need register to use Forseti'
-      >
-        <form onSubmit={this.props.onSubmit}>
-          <div className='form-group row'>
-            <label htmlFor='inputEmail' className='col-sm-2 col-form-label'>Email</label>
-            <div className='col-sm-10'>
-              <input
-                name='email'
-                className='form-control'
-                id='inputEmail'
-                placeholder='name@example.com'
-                onChange={this.props.onChange}
-              />
-              {this.props.errors && this.props.errors.email &&
-              <p className='text-danger'>{this.props.errors.email.msg}</p>
-              }
+      <div className='Register'>
+        <div className='Register__center'>
+          <div className='Register__logo' />
+          <form className='Register__form' onSubmit={this.props.onSubmit}>
+            <h1>Welcome To Forseti!</h1>
+            <p className='frsMuted'>Forseti provide a protocol for fair disputes resolution, trustable data
+              feeds(oracles) powered by domain experts DAO`s incentivised by unique reputation system.</p>
+            {!this.props.isMetamaskInstalled &&
+              <ErrorRequest error='You need install MetaMask plugin to continue!'/>
+            }
+            {this.props.isMetamaskInstalled && !this.props.isSigned &&
+              <ErrorRequest error='You need sign at MetaMask plugin to continue!'/>
+            }
+            <div className='form-group d-flex align-items-baseline'>
+              <label className='mr-3 font-weight-bold' htmlFor='inputEmail'>E-mail</label>
+              <div className='flex-grow-1 mr-3'>
+                <input
+                  name='email'
+                  className='form-control d-inline-block'// d-inline-block for FFX
+                  id='inputEmail'
+                  placeholder='name@example.com'
+                  onChange={this.props.onChange}
+                />
+              </div>
+              <button type='submit' className='btn btn-primary' disabled={!this.props.canSubmit}>Submit</button>
             </div>
-          </div>
-          {this.props.errors && this.props.errors.account &&
-          <p className='text-danger'>{this.props.errors.account.msg}</p>
-          }
-          <button type='submit' className='btn btn-primary' disabled={!this.props.canSubmit}>Submit</button>
-          {!this.props.isSigned &&
-          <ErrorRequest error='MetaMask account not signed'/>
-          }
-        </form>
-      </LayerPage>
+            {this.props.error &&
+            <p className='text-danger'>{this.props.error}</p>
+            }
+          </form>
+        </div>
+      </div>
     );
   }
 }

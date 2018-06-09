@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { Nav, NavText, withRR4 } from 'react-sidenav/src';
 import { Nav, NavText, NavIcon } from 'react-sidenav/dist/Nav';
@@ -35,8 +35,25 @@ class Navigation extends Component {
   };
 
   render() {
-    const about = (
-      <Fragment>
+    return (
+      <SideNav {...mainOptions}>
+        <Nav id='community'>
+          <NavIcon className='lnr lnr-users' style={navIconStyle}/>
+          <NavText>Communities</NavText>
+        </Nav>
+        <Nav collapseIndicatorSize='0.5em'>
+          <NavIcon className='lnr lnr-bullhorn' style={navIconStyle} />
+          <NavText>Disputes</NavText>
+          <Nav id={`dispute/filter/${DISPUTE_FILTER_MY}`}>
+            <NavText>My disputes</NavText>
+          </Nav>
+          <Nav id={`dispute/filter/${DISPUTE_FILTER_UNANSWERED}`}>
+            <NavText>Incoming disputes</NavText>
+          </Nav>
+          <Nav id={`dispute/filter/${DISPUTE_FILTER_ANSWERED}`}>
+            <NavText>Closed disputes</NavText>
+          </Nav>
+        </Nav>
         <a onClick={this.handleOpenAboutClick}>
           <Nav id=''>
             <NavIcon className='lnr lnr-question-circle' style={navIconStyle} />
@@ -48,43 +65,8 @@ class Navigation extends Component {
         <Popup open={this.state.showAbout} onClose={this.handleCloseAboutWnd}>
           <AboutWnd/>
         </Popup>
-      </Fragment>
+      </SideNav>
     );
-
-    if (this.props.isLogged && this.props.isMetamaskLoaded) {
-      return (
-        <SideNav {...mainOptions}>
-          <Nav id='community'>
-            <NavIcon className='lnr lnr-users' style={navIconStyle}/>
-            <NavText>Communities</NavText>
-          </Nav>
-          <Nav collapseIndicatorSize='0.5em'>
-            <NavIcon className='lnr lnr-bullhorn' style={navIconStyle} />
-            <NavText>Disputes</NavText>
-            <Nav id={`dispute/filter/${DISPUTE_FILTER_MY}`}>
-              <NavText>My disputes</NavText>
-            </Nav>
-            <Nav id={`dispute/filter/${DISPUTE_FILTER_UNANSWERED}`}>
-              <NavText>Incoming disputes</NavText>
-            </Nav>
-            <Nav id={`dispute/filter/${DISPUTE_FILTER_ANSWERED}`}>
-              <NavText>Closed disputes</NavText>
-            </Nav>
-          </Nav>
-          {about}
-        </SideNav>
-      );
-    } else {
-      return (
-        <SideNav {...mainOptions}>
-          <Nav id='register'>
-            <NavIcon className='lnr lnr-license' style={navIconStyle} />
-            <NavText>Register</NavText>
-          </Nav>
-          {about}
-        </SideNav>
-      );
-    }
   }
 }
 
