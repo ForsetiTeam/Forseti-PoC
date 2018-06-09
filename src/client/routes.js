@@ -7,7 +7,7 @@ import { getUser } from './services/localStore';
 import About from './containers/About';
 import Register from './containers/Register';
 import { Communities, Community } from './containers/Community';
-import { Disputes, Dispute } from './containers/Dispute';
+import { Disputes } from './containers/Dispute';
 
 import PrivateRoute from './containers/App/components/PrivateRoute';
 
@@ -24,7 +24,6 @@ const Main = () => {
       <PrivateRoute path='/community/:communityName' component={Community} />
       <PrivateRoute path='/community' component={Communities} />
       <PrivateRoute path='/dispute/filter/:filter' component={Disputes} />
-      <PrivateRoute path='/dispute/:disputeId' component={Dispute} />
       <Redirect from='*' to={defPage} />
     </Switch>
   );

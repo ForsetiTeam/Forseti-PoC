@@ -21,9 +21,9 @@ class Disputes extends Component {
       >
         {this.props.list.length ?
           <Page>
-            {this.props.list.map(dispute =>
+            {this.props.list.map(dispute => (
               <DisputesItem key={dispute.id} dispute={dispute}/>
-            )}
+            ))}
           </Page> :
           <div>No entries</div>
         }

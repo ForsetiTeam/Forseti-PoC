@@ -3,18 +3,15 @@ import PropTypes from 'prop-types';
 import { request, downloadFile } from '../../../redux/actions/utils/axios';
 import apiRoutes from '../../../redux/apiRoutes';
 
-import Dispute from './Dispute';
+import DisputeWnd from './DisputeWnd';
 
-class DisputeController extends Component {
+class DisputeWndContainer extends Component {
   static propTypes = {
-    id: PropTypes.string,
     dispute: PropTypes.shape(),
     isAuthor: PropTypes.bool,
-    documentLink: PropTypes.string,
     isLoading: PropTypes.bool,
     error: PropTypes.string,
 
-    fetchDispute: PropTypes.func,
     fetchVoteDispute: PropTypes.func,
     fetchStartDispute: PropTypes.func,
     fetchFinishDispute: PropTypes.func
@@ -23,10 +20,6 @@ class DisputeController extends Component {
   state = {
     isToggled: false
   };
-
-  componentDidMount() {
-    this.props.fetchDispute(this.props.id);
-  }
 
   handleToggle = e => {
     e.preventDefault();
@@ -45,25 +38,25 @@ class DisputeController extends Component {
 
   handleDownloadDocument = e => {
     e.preventDefault();
-    request('get', apiRoutes.disputeDocument(this.props.id)).then(response => downloadFile(response));
+    request('get', apiRoutes.disputeDocument(this.props.dispute.id)).then(response => downloadFile(response));
   };
 
   handleVote = e => {
     e.preventDefault();
     const decision = e.target.dataset.decision;
 
-    this.props.fetchVoteDispute(this.props.id, decision);
+    this.props.fetchVoteDispute(this.props.dispute.id, decision);
 
     this.setState({ isToggled: false });
   };
 
   render() {
     return (
-      <Dispute
+      <DisputeWnd
         dispute={this.props.dispute}
         isAuthor={this.props.isAuthor}
-        isLoading={this.props.isLoading}
         isToggled={this.state.isToggled}
+        isLoading={this.props.isLoading}
         error={this.props.error}
 
         onToggle={this.handleToggle}
@@ -76,4 +69,4 @@ class DisputeController extends Component {
   }
 }
 
-export default DisputeController;
+export default DisputeWndContainer;

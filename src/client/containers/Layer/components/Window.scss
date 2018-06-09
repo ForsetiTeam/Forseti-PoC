@@ -1,8 +1,9 @@
 .Window {
 
-  background-color: $layercolor;
-  border-radius: $borderRadius;
   width: 700px;
+  background-color: $layercolor;
+  text-align: left;
+  border-radius: $borderRadius;
 
   &__header {
     display: flex;

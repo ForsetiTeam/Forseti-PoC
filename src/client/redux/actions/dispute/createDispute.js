@@ -66,7 +66,7 @@ function fetchCreateDisputeDo(dispute, community) {
         const dispute = res.data;
 
         dispatch(receiveCreateDispute(dispute));
-        dispatch(push(`/dispute/${dispute.id}`));
+        dispatch(push('/dispute/filter/my'));
       })
       .catch(err => {
         dispatch(failureCreateDispute(err));

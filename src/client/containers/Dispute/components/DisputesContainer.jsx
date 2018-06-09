@@ -5,12 +5,13 @@ import equal from 'fast-deep-equal';
 import Disputes from './Disputes';
 import { DISPUTE_FILTER_MY, DISPUTE_FILTER_UNANSWERED, DISPUTE_FILTER_ANSWERED } from '../../../consts';
 
-class DisputesController extends Component {
+class DisputesContainer extends Component {
   static propTypes = {
     list: PropTypes.array,
-    fetchDisputeList: PropTypes.func,
     filter: PropTypes.string,
-    filterParams: PropTypes.object
+    filterParams: PropTypes.object,
+
+    fetchDisputeList: PropTypes.func
   };
 
   componentDidMount() {
@@ -55,4 +56,4 @@ class DisputesController extends Component {
   }
 }
 
-export default DisputesController;
+export default DisputesContainer;
