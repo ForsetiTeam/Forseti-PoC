@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import NewDispute from './NewDispute';
+import NewDisputeWnd from './NewDisputeWnd';
 import validate from '../../../services/validate';
 
-class NewDisputeContainer extends Component {
+class NewDisputeWndContainer extends Component {
   static propTypes = {
     onFetchCreateDispute: PropTypes.func
   };
@@ -64,7 +64,7 @@ class NewDisputeContainer extends Component {
 
   render() {
     return (
-      <NewDispute
+      <NewDisputeWnd
         formValid={this.state.formValid}
         errors={this.state}
 
@@ -75,4 +75,4 @@ class NewDisputeContainer extends Component {
   }
 }
 
-export default NewDisputeContainer;
+export default NewDisputeWndContainer;

@@ -19,7 +19,7 @@ import { LayerPage, Page, Popup } from '../../Layer';
 import SpinnerWaiter from '../../../components/SpinnerWaiter';
 import ErrorRequest from '../../../components/ErrorRequest';
 
-import { NewDisputeContainer } from '../../Dispute';
+import { NewDisputeWndContainer } from '../../Dispute';
 
 class Community extends Component {
   static propTypes = {
@@ -78,7 +78,7 @@ class Community extends Component {
           <div className='Community__subtitle clearfix'>
             <div className='float-right'>
               <Popup trigger={<button className='btn btn-primary'>Add dispute</button>}>
-                <NewDisputeContainer onFetchCreateDispute={this.props.onCreateDispute}/>
+                <NewDisputeWndContainer onFetchCreateDispute={this.props.onCreateDispute}/>
               </Popup>
               <Link to={`/community/${comm.name}/dispute/new`} className='btn m-1 btn-info'>Add dispute</Link>
             </div>

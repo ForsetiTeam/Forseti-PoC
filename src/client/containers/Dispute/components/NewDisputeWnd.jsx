@@ -5,7 +5,7 @@ import { Window } from '../../Layer';
 
 import ErrorRequest from '../../../components/ErrorRequest';
 
-class NewDispute extends Component {
+class NewDisputeWnd extends Component {
   static propTypes = {
     formValid: PropTypes.bool,
     errors: PropTypes.shape(),
@@ -101,4 +101,4 @@ class NewDispute extends Component {
   }
 }
 
-export default NewDispute;
+export default NewDisputeWnd;
