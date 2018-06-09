@@ -2,9 +2,6 @@ $mutedcolor: rgba(37, 37, 37, 0.5);
 $layercolor: #fff;
 $shadowcolor: rgba(0, 0, 0, 0.1);
 
-$frsBlack: #252525;
-$frsRed: #c33727;
-
 $borderRadius: 5px;
 $cardspadding: 12px;
 
@@ -43,13 +40,40 @@ hr {
 
 .btn {
   padding: 10px 25px;
-  background-color: $frsBlack;
   text-transform: none;
   color: #fff;
-}
 
-.btn:hover {
-  color: $frsRed;
+  &.btn-primary {
+    background-color: #70BBFD;
+
+    &:hover {
+      background-color: #63A8E6;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: #D1D3DD;
+
+    &:hover {
+      background-color: #B6B8C3;
+    }
+  }
+
+  &.btn-success {
+    background-color: #4CE1B6;
+
+    &:hover {
+      background-color: #44C9A2;
+    }
+  }
+
+  &.btn-danger {
+    background-color: #F6816E;
+
+    &:hover {
+      background-color: #E17361;
+    }
+  }
 }
 
 .popup-content {

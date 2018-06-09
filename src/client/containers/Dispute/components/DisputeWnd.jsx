@@ -83,14 +83,14 @@ class DisputeWnd extends Component {
           return (
             <Fragment>
               <button
-                className='btn btn-warning m-1'
+                className='btn btn-danger m-1'
                 data-decision={DISPUTE_DECISION_ABSTAIN}
                 onClick={this.props.onVote}
               >
                 Abstain
               </button>
               <button
-                className='btn btn-info m-1'
+                className='btn btn-primary'
                 onClick={this.props.onToggle}
               >
                 Resolve
