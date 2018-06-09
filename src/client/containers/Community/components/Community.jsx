@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 // highlight code
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -80,7 +79,6 @@ class Community extends Component {
               <Popup trigger={<button className='btn btn-primary'>Add dispute</button>}>
                 <NewDisputeWndContainer onFetchCreateDispute={this.props.onCreateDispute}/>
               </Popup>
-              <Link to={`/community/${comm.name}/dispute/new`} className='btn m-1 btn-info'>Add dispute</Link>
             </div>
             <h1>Recent solved disputes</h1>
           </div>
