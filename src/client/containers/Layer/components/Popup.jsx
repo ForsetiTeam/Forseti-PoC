@@ -8,6 +8,8 @@ import WindowContext from './WindowContext';
 class CustomPopup extends Component {
   static propTypes = {
     trigger: PropTypes.node,
+    open: PropTypes.bool,
+    onClose: PropTypes.func,
     children: PropTypes.node
   };
 
@@ -38,6 +40,8 @@ class CustomPopup extends Component {
       <Popup
         modal
         trigger={this.props.trigger}
+        open={this.props.open}
+        onClose={this.props.onClose}
         contentStyle={{ background: 'none', border: 0, padding: 0, width: 'auto' }}
       >
         {this.renderChildren}

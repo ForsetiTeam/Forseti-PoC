@@ -1,3 +1,3 @@
-import About from './About';
+import AboutWnd from './AboutWnd';
 
-export default About;
+export { AboutWnd };

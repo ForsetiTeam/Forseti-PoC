@@ -4,7 +4,6 @@ import { Switch, Redirect, Route } from 'react-router-dom';
 import { checkPlugin } from './services/metamask';
 import { getUser } from './services/localStore';
 
-import About from './containers/About';
 import Register from './containers/Register';
 import { Communities, Community } from './containers/Community';
 import { Disputes } from './containers/Dispute';
@@ -19,7 +18,6 @@ const Main = () => {
   return (
     <Switch>
       <Redirect exact from='/' to={defPage} />
-      <Route path='/about' component={About} />
       <Route path='/register' component={Register} />
       <PrivateRoute path='/community/:communityName' component={Community} />
       <PrivateRoute path='/community' component={Communities} />
