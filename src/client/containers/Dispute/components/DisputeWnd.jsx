@@ -108,9 +108,9 @@ class DisputeWnd extends Component {
     return (
       <Fragment>
         <h1>{dispute.title}</h1>
-        <div className='frsMuted'>
+        <div className='text-muted'>
           <p>{dispute.description}</p>
-          <dl className='row no-gutters frsMuted'>
+          <dl className='row no-gutters text-muted'>
             <dt className='col-3 text-right'>Respondent:</dt>
             <dd className='col-9 text-truncate'>{dispute.authorAddress}</dd>
             <dt className='col-3 text-right'>Applicant:</dt>

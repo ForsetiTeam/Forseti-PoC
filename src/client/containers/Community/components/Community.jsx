@@ -58,8 +58,8 @@ class Community extends Component {
                 </button>
                 <h1>{comm.title}</h1>
               </div>
-              <p className='frsMuted'>{comm.description}</p>
-              <dl className='row frsMuted'>
+              <p className='text-muted'>{comm.description}</p>
+              <dl className='row text-muted'>
                 <dt className='col-2'>Pool address:</dt>
                 <dd className='col text-truncate'>{comm.poolAddress}</dd>
                 <div className='w-100'/>

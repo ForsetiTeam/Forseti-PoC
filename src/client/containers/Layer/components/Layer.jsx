@@ -33,7 +33,7 @@ class Layer extends Component {
           </div>
           <div className='Layer__center'>
             {this.props.children}
-            <div className='Layer__footer frsMuted'>
+            <div className='Layer__footer text-muted'>
               2018 © Forseti. v{this.props.version || '...'}
             </div>
           </div>

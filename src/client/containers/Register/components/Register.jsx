@@ -22,7 +22,7 @@ class Register extends Component {
           <div className='Register__logo' />
           <form className='Register__form' onSubmit={this.props.onSubmit}>
             <h1>Welcome To Forseti!</h1>
-            <p className='frsMuted'>Forseti provide a protocol for fair disputes resolution, trustable data
+            <p className='text-muted'>Forseti provide a protocol for fair disputes resolution, trustable data
               feeds(oracles) powered by domain experts DAO`s incentivised by unique reputation system.</p>
             {!this.props.isMetamaskInstalled &&
               <ErrorRequest error='You need install MetaMask plugin to continue!'/>

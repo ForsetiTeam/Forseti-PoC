@@ -11,7 +11,7 @@ class LayerHeader extends Component {
     return (
       <div className='LayerHeader'>
         <div className='LayerHeader__topic'>{this.props.topic}</div>
-        <div className='LayerHeader__comment frsMuted'>{this.props.comment}</div>
+        <div className='LayerHeader__comment text-muted'>{this.props.comment}</div>
       </div>
     );
   }

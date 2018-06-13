@@ -19,7 +19,7 @@ class CommunitiesItem extends Component {
         <div>
           <FontAwesomeIcon icon={icons[comm.icon]} className='display-1'/>
           <h1>{comm.title}</h1>
-          <div className='frsMuted'>
+          <div className='text-muted'>
             <p>{comm.description}</p>
             <dl className='row no-gutters'>
               <dt className='col-7 text-right'>Solved dispute:</dt>

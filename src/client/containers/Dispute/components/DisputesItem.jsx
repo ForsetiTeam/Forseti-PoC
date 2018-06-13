@@ -17,8 +17,8 @@ class DisputesItem extends Component {
     return (
       <div className='Card__content text-center'>
         <h1 className='text-truncate'>{dispute.title}</h1>
-        <p className='frsMuted flex-grow-1'>{truncate(dispute.description, 150)}</p>
-        <dl className='row no-gutters frsMuted text-left'>
+        <p className='text-muted flex-grow-1'>{truncate(dispute.description, 150)}</p>
+        <dl className='row no-gutters text-muted text-left'>
           <dt className='col-4 text-right'>Contract:</dt>
           <dd className='col-8 text-truncate'>{dispute.ethAddress || 'not started'}</dd>
           <dt className='col-4 text-right'>Respondent:</dt>

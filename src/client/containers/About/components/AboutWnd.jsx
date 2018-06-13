@@ -11,7 +11,7 @@ class AboutWnd extends Component {
 
       <Window topic='About'>
         <h1>Forseti is …</h1>
-        <p className='frsMuted'>
+        <p className='text-muted'>
           Forseti provide a protocol for fair disputes resolution, trustable data feeds(oracles) powered by
           domain experts DAO`s incentivised by unique reputation system.
         </p>
