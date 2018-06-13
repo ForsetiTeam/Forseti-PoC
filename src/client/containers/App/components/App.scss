@@ -5,6 +5,8 @@ $shadowcolor: rgba(0, 0, 0, 0.1);
 $borderRadius: 5px;
 $cardspadding: 12px;
 
+$titleFontSize: 30px;
+
 body {
   background-color: #f2f4f7;
 }
@@ -23,7 +25,7 @@ dd:after {
 }
 
 h1 {
-  font-size: 30px;
+  font-size: $titleFontSize;
 }
 
 hr {

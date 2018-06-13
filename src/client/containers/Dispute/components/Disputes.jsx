@@ -25,7 +25,7 @@ class Disputes extends Component {
               <DisputesItem key={dispute.id} dispute={dispute}/>
             ))}
           </Page> :
-          <div>No entries</div>
+          <div className='noPage'>There are no disputes yet</div>
         }
       </LayerPage>
     );

@@ -2,3 +2,9 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.noPage {
+  padding-left: 15px;
+  color: $mutedcolor;
+  font-size: $titleFontSize;
+}
