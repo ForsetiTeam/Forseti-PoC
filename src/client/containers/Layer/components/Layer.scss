@@ -36,12 +36,10 @@
   &__topbar {
     position: fixed;
     z-index: 1;
-    display: flex;
-    width: 100%;
     height: $headerHeight;
     left: $tabsWidth;
     top: 0;
-    padding-left: 25px;
+    right: 0;
     background-color: $layercolor;
     box-shadow: 0 2px 15px 0 $shadowcolor;
   }

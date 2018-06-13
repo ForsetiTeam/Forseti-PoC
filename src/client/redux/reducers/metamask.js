@@ -4,12 +4,21 @@ import {
   METAMASK_SIG_REQUEST,
   METAMASK_SIG_SUCCESS
 } from '../actions/metamask/processMetamask';
+import {
+  // REQUEST_METAMASK_BALANCES_FAILURE,
+  // REQUEST_METAMASK_BALANCES_LOADING,
+  REQUEST_METAMASK_BALANCES_SUCCESS
+} from '../actions/metamask/updateBalances';
+
 
 const initialState = {
   loading: false,
   account: null,
   error: null,
-  sig: null
+  sig: null,
+  balanceEth: null,
+  balanceFrs: null,
+  conversion: null
 };
 
 export default function (state = initialState, action) {
@@ -23,12 +32,13 @@ export default function (state = initialState, action) {
       };
     }
     case METAMASK_ACCOUNT_SUCCESS: {
-      console.log('METAMASK_ACCOUNT_SUCCESS');
       return {
         loading: false,
         account: action.account,
         error: null,
-        sig: null
+        sig: null,
+        balanceEth: null,
+        balanceFrs: null
       };
     }
     case METAMASK_SIG_REQUEST: {
@@ -36,7 +46,9 @@ export default function (state = initialState, action) {
         loading: true,
         account: state.account,
         error: null,
-        sig: null
+        sig: null,
+        balanceEth: null,
+        balanceFrs: null
       };
     }
     case METAMASK_SIG_SUCCESS: {
@@ -45,6 +57,17 @@ export default function (state = initialState, action) {
         account: state.account,
         error: null,
         sig: action.sig
+      };
+    }
+    case REQUEST_METAMASK_BALANCES_SUCCESS: {
+      return {
+        loading: state.account,
+        account: state.account,
+        error: state.error,
+        sig: state.sig,
+        balanceEth: action.balanceEth,
+        balanceFrs: action.balanceFrs,
+        conversion: action.conversion
       };
     }
     default:

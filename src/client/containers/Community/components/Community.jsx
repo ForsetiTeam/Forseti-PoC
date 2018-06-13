@@ -40,7 +40,7 @@ class Community extends Component {
 
     const comm = this.props.community;
 
-    // if (!comm) return <div />;
+    if (!comm) return <div className='noPage'>Community not found</div>;
 
     return (
 

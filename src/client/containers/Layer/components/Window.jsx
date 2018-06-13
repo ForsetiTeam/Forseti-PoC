@@ -10,8 +10,6 @@ class Window extends Component {
   };
 
   render() {
-    console.log('WINDOW', this, this.context.handleWndClose);
-
     return (
       <WindowContext.Consumer>
         {({ handleClose }) => (

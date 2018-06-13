@@ -5,6 +5,7 @@ import { checkPlugin } from '../../../services/metamask';
 import { getMetamask, removeMetamask, setMetamask } from '../../../services/localStore';
 import { fetchLoginDo } from '../auth/authLogin';
 import { fetchLogout } from '../auth/authLogout';
+import { fetchBalances } from './updateBalances';
 
 export const METAMASK_FAILURE = 'METAMASK_FAILURE';
 export const METAMASK_ACCOUNT_SUCCESS = 'METAMASK_ACCOUNT_SUCCESS';
@@ -57,6 +58,7 @@ function processAccount(dispatch, getState) {
 
     if (storedData && storedData.account === account) {
       dispatch(successMetamaskSig(storedData.sig));
+      fetchBalances(dispatch);
     } else {
       removeMetamask();
       dispatch(fetchLogout());
@@ -74,6 +76,7 @@ function processSig(dispatch, getState) {
     setMetamask(account, sig);
     dispatch(successMetamaskSig(sig));
     dispatch(fetchLoginDo(account, sig));
+    fetchBalances(dispatch);
   }).catch(error => {
     dispatch(failureMetamask(error));
   });

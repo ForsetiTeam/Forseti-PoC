@@ -1,12 +1,44 @@
 .LayerHeader {
 
-  margin: auto 0;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding: 0 25px;
+
+  &__title{
+    flex-grow: 1;
+    min-width: 0;
+  }
 
   &__topic {
     font-size: 24px;
     font-weight: bold;
   }
 
-  &__comment {
+  &__userInfo {
+  }
+}
+
+.UserInfo {
+
+  display: flex;
+  font-size: 13px;
+  align-items: center;
+
+  &__photo {
+    $photoSize: 42px;
+
+    width: $photoSize;
+    min-width: $photoSize;
+    height: $photoSize;
+    background-image: url('../../../sources/images/photo.png');
+  }
+
+  &__wallet {
+    width: 110px;
+  }
+
+  &__balance {
+    font-size: 16px;
   }
 }
