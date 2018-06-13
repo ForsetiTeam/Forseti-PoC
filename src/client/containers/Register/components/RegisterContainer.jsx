@@ -10,7 +10,7 @@ class RegisterContainer extends Component {
     isMetamaskInstalled: PropTypes.bool,
 
     onSubmit: PropTypes.func,
-    onRequestSig: PropTypes.func,
+    fetchRequestSig: PropTypes.func,
 
     history: PropTypes.shape({
       push: PropTypes.func
@@ -20,6 +20,12 @@ class RegisterContainer extends Component {
   state = {
     email: ''
   };
+
+  componentWillUpdate(newProps) {
+    if (this.props.metamask.account !== newProps.metamask.account) {
+      this.props.fetchRequestSig();
+    }
+  }
 
   handleSubmit = e => {
     e.preventDefault();
@@ -44,15 +50,20 @@ class RegisterContainer extends Component {
   }
 
   render() {
-    console.log('this.props.currentUser.error', this.props.currentUser.error);
+    const user = this.props.currentUser;
+    const error = user.validatorError && user.validatorError.account ?
+      `${user.error}: ${user.validatorError.account.msg}` :
+      user.error;
+
     return (
       <Register
-        onChange={this.handleChange}
-        onSubmit={this.handleSubmit}
-        canSubmit={this.isFormValid()}
         isSigned={!!this.props.metamask.sig}
         isMetamaskInstalled={this.props.isMetamaskInstalled}
-        error={this.props.currentUser.error}
+        error={error}
+        canSubmit={this.isFormValid()}
+
+        onChange={this.handleChange}
+        onSubmit={this.handleSubmit}
       />
     );
   }

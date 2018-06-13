@@ -59,8 +59,8 @@ function fetchDisputeListDo(filter) {
       .then(res => {
         dispatch(receiveDisputeList(res.data));
       })
-      .catch(err => {
-        dispatch(failureDisputeList(err));
+      .catch(error => {
+        dispatch(failureDisputeList(error.message));
       });
   };
 }

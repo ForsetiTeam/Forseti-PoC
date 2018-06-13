@@ -60,8 +60,8 @@ function fetchCommunityDo(communityName) {
       .then(res => updateCommunityJoin(res.data))
       .then(community => updateCommunityActiveArbiters(community))
       .then(community => dispatch(receiveCommunity(community)))
-      .catch(err => {
-        dispatch(failureCommunity(err));
+      .catch(error => {
+        dispatch(failureCommunity(error.message));
       });
   };
 }

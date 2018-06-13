@@ -68,8 +68,8 @@ function fetchFinishDisputeDo(dispute) {
         dispatch(receiveFinishDispute(res.data));
         dispatch(push(`/dispute/${res.data.id}`));
       })
-      .catch(err => {
-        dispatch(failureFinishDispute(err));
+      .catch(error => {
+        dispatch(failureFinishDispute(error.message));
         dispatch(push('/'));
       });
   };

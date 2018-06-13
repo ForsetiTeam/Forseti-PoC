@@ -5,14 +5,14 @@ import ErrorRequest from '../../../components/ErrorRequest';
 
 class Register extends Component {
   static propTypes = {
-    canSubmit: PropTypes.bool,
     isSigned: PropTypes.bool,
     isMetamaskInstalled: PropTypes.bool,
     error: PropTypes.any,
+    validatorErrors: PropTypes.any,
+    canSubmit: PropTypes.bool,
 
     onChange: PropTypes.func,
-    onSubmit: PropTypes.func,
-    onRequestSig: PropTypes.func
+    onSubmit: PropTypes.func
   };
 
   render() {

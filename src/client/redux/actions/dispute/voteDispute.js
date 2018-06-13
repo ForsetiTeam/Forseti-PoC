@@ -55,8 +55,8 @@ function fetchVoteDisputeDo(disputeId, decision) {
       .then(res => {
         dispatch(receiveVoteDispute(res.data));
       })
-      .catch(err => {
-        dispatch(failureVoteDispute(err));
+      .catch(error => {
+        dispatch(failureVoteDispute(error.message));
       });
   };
 }

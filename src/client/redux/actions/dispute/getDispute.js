@@ -72,8 +72,8 @@ function fetchDisputeDo(id) {
             dispatch(push('/'));
           });
       })
-      .catch(err => {
-        dispatch(failureDispute(err));
+      .catch(error => {
+        dispatch(failureDispute(error.message));
         dispatch(push('/'));
       });
   };

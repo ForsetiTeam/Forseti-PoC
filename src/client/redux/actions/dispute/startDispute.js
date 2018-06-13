@@ -63,8 +63,8 @@ function fetchStartDisputeDo(dispute) {
           .then(res => dispatch(receiveStartDispute(res.data)))
           .catch(err => dispatch(failureStartDispute(err)));
       })
-      .catch(err => {
-        dispatch(failureStartDispute(err));
+      .catch(error => {
+        dispatch(failureStartDispute(error.message));
       });
   };
 }

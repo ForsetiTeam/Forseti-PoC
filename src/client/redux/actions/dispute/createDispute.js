@@ -68,8 +68,8 @@ function fetchCreateDisputeDo(dispute, community) {
         dispatch(receiveCreateDispute(dispute));
         dispatch(push('/dispute/filter/my'));
       })
-      .catch(err => {
-        dispatch(failureCreateDispute(err));
+      .catch(error => {
+        dispatch(failureCreateDispute(error.message));
         dispatch(push('/'));
       });
   };

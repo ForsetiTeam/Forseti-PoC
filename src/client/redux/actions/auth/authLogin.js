@@ -62,8 +62,8 @@ export function fetchLoginDo(account, sig) {
         dispatch(receiveLogin(res.data.user));
         dispatch(push('/'));
       })
-      .catch(err => {
-        dispatch(failureLogin(err));
+      .catch(error => {
+        dispatch(failureLogin(error.message));
       });
   };
 }

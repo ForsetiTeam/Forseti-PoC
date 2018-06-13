@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import RegisterContainer from './components/RegisterContainer';
 
 import { fetchRegister } from '../../redux/actions/auth/authRegister';
-import { requestSig, checkPlugin } from '../../services/metamask';
+import { fetchRequestSig } from '../../redux/actions/metamask/processMetamask';
+import { checkPlugin } from '../../services/metamask';
 
 function mapStateToProps(state) {
   const currentUser = state.currentUser;
@@ -14,8 +15,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: user => dispatch(fetchRegister(user)),
-  onRequestSig: message => requestSig(message)
+  fetchRequestSig: () => dispatch(fetchRequestSig()),
+  onSubmit: user => dispatch(fetchRegister(user))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);

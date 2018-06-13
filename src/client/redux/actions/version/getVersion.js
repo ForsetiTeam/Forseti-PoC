@@ -57,7 +57,7 @@ function fetchVersionDo() {
         dispatch(receiveVersion(res.data.version));
       })
       .catch(error => {
-        dispatch(failureVersion(error));
+        dispatch(failureVersion(error.message));
       });
     /* , 'Authorization': state.session.cookies.jwt */
   };

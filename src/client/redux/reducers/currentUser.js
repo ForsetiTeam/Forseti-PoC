@@ -19,7 +19,8 @@ const initialState = {
   user,
   loaded: !!user,
   loading: false,
-  error: null
+  error: null,
+  validatorError: null
 };
 
 export default function (state = initialState, action) {
@@ -51,7 +52,8 @@ export default function (state = initialState, action) {
         user: null,
         loaded: false,
         loading: false,
-        error: action.error
+        error: action.error,
+        validatorError: action.validatorError /* from register*/
       };
     }
     default:

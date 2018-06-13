@@ -25,10 +25,11 @@ function receiveRegister(user) {
   };
 }
 
-function failureRegister(error) {
+function failureRegister(error, validatorError) {
   return {
     type: REQUEST_REGISTER_FAILURE,
-    error
+    error,
+    validatorError
   };
 }
 
@@ -55,14 +56,14 @@ function fetchRegisterDo(user) {
       ],
       request('post', apiRoutes.authRegister(), user)
     )
-      .then((res) => {
+      .then(res => {
         setUser(res.data.user);
         setToken(res.data.token);
         dispatch(receiveRegister(res.data.user));
         dispatch(push('/'));
       })
-      .catch(err => {
-        dispatch(failureRegister(err));
+      .catch(error => {
+        dispatch(failureRegister(error.message, error.errors));
       });
   };
 }
