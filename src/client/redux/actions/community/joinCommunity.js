@@ -56,8 +56,9 @@ function fetchCommunityJoinDo(community) {
             dispatch(failureCommunityJoin(err));
           });
       })
-      .catch(err => {
-        dispatch(failureCommunityJoin(err));
+      .catch(error => {
+        console.log(error);
+        dispatch(receiveCommunityJoin(community));
       });
   };
 }
