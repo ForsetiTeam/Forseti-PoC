@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import LayerHeader from './LayerHeader';
+import LayerHeader from '../LayerHeader';
 
 class LayerPage extends Component {
   static propTypes = {

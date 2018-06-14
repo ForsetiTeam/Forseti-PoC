@@ -1,25 +1,26 @@
-
-
 .Layer {
   $margin: 30px;
   $tabsWidth: 240px;
   $headerHeight: 108px;
   $footerHeight: 40px;
+  $transition: 0.3s;
 
   position: relative;
   font-size: 16px;
   height: 100%;
 
   &__sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99;
     height: 100vh;
     width: $tabsWidth;
+    position: fixed;
+    top: 0;
+    left: -$tabsWidth;
+    z-index: 99;
+    overflow: hidden;
     background-color: $layercolor;
     box-shadow: 0 1px 30px 0 $shadowcolor;
     color: rgba(37, 37, 37, 0.5);
+    transition: $transition;
   }
 
   &__logo {
@@ -37,17 +38,18 @@
     position: fixed;
     z-index: 1;
     height: $headerHeight;
-    left: $tabsWidth;
     top: 0;
+    left: 0;
     right: 0;
     background-color: $layercolor;
     box-shadow: 0 2px 15px 0 $shadowcolor;
+    transition: $transition;
   }
 
   &__footer {
     position: fixed;
     bottom: 0;
-    left: $tabsWidth;
+    left: 0;
     right: 0;
     z-index: 1;
     height: $footerHeight;
@@ -55,12 +57,13 @@
     line-height: $footerHeight;
     background-color: $layercolor;
     box-shadow: 0 -2px 15px 0 $shadowcolor;
+    transition: $transition;
   }
 
   &__center {
     position: relative;
     height: 100%;
-    padding-left: $tabsWidth;
+    transition: $transition;
   }
 
   &__content {
@@ -73,5 +76,35 @@
     height: 100%;
     padding: $cardspadding;
     overflow-y: auto;
+  }
+
+  @media (min-width: 768px) {
+    &__sidebar {
+      left: 0;
+    }
+
+    &__topbar,
+    &__footer {
+      left: $tabsWidth;
+    }
+
+    &__center {
+      padding-left: $tabsWidth;
+    }
+  }
+
+  &_leftMenu {
+    & .Layer__sidebar {
+      left: 0;
+    }
+
+    & .Layer__topbar,
+    & .Layer__footer {
+      left: $tabsWidth;
+    }
+
+    & .Layer__center {
+      padding-left: $tabsWidth;
+    }
   }
 }

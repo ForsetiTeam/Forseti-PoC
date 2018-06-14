@@ -29,8 +29,8 @@ class UserInfo extends Component {
       <div className='UserInfo'>
         {this.renderBalance(this.props.balanceEth, 'ETH', this.props.conversion)}
         {this.renderBalance(this.props.balanceFrs, 'FRS', this.props.conversion)}
-        <div className='UserInfo__photo ml-2 mr-1 d-none d-md-block'/>
-        <div className='d-none d-md-block'>
+        <div className='UserInfo__photo ml-2 mr-1 d-none d-sm-block'/>
+        <div className='d-none d-sm-block'>
           Ramin Javadi<br/>
           {this.props.account &&
             <div className='UserInfo__wallet text-muted text-truncate'>Wallet: {this.props.account}</div>

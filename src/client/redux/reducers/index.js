@@ -6,6 +6,7 @@ import currentUser from './currentUser';
 import community from './community';
 import dispute from './dispute';
 import metamask from './metamask';
+import display from './interface';
 
 export default combineReducers({
   version,
@@ -13,6 +14,7 @@ export default combineReducers({
   community,
   dispute,
   metamask,
+  display,
 
   routing: routerReducer
 });

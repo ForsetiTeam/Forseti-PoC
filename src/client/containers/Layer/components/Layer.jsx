@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import Navigation from '../../Navigation';
 
@@ -9,6 +10,7 @@ class Layer extends Component {
     version: PropTypes.string,
     fetchVersion: PropTypes.func,
 
+    isLeftMenuShown: PropTypes.bool,
     isLogged: PropTypes.bool,
     isMetamaskLoaded: PropTypes.bool,
     fetchProcessMetamaskAccount: PropTypes.func
@@ -22,7 +24,7 @@ class Layer extends Component {
   render() {
     if (this.props.isLogged) {
       return (
-        <div className='Layer'>
+        <div className={classnames({ Layer: true, 'Layer_leftMenu': this.props.isLeftMenuShown })}>
           <div className='Layer__sidebar'>
             <a href='https://forseti.im/' target='_blank'>
               <div className='Layer__logo' />

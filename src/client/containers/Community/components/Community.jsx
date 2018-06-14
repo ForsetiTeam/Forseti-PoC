@@ -47,10 +47,9 @@ class Community extends Component {
 
 
     return (
-
       <Page isSingle>
         <div className='Community'>
-          <FontAwesomeIcon icon={icons[comm.icon]} className='Community__image d-none d-md-block float-left mr-3'/>
+          <FontAwesomeIcon icon={icons[comm.icon]} className='Community__image d-none d-sm-block float-left mr-3'/>
           <div>
             <div className='d-flex align-items-start'>
               <h1 className='flex-grow-1'>{comm.title}</h1>

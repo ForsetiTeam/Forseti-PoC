@@ -2,6 +2,7 @@
 .Card {
   position: relative;
   width: 388px;
+  min-width: 388px;
   margin: $cardspadding;
   padding: 50px 25px;
   background-color: $layercolor;
