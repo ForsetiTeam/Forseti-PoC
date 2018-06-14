@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 // highlight code
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/styles/hljs';
+delete docco.hljs.overflowX;
+docco.hljs.overflow = 'initial';
+docco.hljs.marginBottom = 0;
 
 // dispute table
 import ReactTable from 'react-table';
@@ -42,27 +45,28 @@ class Community extends Component {
 
     if (!comm) return <div className='noPage'>Community not found</div>;
 
+
     return (
 
       <Page isSingle>
-        <div className='Community flex'>
-          <FontAwesomeIcon icon={icons[comm.icon]} className='Community__image float-left'/>
-          <div className='Community__info'>
-            <div>
-              <button className='btn m-1 btn-primary float-right' onClick={this.props.onJoin} disabled={this.props.isJoining}>
+        <div className='Community'>
+          <FontAwesomeIcon icon={icons[comm.icon]} className='Community__image d-none d-md-block float-left mr-3'/>
+          <div>
+            <div className='d-flex align-items-start'>
+              <h1 className='flex-grow-1'>{comm.title}</h1>
+              <button className='btn m-1 btn-primary' onClick={this.props.onJoin} disabled={this.props.isJoining}>
                 {comm.isJoined ? 'Leave' : 'Join'}
               </button>
-              <h1>{comm.title}</h1>
             </div>
             <p className='text-muted'>{comm.description}</p>
-            <dl className='row text-muted'>
-              <dt className='col-2'>Pool address:</dt>
+            <dl className='row text-muted ml-0'>
+              <dt style={{ width: '150px' }}>Pool address:</dt>
               <dd className='col text-truncate'>{comm.poolAddress}</dd>
               <div className='w-100'/>
-              <dt className='col-2'>Solved dispute:</dt>
+              <dt style={{ width: '150px' }}>Solved dispute:</dt>
               <dd className='col'>{comm.disputesSolved}</dd>
               <div className='w-100'/>
-              <dt className='col-2'>Active members:</dt>
+              <dt style={{ width: '150px' }}>Active members:</dt>
               <dd className='col'>{comm.usersActive}</dd>
             </dl>
           </div>
@@ -70,13 +74,11 @@ class Community extends Component {
 
         <hr/>
 
-        <div className='Community__subtitle clearfix'>
-          <div className='float-right'>
-            <Popup trigger={<button className='btn btn-primary'>Add dispute</button>}>
-              <NewDisputeWndContainer onFetchCreateDispute={this.props.onCreateDispute}/>
-            </Popup>
-          </div>
-          <h1>Recent solved disputes</h1>
+        <div className='Community__subtitle d-flex align-items-start'>
+          <h1 className='flex-grow-1'>Recent solved disputes</h1>
+          <Popup trigger={<button className='btn btn-primary'>Add dispute</button>}>
+            <NewDisputeWndContainer onFetchCreateDispute={this.props.onCreateDispute}/>
+          </Popup>
         </div>
         <div>
           <ReactTable
