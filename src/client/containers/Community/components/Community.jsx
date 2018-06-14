@@ -20,6 +20,7 @@ import { LayerPage, Page, Popup } from '../../Layer';
 
 import SpinnerWaiter from '../../../components/SpinnerWaiter';
 import ErrorRequest from '../../../components/ErrorRequest';
+import EtherscanLink from '../../../components/EtherscanLink';
 
 import { NewDisputeWndContainer } from '../../Dispute';
 
@@ -60,7 +61,7 @@ class Community extends Component {
             <p className='text-muted'>{comm.description}</p>
             <dl className='row text-muted ml-0'>
               <dt style={{ width: '150px' }}>Pool address:</dt>
-              <dd className='col text-truncate'>{comm.poolAddress}</dd>
+              <dd className='col text-truncate'><EtherscanLink address={comm.poolAddress} /></dd>
               <div className='w-100'/>
               <dt style={{ width: '150px' }}>Solved dispute:</dt>
               <dd className='col'>{comm.disputesSolved}</dd>

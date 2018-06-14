@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 const numeral = require('numeral');
 
+import EtherscanLink from '../../../components/EtherscanLink';
+
 class UserInfo extends Component {
   static propTypes = {
     balanceEth: PropTypes.number,
@@ -33,7 +35,9 @@ class UserInfo extends Component {
         <div className='d-none d-sm-block'>
           Ramin Javadi<br/>
           {this.props.account &&
-            <div className='UserInfo__wallet text-muted text-truncate'>Wallet: {this.props.account}</div>
+            <div className='UserInfo__wallet text-muted text-truncate'>
+              Wallet: <EtherscanLink address={this.props.account} />
+            </div>
           }
         </div>
       </div>

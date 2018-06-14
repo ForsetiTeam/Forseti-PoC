@@ -9,8 +9,10 @@ import {
   DISPUTE_DECISION_ABSTAIN,
   DISPUTE_STATUS_OPEN, DISPUTE_STATUS_CLOSED
 } from '../../../consts';
+
 import SpinnerWaiter from '../../../components/SpinnerWaiter';
 import ErrorRequest from '../../../components/ErrorRequest';
+import EtherscanLink from '../../../components/EtherscanLink';
 
 class DisputeWnd extends Component {
   static propTypes = {
@@ -112,9 +114,9 @@ class DisputeWnd extends Component {
           <p>{dispute.description}</p>
           <dl className='row no-gutters text-muted'>
             <dt className='col-3 text-right'>Respondent:</dt>
-            <dd className='col-9 text-truncate'>{dispute.authorAddress}</dd>
+            <dd className='col-9 text-truncate'><EtherscanLink address={dispute.authorAddress} /></dd>
             <dt className='col-3 text-right'>Applicant:</dt>
-            <dd className='col-9 text-truncate'>{dispute.authorAddress}</dd>
+            <dd className='col-9 text-truncate'><EtherscanLink address={dispute.authorAddress} /></dd>
             <dt className='col-3 text-right'>Community:</dt>
             <dd className='col-9'>{dispute.communityName}</dd>
             <dt className='col-3 text-right'>Arbiters count:</dt>

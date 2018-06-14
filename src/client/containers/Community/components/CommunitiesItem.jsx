@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/fontawesome-free-solid';
+import EtherscanLink from '../../../components/EtherscanLink';
 
 class CommunitiesItem extends Component {
   static propTypes = {
@@ -22,6 +23,8 @@ class CommunitiesItem extends Component {
           <div className='text-muted'>
             <p>{comm.description}</p>
             <dl className='row no-gutters'>
+              <dt className='col-7 text-right'>Pool address:</dt>
+              <dd className='col-5 text-left text-truncate'><EtherscanLink address={comm.poolAddress} /></dd>
               <dt className='col-7 text-right'>Solved dispute:</dt>
               <dd className='col-5 text-left'>{comm.disputesSolved}</dd>
               <dt className='col-7 text-right'>Model:</dt>
