@@ -84,14 +84,18 @@ class NewDisputeWnd extends Component {
           <div className='form-group row'>
             <label htmlFor='document' className='col-sm-4 col-form-label'>Upload file</label>
             <div className='col-sm-8'>
-              <input
-                type='file'
-                id='document'
-                name='document'
-                className='form-control'
-                placeholder='Document attached to dispute'
-                onChange={this.props.onChange({})}
-              />
+              <label className='btn btn-primary'>
+                Browse
+                <input
+                  type='file'
+                  id='document'
+                  name='document'
+                  className='form-control'
+                  placeholder='Document attached to dispute'
+                  onChange={this.props.onChange({})}
+                  hidden
+                />
+              </label>
             </div>
           </div>
           <button type='submit' className='btn btn-primary' disabled={!this.props.formValid}>Submit</button>
