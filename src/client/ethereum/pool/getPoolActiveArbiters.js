@@ -8,6 +8,10 @@ export default function getPoolActiveArbiters(poolAddress) {
         const list = [];
         let passed = 0;
 
+        if (count === 0) {
+          return resolve([]);
+        }
+
         for (let i = 1; i <= count; i++) {
           /* eslint-disable no-loop-func */
           getPoolReputationById(poolAddress, i)
