@@ -6,21 +6,25 @@ export default function getPoolActiveArbiters(poolAddress) {
     getPoolArbitersCount(poolAddress)
       .then(count => {
         const list = [];
-        let passed = 0;
 
-        for (let i = 1; i <= count; i++) {
-          getPoolReputationById(poolAddress, i)
-            .then(arbiter => {
-              if (arbiter.reputation) {
-                list.push(arbiter);
-              }
+        if (count) {
+          let passed = 0;
+          for (let i = 1; i <= count; i++) {
+            getPoolReputationById(poolAddress, i)
+              .then(arbiter => {
+                if (arbiter.reputation) {
+                  list.push(arbiter);
+                }
 
-              passed++;
-              if (passed === count) {
-                resolve(list);
-              }
-            })
-            .catch(reject);
+                passed++;
+                if (passed === count) {
+                  resolve(list);
+                }
+              })
+              .catch(reject);
+          }
+        } else {
+          resolve(list);
         }
       })
       .catch(reject);
