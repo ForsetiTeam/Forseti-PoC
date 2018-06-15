@@ -113,6 +113,10 @@ class DisputeWnd extends Component {
         <div className='text-muted'>
           <p>{dispute.description}</p>
           <dl className='row no-gutters text-muted'>
+            <dt className='col-3 text-right'>Contract:</dt>
+            <dd className='col-9 text-truncate'>
+              {dispute.ethAddress ? <EtherscanLink address={dispute.ethAddress} /> : 'not started'}
+            </dd>
             <dt className='col-3 text-right'>Respondent:</dt>
             <dd className='col-9 text-truncate'><EtherscanLink address={dispute.authorAddress} /></dd>
             <dt className='col-3 text-right'>Applicant:</dt>

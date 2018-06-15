@@ -69,6 +69,7 @@ function processAccount(dispatch, getState) {
 
 function processSig(dispatch, getState) {
   const account = getState().metamask.account;
+
   if (!account) return;
 
   dispatch(requestMetamaskSig());
