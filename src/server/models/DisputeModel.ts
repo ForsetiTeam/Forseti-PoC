@@ -108,7 +108,7 @@ export class Dispute extends Typegoose {
       poolMasterAddress: this.community.poolMasterAddress
     };
 
-    if (this.author.toString() === user._id.toString()) {
+    if (this.author._id.toString() === user._id.toString()) {
       //author or pool-master
       exportData = Object.assign(exportData,
         this.arbiters.reduce((summary, arbiter) => {
