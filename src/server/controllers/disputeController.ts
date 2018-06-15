@@ -47,14 +47,18 @@ async function getList(req: Request, res: Response, next: NextFunction) {
   ;
 }
 
+function getById(id, user, res) {
+  populateDispute(DisputeModel.findById(id)).exec()
+    .then(async dispute => {
+      res.json(dispute.getExportJSON(user));
+    })
+    .catch(() => res.responses.notFoundResource("Dispute not found"));
+}
+
 async function get(req: Request, res: Response, next: NextFunction) {
   const disputeId = req.params.id;
 
-  return populateDispute(DisputeModel.findById(disputeId)).exec()
-    .then(async dispute => {
-      res.json(dispute.getExportJSON(req.user));
-    })
-    .catch(() => res.responses.notFoundResource("Dispute not found"));
+  getById(disputeId, req.user, res);
 }
 
 async function create(req, res: Response, next: NextFunction) {
@@ -69,7 +73,7 @@ async function create(req, res: Response, next: NextFunction) {
   });
 
   return dispute.save()
-    .then(dispute => res.json(dispute.getExportJSON(req.user)))
+    .then(dispute => getById(dispute._id, req.user, res))
     .catch(err => res.responses.requestError("Can't save dispute"));
 }
 
@@ -126,7 +130,7 @@ function finish(req: Request, res: Response, next: NextFunction) {
   populateDispute(DisputeModel.findById(disputeId)).exec()
     .then(dispute => {
       const result = dispute.calcResult();
-      finishDispute(dispute.ethAddress, dispute.community.poolMasterAddress, dispute.arbiters, result)
+      finishDispute(dispute.ethAddress, dispute.arbiters, result)
         .then(async (transaction) => {
           dispute.status = Status.CLOSED;
           await dispute.save();
