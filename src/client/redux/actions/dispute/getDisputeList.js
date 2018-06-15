@@ -6,6 +6,7 @@ import {
   fetchSuccessStatusDecorator,
   fetchProtectedAuth
 } from '../decorators/index';
+import isDisputeClosed from "../../../ethereum/dispute/isDisputeClosed";
 
 export const REQUEST_DISPUTE_LIST_LOADING = 'REQUEST_DISPUTE_LIST_LOADING';
 export const REQUEST_DISPUTE_LIST_SUCCESS = 'REQUEST_DISPUTE_LIST_SUCCESS';
@@ -56,8 +57,26 @@ function fetchDisputeListDo(filter) {
       ],
       request('get', apiRoutes.disputeList(), filter)
     )
+      .catch(error => {
+        dispatch(failureDisputeList(error.message));
+      })
       .then(res => {
-        dispatch(receiveDisputeList(res.data));
+        const list = res.data;
+
+        return Promise.all(list.map(dispute => {
+          if (!dispute.ethAddress) {
+            dispute.isClosed = false;
+            return dispute;
+          }
+          return isDisputeClosed(dispute.ethAddress)
+            .then(isClosed => {
+              dispute.isClosed = isClosed;
+              return dispute;
+            });
+        }));
+      })
+      .then(list => {
+        dispatch(receiveDisputeList(list));
       })
       .catch(error => {
         dispatch(failureDisputeList(error.message));
