@@ -61,7 +61,7 @@ function fetchStartDisputeDo(dispute) {
           request('post', apiRoutes.disputeStart(dispute.id), { ethAddress })
         )
           .then(res => dispatch(receiveStartDispute(res.data)))
-          .catch(err => dispatch(failureStartDispute(err)));
+          .catch(error => dispatch(failureStartDispute(error.message)));
       })
       .catch(error => {
         dispatch(failureStartDispute(error.message));

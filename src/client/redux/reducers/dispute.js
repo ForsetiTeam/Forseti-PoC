@@ -59,8 +59,11 @@ export default function (state = initialState, action) {
     case REQUEST_VOTE_DISPUTE_SUCCESS:
     case REQUEST_START_DISPUTE_SUCCESS: {
       const newState = { ...state };
+      const list = state.list.map(dispute =>
+        action.dispute.id === dispute.id ? action.dispute : dispute
+      );
 
-      newState.list = [ action.dispute ];
+      newState.list = list;
       newState.loaded = true;
       newState.loading = false;
       return newState;

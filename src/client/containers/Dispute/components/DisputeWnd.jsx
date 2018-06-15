@@ -6,8 +6,7 @@ import { Window } from '../../Layer';
 import {
   DISPUTE_DECISION_APPROVE,
   DISPUTE_DECISION_DISAPPROVE,
-  DISPUTE_DECISION_ABSTAIN,
-  DISPUTE_STATUS_OPEN, DISPUTE_STATUS_CLOSED
+  DISPUTE_DECISION_ABSTAIN
 } from '../../../consts';
 
 import SpinnerWaiter from '../../../components/SpinnerWaiter';
@@ -48,7 +47,7 @@ class DisputeWnd extends Component {
           </Fragment>
         );
       }
-      if (dispute.status !== DISPUTE_STATUS_CLOSED) {
+      if (!dispute.isClosed) {
         return (
           <button
             className='btn btn-success m-1'
@@ -61,7 +60,7 @@ class DisputeWnd extends Component {
     } else {
       if (!dispute.ethAddress) return;
       if (!dispute.userIsArbiter) return;
-      if (dispute.status === DISPUTE_STATUS_OPEN && !dispute.userDecision) {
+      if (!dispute.isClosed && !dispute.userDecision) {
         if (this.props.isToggled) {
           return (
             <Fragment>
