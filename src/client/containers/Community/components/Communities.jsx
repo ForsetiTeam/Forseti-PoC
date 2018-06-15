@@ -15,16 +15,13 @@ class Communities extends Component {
   }
 
   render() {
-    const list = this.props.list.length ? [this.props.list[0], this.props.list[0], this.props.list[0], this.props.list[0],
-      this.props.list[0], this.props.list[0], this.props.list[0], this.props.list[0]] : [];
-
     return (
       <LayerPage
         topic='Communities'
         comment='Is atomic unit of domain experts community builded on trust and reputation'
       >
         <Page>
-          {list.map(community =>
+          {this.props.list.map(community =>
             <CommunitiesItem key={community.name} community={community}/>
           )}
         </Page>
