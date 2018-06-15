@@ -7,15 +7,6 @@ export const abi = [
     "type": "event"
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "getProfit",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -26,6 +17,15 @@ export const abi = [
     ],
     "name": "ResultCommited",
     "type": "event"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "getProfit",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "constant": false,
@@ -45,6 +45,10 @@ export const abi = [
       {
         "name": "_s",
         "type": "bytes32[]"
+      },
+      {
+        "name": "_result",
+        "type": "string"
       }
     ],
     "name": "setArbitratorsAndVotes",
