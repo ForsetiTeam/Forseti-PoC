@@ -10,14 +10,17 @@ function getWeb3() {
   // web3.setProvider(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws'));
   web3.setProvider(new Web3.providers.HttpProvider('http://ethereum-test.aspirity.com:80'));
 
-  /*
   const account = config.get('metamask.poolMasterAccount');
-  const phrase = config.get('metamask.poolMasterPassword');
+  const phrase = config.get('metamask.poolMasterPassphrase');
+  const key = config.get('metamask.poolMasterKey');
 
-  console.log(account, phrase);
-  web3.eth.personal.unlockAccount(account, phrase, 1e6)
+  web3.eth.personal.importRawKey(key, phrase)
+    .then(result => console.log('IMPORT ACCOUNT', result))
+    .catch(() => {});// it's ok if account exists
+
+  web3.eth.personal.unlockAccount(account, phrase)
     .then(result => console.log('UNLOCKED', result))
-    .catch(console.log);*/
+    .catch(console.log);
 
   return web3;
 }
@@ -50,13 +53,13 @@ function getTransactionFinish(transactionAddress, resolve, reject) {
 }
 
 /* eslint-disable max-params */
-function runSigned(contract, methodName, params, resolve, reject) {
+function runSigned(contract, methodName, params, resolve, reject, useSend = false) {
   const myAccount = config.get('metamask.poolMasterAccount');
-  const logParams = { address: contract._address, methodName, params };
+  const logParams = { address: contract._address, methodName, params, useSend };
 
   console.log('req transaction', logParams);
   contract.methods[methodName](...params)
-    .call({ from: myAccount })
+    [useSend ? 'send' : 'call']({ from: myAccount })
     .then(response => {
       console.log('get transaction - success', logParams, response);
       resolve(response);
@@ -67,10 +70,16 @@ function runSigned(contract, methodName, params, resolve, reject) {
     });
 }
 
-function runSignedTillResolve(contract, methodName, params, resolve, reject) {
-  runSigned(contract, methodName, params, transactionAddress =>
-    getTransactionFinish(transactionAddress, resolve, reject), reject);
+function runSignedTillResolve(contract, methodName, params, resolve, reject, useSend = false) {
+  runSigned(
+    contract,
+    methodName,
+    params,
+    transactionAddress => getTransactionFinish(transactionAddress, resolve, reject),
+    reject,
+    useSend);
 }
 
 const web3 = getWeb3();
+
 export default { web3, getSmartContract, runSigned, runSignedTillResolve };
