@@ -34,17 +34,13 @@ class DisputeWnd extends Component {
     if (this.props.isAuthor) {
       if (!dispute.ethAddress) {
         return (
-          <Fragment>
-            <button
-              className='btn btn-success m-1'
-              onClick={this.props.onStart}
-              disabled={this.props.isLoading}
-            >
-              Start
-            </button>
-            <SpinnerWaiter isLoading={this.props.isLoading}/>
-            <ErrorRequest error={this.props.error}/>
-          </Fragment>
+          <button
+            className='btn btn-success m-1'
+            onClick={this.props.onStart}
+            disabled={this.props.isLoading}
+          >
+            Start
+          </button>
         );
       }
       if (!dispute.isClosed) {
@@ -52,6 +48,7 @@ class DisputeWnd extends Component {
           <button
             className='btn btn-success m-1'
             onClick={this.props.onFinish}
+            disabled={this.props.isLoading}
           >
             Finish
           </button>
@@ -146,7 +143,11 @@ class DisputeWnd extends Component {
             }
           </dl>
         </div>
-        {this.renderButtons()}
+        <div>
+          {this.renderButtons()}
+          <SpinnerWaiter isLoading={this.props.isLoading}/>
+          <ErrorRequest error={this.props.error}/>
+        </div>
       </Fragment>
     );
   }

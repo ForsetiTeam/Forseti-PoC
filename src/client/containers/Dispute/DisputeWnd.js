@@ -9,8 +9,8 @@ import { fetchFinishDispute } from '../../redux/actions/dispute/finishDispute';
 function mapStateToProps(state, props) {
   const currentUser = state.currentUser.user;
   const isAuthor = currentUser.id === props.dispute.author;
-  const isLoading = state.dispute.loading;
-  const error = state.dispute.error;
+  const isLoading = state.dispute.loadingItem;
+  const error = state.dispute.errorItem;
 
   return { isAuthor, isLoading, error };
 }

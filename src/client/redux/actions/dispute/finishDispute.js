@@ -1,11 +1,3 @@
-/*
-import finishDispute from '../../../../etherium/actions/finishDispute';
-
-finishDispute(dispute.ethAddress, dispute.poolMasterAccount, votes, result);
-*/
-
-import { push } from 'react-router-redux';
-
 import { request } from '../utils/axios';
 import apiRoutes from '../../apiRoutes';
 
@@ -66,11 +58,9 @@ function fetchFinishDisputeDo(dispute) {
     )
       .then(async res => {
         dispatch(receiveFinishDispute(res.data));
-        dispatch(push(`/dispute/${res.data.id}`));
       })
       .catch(error => {
         dispatch(failureFinishDispute(error.message));
-        dispatch(push('/'));
       });
   };
 }
