@@ -27,6 +27,9 @@ function mapStateToProps(state, props) {
 
   return {
     list: state.dispute.list,
+    error: state.dispute.error,
+    isLoading: state.dispute.loading,
+
     filter,
     filterParams
   };

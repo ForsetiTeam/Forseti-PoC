@@ -8,6 +8,9 @@ import { DISPUTE_FILTER_MY, DISPUTE_FILTER_UNANSWERED, DISPUTE_FILTER_ANSWERED }
 class DisputesContainer extends Component {
   static propTypes = {
     list: PropTypes.array,
+    error: PropTypes.string,
+    isLoading: PropTypes.bool,
+
     filter: PropTypes.string,
     filterParams: PropTypes.object,
 
@@ -50,6 +53,8 @@ class DisputesContainer extends Component {
       <Disputes
         {...this.getPageHeader()}
         list={this.props.list}
+        error={this.props.error}
+        isLoading={this.props.isLoading}
         filter={this.props.filter}
       />
     );
