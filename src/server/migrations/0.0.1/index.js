@@ -6,16 +6,28 @@ const storedData = {};
 const rawData = {
   Community: [
     {
-      "_id" : "5b064449f52d114cdac0907a",
-      "poolAddress" : "0x84a01984161ba593bc509fab52dcd6cd2b6f85ca",
-      "name" : "web",
-      "title" : "Web Developers",
-      "description" : "Community for Dispute resolution in Web Development",
-      "icon" : "faMagic",
-      "disputesSolved" : 20,
-      "usersActive" : 32,
-      "__v" : 0,
-      "poolMasterAddress" : "0x88373c8ce5213bfd1530c83e409b4bc024586202"
+      'poolAddress' : '0xb150bd72629dd49c2374d89857f10b02c448a08f',
+      'name' : 'web',
+      'title' : 'Web Developers',
+      'description' : 'Community for Dispute resolution in Web Development',
+      'icon' : 'faMagic',
+      'disputesSolved' : 20
+    },
+    {
+      'poolAddress' : '0x9c1cb1e743b4e97d6defe6232c1ca0decbba4de5',
+      'name' : 'blockchain',
+      'title' : 'Blockchain Community',
+      'description' : 'Community for solving bitcoin and ethereum disputes',
+      'icon' : 'faMagic',
+      'disputesSolved' : 42
+    },
+    {
+      'poolAddress' : '0xc3ab456fe06bde5a89c203247a357bc2b3929820',
+      'name' : 'new',
+      'title' : 'New Community',
+      'description' : 'Community for something else',
+      'icon' : 'faMagic',
+      'disputesSolved' : 3
     }
   ]
 };
