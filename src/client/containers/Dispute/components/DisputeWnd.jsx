@@ -125,15 +125,10 @@ class DisputeWnd extends Component {
             <dd className='col-9'>{dispute.communityName}</dd>
             <dt className='col-3 text-right'>Arbiters count:</dt>
             <dd className='col-9'>{dispute.arbitersNeed}</dd>
-            {dispute.ethAddress && this.props.isAuthor &&
+            {dispute.document &&
               <Fragment>
-                <dt className='col-3 text-right'>Vote summary:</dt>
-                <dd className='col-9'>
-                  {dispute.arbitersNeed === dispute.usersVoted ?
-                    <b>finished</b> :
-                    `${dispute.usersVoted} voted, ${dispute.usersRejected} abstained`
-                  }
-                </dd>
+                <dt className='col-3 text-right'>Evidences:</dt>
+                <dd className='col-9'><a href='#' onClick={this.props.onDownloadDocument}>Download document</a></dd>
               </Fragment>
             }
             {dispute.userDecision &&
@@ -142,10 +137,21 @@ class DisputeWnd extends Component {
                 <dd className='col-9'><b>{dispute.userDecision}</b></dd>
               </Fragment>
             }
-            {dispute.document &&
+            {dispute.result &&
               <Fragment>
-                <dt className='col-3 text-right'>Evidences:</dt>
-                <dd className='col-9'><a href='#' onClick={this.props.onDownloadDocument}>Download document</a></dd>
+                <dt className='col-3 text-right'>Result:</dt>
+                <dd className='col-9'><b>{dispute.result}</b></dd>
+              </Fragment>
+            }
+            {dispute.ethAddress && !dispute.result && this.props.isAuthor &&
+              <Fragment>
+                <dt className='col-3 text-right'>Vote summary:</dt>
+                <dd className='col-9'>
+                  {dispute.arbitersNeed === dispute.usersVoted ?
+                    <b>finished</b> :
+                    `${dispute.usersVoted} voted, ${dispute.usersRejected} abstained`
+                  }
+                </dd>
               </Fragment>
             }
           </dl>

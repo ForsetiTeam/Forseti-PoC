@@ -6,7 +6,8 @@ import {
   fetchSuccessStatusDecorator,
   fetchProtectedAuth
 } from '../decorators/index';
-import isDisputeClosed from "../../../ethereum/dispute/isDisputeClosed";
+
+import getDisputeResult from '../../../ethereum/dispute/getDisputeResult';
 
 export const REQUEST_DISPUTE_LIST_LOADING = 'REQUEST_DISPUTE_LIST_LOADING';
 export const REQUEST_DISPUTE_LIST_SUCCESS = 'REQUEST_DISPUTE_LIST_SUCCESS';
@@ -68,9 +69,10 @@ function fetchDisputeListDo(filter) {
             dispute.isClosed = false;
             return dispute;
           }
-          return isDisputeClosed(dispute.ethAddress)
-            .then(isClosed => {
-              dispute.isClosed = isClosed;
+          return getDisputeResult(dispute.ethAddress)
+            .then(result => {
+              dispute.result = result;
+              dispute.isClosed = result !== '';
               return dispute;
             });
         }));
