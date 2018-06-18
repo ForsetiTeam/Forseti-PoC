@@ -91,6 +91,7 @@ export class Dispute extends Typegoose {
       description: this.description,
       communityName: this.community.name,
       isClosed: this.isClosed,
+      result: this.result,
       arbitersNeed: this.arbitersNeed,
       document: fileName,
       ethAddress: this.ethAddress,
