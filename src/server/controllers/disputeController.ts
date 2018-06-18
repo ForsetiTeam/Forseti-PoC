@@ -103,7 +103,7 @@ function vote(req: Request, res: Response, next: NextFunction) {
       vote.sig = req.body.sig;
 
       dispute.save()
-        .then(dispute => res.json(dispute.getExportJSON(req.user)))
+        .then(dispute => getById(dispute._id, req.user, res))
         .catch(error => res.responses.requestError(error));
     })
     .catch(() => res.responses.notFoundResource("Dispute not found"));
