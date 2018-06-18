@@ -13,6 +13,62 @@ class NewDisputeWnd extends Component {
     onChange: PropTypes.func
   };
 
+  handleSelectFile = e => {
+    e.preventDefault();
+    const IPFS = require('ipfs');
+    const buffer = require('buffer');
+    const node = new IPFS({
+      config: {
+        Addresses: {
+          Swarm: [
+            '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star'
+          ]
+        }
+      }
+    });
+    const reader = new FileReader();
+
+    node.on('ready', () => {
+      reader.onloadend = () => {
+        const buf = buffer.Buffer(reader.result); // Convert data into buffer
+
+        node.files.add(buf, (err, result) => { // Upload buffer to IPFS
+          if (err) return console.error(err);
+          const url = `https://ipfs.io/ipfs/${result[0].hash}`;
+
+          console.log(`Url --> ${url}`);
+        });
+      };
+
+      const photo = document.getElementById('document');
+
+      reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
+    });
+    /*
+
+
+    const ipfsAPI = require('ipfs-api');
+    const buffer = require('buffer');
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const ipfs = ipfsAPI('localhost', 5001); // Connect to IPFS
+      const buf = buffer.Buffer(reader.result); // Convert data into buffer
+
+      ipfs.files.add(buf, (err, result) => { // Upload buffer to IPFS
+        if (err) return console.error(err);
+        const url = `https://ipfs.io/ipfs/${result[0].hash}`;
+
+        console.log(`Url --> ${url}`);
+      });
+    };
+
+    const photo = document.getElementById('document');
+
+    reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
+    */
+  };
+
   render() {
     return (
       <Window topic='Add dispute'>
@@ -96,6 +152,7 @@ class NewDisputeWnd extends Component {
                   hidden
                 />
               </label>
+              <span className='btn btn-primary' onClick={this.handleSelectFile}>Btn</span>
             </div>
           </div>
           <button type='submit' className='btn btn-primary' disabled={!this.props.formValid}>Submit</button>
