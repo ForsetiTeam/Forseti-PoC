@@ -43,7 +43,10 @@ class DisputeWnd extends Component {
           </button>
         );
       }
-      if (!dispute.isClosed) {
+      if (dispute.isClosed) {
+        return <span className='text-danger'>Dispute is closed</span>;
+      }
+      if (dispute.arbitersNeed === dispute.usersVoted) {
         return (
           <button
             className='btn btn-success m-1'
@@ -54,6 +57,7 @@ class DisputeWnd extends Component {
           </button>
         );
       }
+      return <span className='text-danger'>Arbiters still voting</span>;
     } else {
       if (!dispute.ethAddress) return;
       if (!dispute.userIsArbiter) return;
@@ -121,18 +125,21 @@ class DisputeWnd extends Component {
             <dd className='col-9'>{dispute.communityName}</dd>
             <dt className='col-3 text-right'>Arbiters count:</dt>
             <dd className='col-9'>{dispute.arbitersNeed}</dd>
-            <dt className='col-3 text-right'>Status:</dt>
-            <dd className='col-9'>{dispute.status}</dd>
             {dispute.ethAddress && this.props.isAuthor &&
               <Fragment>
                 <dt className='col-3 text-right'>Vote summary:</dt>
-                <dd className='col-9'>{dispute.usersVoted} voted, {dispute.usersRejected} abstained</dd>
+                <dd className='col-9'>
+                  {dispute.arbitersNeed === dispute.usersVoted ?
+                    <b>all arbiters voted</b> :
+                    `${dispute.usersVoted} voted, ${dispute.usersRejected} abstained`
+                  }
+                </dd>
               </Fragment>
             }
             {dispute.userDecision &&
               <Fragment>
                 <dt className='col-3 text-right'>Your decision:</dt>
-                <dd className='col-9'>{dispute.userDecision}</dd>
+                <dd className='col-9'><b>{dispute.userDecision}</b></dd>
               </Fragment>
             }
             {dispute.document &&

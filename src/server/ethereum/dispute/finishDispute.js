@@ -20,13 +20,12 @@ export default function finishDispute(disputeAddress, votes, result) {
       v.push(web3.utils.toDecimal(sig.slice(128, 130)) + 27);
     });
 
-    // contractUtils.runSigned(dispute, 'validate', [h[0], v[0], r[0], s[0]], xxx => {
-    contractUtils.runSigned(dispute, 'setArbitratorsAndVotes', [h, v, r, s, result], xxx => {
-      console.log('xxx', xxx);
-      resolve(xxx);
-    }, err => {
-      console.log(err);
-      reject(err);
-    }, true);
+    contractUtils.runSigned(
+      dispute,
+      'setArbitratorsAndVotes',
+      [h, v, r, s, result],
+      resolve,
+      reject,
+      true);
   });
 }

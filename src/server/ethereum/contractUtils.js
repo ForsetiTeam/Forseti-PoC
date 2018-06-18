@@ -59,7 +59,7 @@ function runSigned(contract, methodName, params, resolve, reject, useSend = fals
 
   console.log('req transaction', logParams);
   contract.methods[methodName](...params)
-    [useSend ? 'send' : 'call']({ from: myAccount })
+    [useSend ? 'send' : 'call']({ from: myAccount, gas: 1e6 })
     .then(response => {
       console.log('get transaction - success', logParams, response);
       resolve(response);

@@ -132,9 +132,8 @@ function finish(req: Request, res: Response, next: NextFunction) {
       const result = dispute.calcResult();
       finishDispute(dispute.ethAddress, dispute.arbiters, result)
         .then(async (transaction) => {
-          dispute.status = Status.CLOSED;
-          await dispute.save();
-          res.responses.success("Success");
+          dispute.isClosed = true;
+          res.json(dispute.getExportJSON(req.user));
         })
         .catch(() => res.responses.requestError("Can't finish dispute"));
     })

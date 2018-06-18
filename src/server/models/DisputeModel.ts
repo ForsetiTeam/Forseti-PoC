@@ -6,13 +6,7 @@ import DocumentModel, { Document } from './DocumentModel';
 import VoteModel, { Vote, Decision } from './VoteModel';
 
 import getPoolActiveArbiters from '../ethereum/pool/getPoolActiveArbiters';
-import getPoolReputationById from '../ethereum/pool/getPoolReputationById';
 import selectArbiters from '../lib/selectArbiters';
-
-export enum Status {
-  OPEN = 'open',
-  CLOSED = 'closed',
-}
 
 export class Dispute extends Typegoose {
 
@@ -27,9 +21,6 @@ export class Dispute extends Typegoose {
 
   @prop({ required: true })
   public community: Ref<Community>;
-
-  @prop({ enum: Status, default: Status.OPEN })
-  public status: Status;
 
   @prop({ required: true })
   public arbitersNeed?: number;
@@ -99,7 +90,7 @@ export class Dispute extends Typegoose {
       title: this.title,
       description: this.description,
       communityName: this.community.name,
-      status: this.status,
+      isClosed: this.isClosed,
       arbitersNeed: this.arbitersNeed,
       document: fileName,
       ethAddress: this.ethAddress,
