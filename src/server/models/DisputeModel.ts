@@ -95,8 +95,7 @@ export class Dispute extends Typegoose {
       document: fileName,
       ethAddress: this.ethAddress,
 
-      poolAddress: this.community.poolAddress,
-      poolMasterAddress: this.community.poolMasterAddress
+      poolAddress: this.community.poolAddress
     };
 
     if (this.author._id.toString() === user._id.toString()) {
