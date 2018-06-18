@@ -130,7 +130,7 @@ class DisputeWnd extends Component {
                 <dt className='col-3 text-right'>Vote summary:</dt>
                 <dd className='col-9'>
                   {dispute.arbitersNeed === dispute.usersVoted ?
-                    <b>all arbiters voted</b> :
+                    <b>finished</b> :
                     `${dispute.usersVoted} voted, ${dispute.usersRejected} abstained`
                   }
                 </dd>
