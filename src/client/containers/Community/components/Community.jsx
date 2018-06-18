@@ -54,9 +54,12 @@ class Community extends Component {
           <div>
             <div className='d-flex align-items-start'>
               <h1 className='flex-grow-1'>{comm.title}</h1>
-              <button className='btn m-1 btn-primary' onClick={this.props.onJoin} disabled={this.props.isJoining}>
-                {comm.isJoined ? 'Leave' : 'Join'}
-              </button>
+              <div>
+                <SpinnerWaiter isLoading={this.props.isJoining}/>
+                <button className='btn m-1 btn-primary' onClick={this.props.onJoin} disabled={this.props.isJoining}>
+                  {comm.isJoined ? 'Leave' : 'Join'}
+                </button>
+              </div>
             </div>
             <p className='text-muted'>{comm.description}</p>
             <dl className='row text-muted ml-0'>

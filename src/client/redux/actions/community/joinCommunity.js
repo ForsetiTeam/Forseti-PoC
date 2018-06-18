@@ -50,15 +50,11 @@ function fetchCommunityJoinDo(community) {
         console.log(anydata);
         updateCommunityJoin(community)
           .then(community => {
+            community.usersActive += community.isJoined ? 1 : -1;
             dispatch(receiveCommunityJoin(community));
           })
-          .catch(err => {
-            dispatch(failureCommunityJoin(err));
-          });
+          .catch(error => dispatch(failureCommunityJoin(error)));
       })
-      .catch(error => {
-        console.log(error);
-        dispatch(receiveCommunityJoin(community));
-      });
+      .catch(() => dispatch(receiveCommunityJoin(community)));
   };
 }
