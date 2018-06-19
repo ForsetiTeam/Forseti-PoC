@@ -60,7 +60,7 @@ function fetchCreateDisputeDo(dispute, community) {
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      request('post', apiRoutes.disputeList(), disputeForm, { 'content-type': 'multipart/form-data' })
+      request('post', apiRoutes.disputeList(), disputeForm, { headers: { 'content-type': 'multipart/form-data' } })
     )
       .then(async res => {
         const dispute = res.data;

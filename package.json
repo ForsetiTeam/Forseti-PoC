@@ -38,6 +38,7 @@
     "cookie-parser": "^1.4.3",
     "cryptocompare": "^0.5.0",
     "css-loader": "0.28.7",
+    "deep-assign": "^2.0.0",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
     "ethereumjs-util": "^5.2.0",

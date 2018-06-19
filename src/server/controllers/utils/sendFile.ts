@@ -10,7 +10,7 @@ export default function sendFile(res : Response, fileData, fileName : String) {
     root: 'fs'
   });
 
-  res.set('Content-Type', 'application/octet-stream');
+  res.set('Content-Type', fileData.contentType);
   res.header('Content-Disposition', `attachment; filename="${fileName}"`);
   readstream.on('error', () => res.responses.requestError('Error read document', null));
   readstream.pipe(res);

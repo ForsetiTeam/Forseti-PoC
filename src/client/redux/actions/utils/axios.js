@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getToken } from '../../../services/localStore';
+const deepAssign = require('deep-assign');
 
 axios.interceptors.response.use(undefined, err => {
   const res = err.response;
@@ -11,12 +12,11 @@ axios.interceptors.response.use(undefined, err => {
 
 export default axios;
 
-export function request(method, url, data = {}, headers = {}) {
-  const config = { method, url };
-
-  config.headers = { Authorization: getToken() };
+export function request(method, url, data = {}, other = {}) {
+  let config = { method, url, headers: { Authorization: getToken() } };
   if (data) config[method === 'get' ? 'params' : 'data'] = data;
-  config.headers = Object.assign(config.headers || {}, headers);
+
+  config = deepAssign(config, other);
   config.validateStatus = status => {
     // return status >= 200 && status < 300 || status === 304;
     return status < 500;
@@ -26,7 +26,7 @@ export function request(method, url, data = {}, headers = {}) {
 }
 
 export function downloadFile(response) {
-  const fileData = new Blob([ response.data ], { type: 'text/plain' });
+  const fileData = new Blob([ response.data ], { type: response.headers['content-type'] });
   const fileName = decodeURIComponent(
     response.headers['content-disposition']
       .split(';')

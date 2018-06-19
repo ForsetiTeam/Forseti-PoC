@@ -4,7 +4,7 @@ import {Types} from "mongoose";
 
 import {NextFunction, Request, Response} from "../types/ExpressExtended";
 
-import DisputeModel, { populateDispute, Status } from "../models/DisputeModel"
+import DisputeModel, { populateDispute } from "../models/DisputeModel"
 import DocumentModel from "../models/DocumentModel";
 
 import getFileUploader from './utils/getFileUploader';

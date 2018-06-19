@@ -38,7 +38,8 @@ class DisputeWndContainer extends Component {
 
   handleDownloadDocument = e => {
     e.preventDefault();
-    request('get', apiRoutes.disputeDocument(this.props.dispute.id)).then(response => downloadFile(response));
+    request('get', apiRoutes.disputeDocument(this.props.dispute.id), {}, { responseType: 'blob' })
+      .then(response => downloadFile(response));
   };
 
   handleVote = e => {
