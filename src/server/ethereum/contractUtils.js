@@ -17,7 +17,7 @@ function importAccountToStorage() {
   const key = config.get('metamask.poolMasterKey');
   const phrase = config.get('metamask.poolMasterPassphrase');
 
-  web3.eth.personal.importRawKey(key, phrase, 0)
+  web3.eth.personal.importRawKey(key, phrase)
     .catch(() => {});
 }
 
@@ -25,7 +25,7 @@ function unlockAccount() {
   const account = config.get('metamask.poolMasterAccount');
   const phrase = config.get('metamask.poolMasterPassphrase');
 
-  return web3.eth.personal.unlockAccount(account, phrase);
+  return web3.eth.personal.unlockAccount(account, phrase, 0);
 }
 
 function getSmartContract(contractName, address) {
