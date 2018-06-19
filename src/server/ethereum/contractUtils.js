@@ -10,19 +10,22 @@ function getWeb3() {
   // web3.setProvider(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws'));
   web3.setProvider(new Web3.providers.HttpProvider('http://ethereum-test.aspirity.com:80'));
 
-  const account = config.get('metamask.poolMasterAccount');
-  const phrase = config.get('metamask.poolMasterPassphrase');
+  return web3;
+}
+
+function importAccountToStorage() {
   const key = config.get('metamask.poolMasterKey');
+  const phrase = config.get('metamask.poolMasterPassphrase');
 
   web3.eth.personal.importRawKey(key, phrase)
-    .then(result => console.log('IMPORT ACCOUNT', result))
-    .catch(() => {});// it's ok if account exists
+    .catch(() => {});
+}
 
-  web3.eth.personal.unlockAccount(account, phrase)
-    .then(result => console.log('UNLOCKED', result))
-    .catch(console.log);
+function unlockAccount() {
+  const account = config.get('metamask.poolMasterAccount');
+  const phrase = config.get('metamask.poolMasterPassphrase');
 
-  return web3;
+  return web3.eth.personal.unlockAccount(account, phrase);
 }
 
 function getSmartContract(contractName, address) {
@@ -54,6 +57,18 @@ function getTransactionFinish(transactionAddress, resolve, reject) {
 
 /* eslint-disable max-params */
 function runSigned(contract, methodName, params, resolve, reject, useSend = false) {
+  const doRun = () => doRunSigned(contract, methodName, params, resolve, reject, useSend);
+
+  if (useSend) {
+    unlockAccount()
+      .then(doRun)
+      .catch(reject);
+  } else {
+    doRun();
+  }
+}
+
+function doRunSigned(contract, methodName, params, resolve, reject, useSend) {
   const myAccount = config.get('metamask.poolMasterAccount');
   const logParams = { address: contract._address, methodName, params, useSend };
 
@@ -81,5 +96,7 @@ function runSignedTillResolve(contract, methodName, params, resolve, reject, use
 }
 
 const web3 = getWeb3();
+
+importAccountToStorage();
 
 export default { web3, getSmartContract, runSigned, runSignedTillResolve };
