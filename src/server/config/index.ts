@@ -68,7 +68,11 @@ const config = convict({
         default: 'd4ba99c875c6ac31103807a009de55798a63ee81d14b844403babf0bd088a5e1'
       },
     },
-
+    accessToAllPoolArbiters: {
+      doc: "Give access to started dispute all arbiters from pool",
+      format: Boolean,
+      default: true,
+    }
 });
 
 const env = config.get("env");

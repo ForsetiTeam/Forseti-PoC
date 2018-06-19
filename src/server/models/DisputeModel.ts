@@ -1,5 +1,7 @@
 import {arrayProp, instanceMethod, InstanceType, prop, Ref, Typegoose} from "typegoose";
 
+import config from '../config';
+
 import UserModel, { User } from "./UserModel";
 import CommunityModel, { Community } from './CommunityModel';
 import DocumentModel, { Document } from './DocumentModel';
@@ -57,10 +59,12 @@ export class Dispute extends Typegoose {
         users = users.filter(user => user.address.toLowerCase() !== author.account.toLowerCase());
 
         //select arbiters from users list
-        const selected = selectArbiters(users, this._id, this.arbitersNeed);
-        if (!selected) return Promise.reject('Not enough arbiters in the pool');
+        if (!config.get('accessToAllPoolArbiters')) {
+          users = selectArbiters(users, this._id, this.arbitersNeed);
+          if (!users) return Promise.reject('Not enough arbiters in the pool');
+        }
 
-        this.arbiters = selected.map(user => new VoteModel({userAddress: user.address.toLowerCase()}));
+        this.arbiters = users.map(user => new VoteModel({userAddress: user.address.toLowerCase()}));
         return this;
       })
   }
