@@ -17,7 +17,7 @@ function importAccountToStorage() {
   const key = config.get('metamask.poolMasterKey');
   const phrase = config.get('metamask.poolMasterPassphrase');
 
-  web3.eth.personal.importRawKey(key, phrase)
+  web3.eth.personal.importRawKey(key, phrase, 0)
     .catch(() => {});
 }
 
@@ -57,18 +57,6 @@ function getTransactionFinish(transactionAddress, resolve, reject) {
 
 /* eslint-disable max-params */
 function runSigned(contract, methodName, params, resolve, reject, useSend = false) {
-  const doRun = () => doRunSigned(contract, methodName, params, resolve, reject, useSend);
-
-  if (useSend) {
-    unlockAccount()
-      .then(doRun)
-      .catch(reject);
-  } else {
-    doRun();
-  }
-}
-
-function doRunSigned(contract, methodName, params, resolve, reject, useSend) {
   const myAccount = config.get('metamask.poolMasterAccount');
   const logParams = { address: contract._address, methodName, params, useSend };
 
@@ -98,5 +86,7 @@ function runSignedTillResolve(contract, methodName, params, resolve, reject, use
 const web3 = getWeb3();
 
 importAccountToStorage();
+
+unlockAccount();
 
 export default { web3, getSmartContract, runSigned, runSignedTillResolve };
