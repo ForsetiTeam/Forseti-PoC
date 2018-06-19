@@ -63,11 +63,13 @@ async function get(req: Request, res: Response, next: NextFunction) {
 
 async function create(req, res: Response, next: NextFunction) {
   const disputeRaw = req.body;
+  console.log(disputeRaw);
   const dispute = new DisputeModel({
     author: req.user._id,
     title: disputeRaw.title,
     description: disputeRaw.description || null,
     community: disputeRaw.community,
+    eth: disputeRaw.eth,
     arbitersNeed: disputeRaw.arbitersNeed,
     document: req.file ? req.file.id : null
   });

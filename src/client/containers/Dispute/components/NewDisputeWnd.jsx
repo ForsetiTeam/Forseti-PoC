@@ -57,16 +57,17 @@ class NewDisputeWnd extends Component {
             </div>
           </div>
           <div className='form-group row'>
-            <label htmlFor='eth' className='col-sm-4 col-form-label'>Eth amount</label>
+            <label htmlFor='eth' className='col-sm-4 col-form-label'>Eth amount *</label>
             <div className='col-sm-8'>
               <input
                 id='eth'
                 name='eth'
                 className='form-control'
                 placeholder='not used yet'
-                onChange={this.props.onChange({})}
+                onChange={this.props.onChange({ required: true, number: true })}
               />
             </div>
+            <ErrorRequest error={this.props.errors.ethError} />
           </div>
           <div className='form-group row'>
             <label htmlFor='arbitersNeed' className='col-sm-4 col-form-label'>Arbiters count *</label>

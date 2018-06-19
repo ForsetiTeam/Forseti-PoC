@@ -13,6 +13,11 @@ export default function createDispute(dispute) {
       resolve(response.args._dispute);
     });
 
-    contractUtils.runSigned(drm, 'createDispute', [dispute.poolAddress, weirdHash, arbitersNeed], () => {}, reject);
+    contractUtils.runSigned(
+      drm,
+      'createDispute',
+      [dispute.poolAddress, weirdHash, arbitersNeed],
+      { value: dispute.eth * 1e18 }
+    ).catch(reject);
   });
 }

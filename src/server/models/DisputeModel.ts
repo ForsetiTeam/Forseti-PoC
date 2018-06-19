@@ -28,6 +28,9 @@ export class Dispute extends Typegoose {
   public arbitersNeed?: number;
 
   @prop({ })
+  public eth: number;
+
+  @prop({ })
   public document?: Ref<Document>;
 
   @prop({ })
@@ -96,6 +99,7 @@ export class Dispute extends Typegoose {
       communityName: this.community.name,
       isClosed: this.isClosed,
       result: this.result,
+      eth: this.eth,
       arbitersNeed: this.arbitersNeed,
       document: fileName,
       ethAddress: this.ethAddress,

@@ -16,7 +16,7 @@ class NewDisputeWndContainer extends Component {
     contractorAddressValid: true,
     contractorAddressError: '',
 
-    ethValid: true,
+    ethValid: false,
     ethError: '',
 
     descriptionValid: false,
@@ -58,7 +58,7 @@ class NewDisputeWndContainer extends Component {
 
   validateForm = () => {
     this.setState({
-      formValid: this.state.titleValid && this.state.descriptionValid && this.state.arbitersNeedValid
+      formValid: this.state.titleValid && this.state.descriptionValid && this.state.arbitersNeedValid && this.state.ethValid
     });
   };
 

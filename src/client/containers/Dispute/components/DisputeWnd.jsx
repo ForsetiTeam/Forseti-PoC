@@ -123,6 +123,8 @@ class DisputeWnd extends Component {
             <dd className='col-9 text-truncate'><EtherscanLink address={dispute.authorAddress} /></dd>
             <dt className='col-3 text-right'>Community:</dt>
             <dd className='col-9'>{dispute.communityName}</dd>
+            <dt className='col-3 text-right'>Eth amount:</dt>
+            <dd className='col-9'>{dispute.eth}</dd>
             <dt className='col-3 text-right'>Arbiters count:</dt>
             <dd className='col-9'>{dispute.arbitersNeed}</dd>
             {dispute.document &&
