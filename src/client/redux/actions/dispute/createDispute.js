@@ -3,12 +3,13 @@ import { push } from 'react-router-redux';
 import { request } from '../utils/axios';
 import apiRoutes from '../../apiRoutes';
 
+import { uploadFile } from '../../../services/ipfs';
+
 import {
   fetchDecorator,
   fetchSuccessStatusDecorator,
   fetchProtectedAuth
 } from '../decorators/index';
-import { jsonToFormData } from '../utils/jsonToFormData';
 
 export const REQUEST_CREATE_DISPUTE_LOADING = 'REQUEST_CREATE_DISPUTE_LOADING';
 export const REQUEST_CREATE_DISPUTE_SUCCESS = 'REQUEST_CREATE_DISPUTE_SUCCESS';
@@ -51,17 +52,19 @@ function fetchCreateDisputeDo(dispute, community) {
     console.log('Fetch: CreateDispute');
     dispatch(requestCreateDispute());
 
-    const disputeForm = jsonToFormData(dispute);
+    dispute.community = community.id;
 
-    disputeForm.append('community', community.id);
+    return uploadFile(dispute.document).then(document => {
+      dispute.document = document.hash;
 
-    return fetchDecorator(
-      [
-        resp => fetchProtectedAuth(resp, dispatch),
-        fetchSuccessStatusDecorator
-      ],
-      request('post', apiRoutes.disputeList(), disputeForm, { headers: { 'content-type': 'multipart/form-data' } })
-    )
+      return fetchDecorator(
+        [
+          resp => fetchProtectedAuth(resp, dispatch),
+          fetchSuccessStatusDecorator
+        ],
+        request('post', apiRoutes.disputeList(), dispute)
+      );
+    })
       .then(async res => {
         const dispute = res.data;
 

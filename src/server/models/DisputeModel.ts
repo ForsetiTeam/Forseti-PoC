@@ -4,7 +4,6 @@ import config from '../config';
 
 import UserModel, { User } from "./UserModel";
 import CommunityModel, { Community } from './CommunityModel';
-import DocumentModel, { Document } from './DocumentModel';
 import VoteModel, { Vote, Decision } from './VoteModel';
 
 import getPoolActiveArbiters from '../ethereum/pool/getPoolActiveArbiters';
@@ -31,7 +30,7 @@ export class Dispute extends Typegoose {
   public eth: number;
 
   @prop({ })
-  public document?: Ref<Document>;
+  public document: string;
 
   @prop({ })
   public ethAddress: string;
@@ -87,9 +86,6 @@ export class Dispute extends Typegoose {
 
   @instanceMethod
   getExportJSON(this, user) {
-    const document = this.document ? this.document.toJSON() : null;
-    const fileName = document && document.metadata ? document.metadata.fileName : null;
-
     let exportData = {
       id: this._id,
       author: this.author._id,
@@ -101,7 +97,7 @@ export class Dispute extends Typegoose {
       result: this.result,
       eth: this.eth,
       arbitersNeed: this.arbitersNeed,
-      document: fileName,
+      document: this.document,
       ethAddress: this.ethAddress,
 
       poolAddress: this.community.poolAddress
@@ -136,6 +132,5 @@ export default DisputeModel;
 export function populateDispute(query) {
   return query
     .populate({path: 'community', model: CommunityModel})
-    .populate({path: 'document', model: DocumentModel})
     .populate({path: 'author', model: UserModel});
 }

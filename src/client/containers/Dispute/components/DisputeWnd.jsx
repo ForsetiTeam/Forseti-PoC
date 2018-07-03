@@ -130,7 +130,11 @@ class DisputeWnd extends Component {
             {dispute.document &&
               <Fragment>
                 <dt className='col-3 text-right'>Evidences:</dt>
-                <dd className='col-9'><a href='#' onClick={this.props.onDownloadDocument}>Download document</a></dd>
+                <dd className='col-9'>
+                  <a href={`http://${window.location.hostname}:5002/ipfs/${dispute.document}`} target='_blank'>
+                    Download document
+                  </a>
+                </dd>
               </Fragment>
             }
             {dispute.userDecision &&

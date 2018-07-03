@@ -1,14 +1,9 @@
 import * as express from "express";
 import * as passport from "passport";
-import {Types} from "mongoose";
 
 import {NextFunction, Request, Response} from "../types/ExpressExtended";
 
-import DisputeModel, { populateDispute } from "../models/DisputeModel"
-import DocumentModel from "../models/DocumentModel";
-
-import getFileUploader from './utils/getFileUploader';
-import sendFile from './utils/sendFile';
+import DisputeModel, { populateDispute } from "../models/DisputeModel";
 
 import finishDispute from '../ethereum/dispute/finishDispute';
 
@@ -63,7 +58,7 @@ async function get(req: Request, res: Response, next: NextFunction) {
 
 async function create(req, res: Response, next: NextFunction) {
   const disputeRaw = req.body;
-  console.log(disputeRaw);
+
   const dispute = new DisputeModel({
     author: req.user._id,
     title: disputeRaw.title,
@@ -71,7 +66,7 @@ async function create(req, res: Response, next: NextFunction) {
     community: disputeRaw.community,
     eth: disputeRaw.eth,
     arbitersNeed: disputeRaw.arbitersNeed,
-    document: req.file ? req.file.id : null
+    document: disputeRaw.document
   });
 
   return dispute.save()
@@ -79,23 +74,9 @@ async function create(req, res: Response, next: NextFunction) {
     .catch(err => res.responses.requestError("Can't save dispute"));
 }
 
-async function getDocument(req: Request, res: Response, next: NextFunction) {
-  const disputeId = req.params.id;
-  DisputeModel.findById(disputeId).populate({path: 'document', model: DocumentModel}).exec()
-    .then((dispute: any) => {
-      if (!dispute.document) return res.responses.notFoundResource("Document not found");
-
-      const fileData = dispute.document.toJSON();
-      const fileName = fileData.metadata && fileData.metadata.fileName || 'undefined';
-
-      sendFile(res, fileData, fileName);
-    })
-    .catch(() => res.responses.notFoundResource("Dispute not found"));
-}
-
 function vote(req: Request, res: Response, next: NextFunction) {
   const disputeId = req.params.id;
-  DisputeModel.findById(disputeId).populate({path: 'document', model: DocumentModel}).exec()
+  DisputeModel.findById(disputeId).exec()
     .then(dispute => {
 
       const vote = dispute.getUserVote(req.user.account);
@@ -147,17 +128,12 @@ router.get("/",
   passport.authenticate("jwt", { session: false }),
   validate(validateGetDisputeList),
   getList);
-router.get("/:id/document",
-  passport.authenticate("jwt", { session: false }),
-  getDocument);
 router.get("/:id",
   passport.authenticate("jwt", { session: false }),
   get);
 
-const upload = getFileUploader();
 router.post("/",
   passport.authenticate("jwt", { session: false }),
-  upload.single('document'),
   validate(validateCreateDispute),
   create);
 router.post("/:id/vote",

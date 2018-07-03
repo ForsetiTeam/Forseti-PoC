@@ -1,7 +1,7 @@
 import express from "./express";
 import config from "./config";
 import MongoDb from "./mongodb";
-import  "./ipfs";
+import  "./ipfs-daemon";
 
 const db = new MongoDb();
 const app = express();

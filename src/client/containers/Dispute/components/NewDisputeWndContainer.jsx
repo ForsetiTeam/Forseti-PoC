@@ -28,7 +28,7 @@ class NewDisputeWndContainer extends Component {
     formValid: false
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
 
     this.props.onFetchCreateDispute({
