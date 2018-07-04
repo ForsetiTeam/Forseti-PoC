@@ -19,6 +19,7 @@ export default class MongoDb {
     mongoose.connect(this.dbUrl);
     const db = mongoose.connection;
     // todo: return connection
+    console.log('DB CONNECTED');
     mainConnect();
   }
 }
