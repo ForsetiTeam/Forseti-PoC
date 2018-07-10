@@ -57,6 +57,7 @@ class RegisterContainer extends Component {
 
     return (
       <Register
+        isLoginFailed={user.loginFailed}
         isSigned={!!this.props.metamask.sig}
         isMetamaskInstalled={this.props.isMetamaskInstalled}
         error={error}

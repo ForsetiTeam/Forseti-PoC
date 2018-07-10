@@ -20,7 +20,8 @@ const initialState = {
   loaded: !!user,
   loading: false,
   error: null,
-  validatorError: null
+  validatorError: null,
+  loginFailed: false
 };
 
 export default function (state = initialState, action) {
@@ -31,6 +32,7 @@ export default function (state = initialState, action) {
 
       newState.loaded = false;
       newState.loading = true;
+      newState.loginFailed = false;
       newState.joining = false;
       newState.user = null;
       newState.error = null;
@@ -42,6 +44,7 @@ export default function (state = initialState, action) {
         user: action.user,
         loaded: true,
         loading: false,
+        loginFailed: false,
         error: null
       };
     }
@@ -52,6 +55,7 @@ export default function (state = initialState, action) {
         user: null,
         loaded: false,
         loading: false,
+        loginFailed: true,
         error: action.error,
         validatorError: action.validatorError /* from register*/
       };
