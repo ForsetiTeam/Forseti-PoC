@@ -5,6 +5,7 @@ export default function signMessage(message) {
     const hex = web3.toHex(message);
 
     web3.personal.sign(hex, myAccount, (e, sig) => {
+      if (myAccount !== web3.eth.coinbase) return;
       if (e || !sig) return resolve();
       resolve(sig);
     });

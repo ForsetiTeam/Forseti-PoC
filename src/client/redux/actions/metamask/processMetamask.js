@@ -118,6 +118,7 @@ function requestSig(account) {
       },
       (error, result) => {
         error = error || result.error;
+        if (account !== window.web3.eth.coinbase) return;
         if (error) return reject(error);
 
         resolve(result.result);
