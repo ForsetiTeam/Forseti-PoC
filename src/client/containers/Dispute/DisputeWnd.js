@@ -16,7 +16,7 @@ function mapStateToProps(state, props) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchVoteDispute: (disputeId, decision) => dispatch(fetchVoteDispute(disputeId, decision)),
+  fetchVoteDispute: (disputeId, abstain, decision) => dispatch(fetchVoteDispute(disputeId, abstain, decision)),
   fetchStartDispute: dispute => dispatch(fetchStartDispute(dispute)),
   fetchFinishDispute: dispute => dispatch(fetchFinishDispute(dispute))
 });

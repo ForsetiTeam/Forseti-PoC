@@ -1,5 +1,4 @@
 import { sigLength, addressLength } from './ethConsts';
-import { Decision } from '../models/VoteModel'
 
 export function validateGetDisputeList(req) {
   return {
@@ -55,12 +54,6 @@ export function validateCreateDispute(req) {
 
 export function validateVoteDispute(req) {
   return {
-    decision: {
-      isIn: {
-        options: {list: Object.values(Decision)},
-        errorMessage: 'Invalid value'
-      },
-    },
     sig: {
       isLength: {
         options: sigLength,

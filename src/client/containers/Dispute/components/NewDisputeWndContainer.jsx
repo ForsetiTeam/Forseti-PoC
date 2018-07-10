@@ -36,6 +36,7 @@ class NewDisputeWndContainer extends Component {
       contractorAddress: this.state.contractorAddress,
       eth: this.state.eth,
       description: this.state.description,
+      answers: this.state.answers,
       arbitersNeed: this.state.arbitersNeed,
       document: this.state.document
     });

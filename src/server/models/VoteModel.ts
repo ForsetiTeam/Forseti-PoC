@@ -1,19 +1,15 @@
-import {prop, Ref, Typegoose} from "typegoose";
-import { User } from "./UserModel";
-
-export enum Decision {
-  APPROVE = 'approve',
-  DISAPPROVE = 'disapprove',
-  ABSTAIN = 'abstain'
-}
+import {prop, Typegoose} from "typegoose";
 
 export class Vote extends Typegoose {
 
   @prop({ required: true })
   public userAddress: string;
 
-  @prop({ enum: Decision })
-  public decision: Decision;
+  @prop({ })
+  public isAbstained: boolean;
+
+  @prop({ })
+  public decision: string;
 
   @prop({ })
   public sig: string;

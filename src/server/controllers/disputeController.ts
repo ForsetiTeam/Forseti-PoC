@@ -58,6 +58,7 @@ async function get(req: Request, res: Response, next: NextFunction) {
 
 async function create(req, res: Response, next: NextFunction) {
   const disputeRaw = req.body;
+  const answers = (disputeRaw.answers || '').split(',').map(answer => answer.trim()).filter(answer => answer);
 
   const dispute = new DisputeModel({
     author: req.user._id,
@@ -65,6 +66,7 @@ async function create(req, res: Response, next: NextFunction) {
     description: disputeRaw.description || null,
     community: disputeRaw.community,
     eth: disputeRaw.eth,
+    answers: answers.length ? answers : null,
     arbitersNeed: disputeRaw.arbitersNeed,
     document: disputeRaw.document
   });
@@ -82,8 +84,14 @@ function vote(req: Request, res: Response, next: NextFunction) {
       const vote = dispute.getUserVote(req.user.account);
       if (!vote) return res.responses.requestError("User is not an arbiter");
 
-      vote.decision = req.body.decision;
+      if (req.body.abstain) {
+        vote.isAbstained = true;
+      } else {
+        vote.decision = req.body.decision;
+        if (!dispute.checkDecision(vote.decision)) return res.responses.requestError("Invalid decision");
+      }
       vote.sig = req.body.sig;
+
 
       dispute.save()
         .then(dispute => getById(dispute._id, req.user, res))
@@ -113,6 +121,9 @@ function finish(req: Request, res: Response, next: NextFunction) {
   populateDispute(DisputeModel.findById(disputeId)).exec()
     .then(dispute => {
       const result = dispute.calcResult();
+      if (result instanceof Error) {
+        return res.responses.requestError(result.message);
+      }
       finishDispute(dispute.ethAddress, dispute.arbiters, result)
         .then(async (transaction) => {
           dispute.isClosed = true;

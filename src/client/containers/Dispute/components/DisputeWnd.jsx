@@ -13,6 +13,11 @@ import SpinnerWaiter from '../../../components/SpinnerWaiter';
 import ErrorRequest from '../../../components/ErrorRequest';
 import EtherscanLink from '../../../components/EtherscanLink';
 
+const standartButtonAnswers = [
+  { answer: DISPUTE_DECISION_DISAPPROVE, color: 'danger' },
+  { answer: DISPUTE_DECISION_APPROVE, color: 'success' }
+];
+
 class DisputeWnd extends Component {
   static propTypes = {
     dispute: PropTypes.shape(),
@@ -22,11 +27,29 @@ class DisputeWnd extends Component {
     error: PropTypes.string,
 
     onToggle: PropTypes.func,
+    onAbstain: PropTypes.func,
     onVote: PropTypes.func,
     onStart: PropTypes.func,
     onFinish: PropTypes.func,
     onDownloadDocument: PropTypes.func
   };
+
+  renderResolvingButtons() {
+    const buttons = this.props.dispute.answers
+      ? this.props.dispute.answers.map(answer => ({ answer, color: 'success' }))
+      : standartButtonAnswers;
+
+    return buttons.map(({ answer, color }) => (
+      <button
+        key={answer}
+        className={`btn btn-${color} m-1`}
+        data-decision={answer}
+        onClick={this.props.onVote}
+      >
+        {answer}
+      </button>
+    ));
+  }
 
   renderButtons() {
     const dispute = this.props.dispute;
@@ -46,7 +69,7 @@ class DisputeWnd extends Component {
       if (dispute.isClosed) {
         return <span className='text-danger'>Dispute is closed</span>;
       }
-      if (dispute.arbitersNeed === dispute.usersVoted) {
+      if (dispute.arbitersNeed <= dispute.usersVoted) {
         return (
           <button
             className='btn btn-success m-1'
@@ -61,33 +84,15 @@ class DisputeWnd extends Component {
     } else {
       if (!dispute.ethAddress) return;
       if (!dispute.userIsArbiter) return;
-      if (!dispute.isClosed && !dispute.userDecision) {
+      if (!dispute.isClosed && !dispute.userDecision && !dispute.userIsAbstained) {
         if (this.props.isToggled) {
-          return (
-            <Fragment>
-              <button
-                className='btn btn-danger m-1'
-                data-decision={DISPUTE_DECISION_DISAPPROVE}
-                onClick={this.props.onVote}
-              >
-                Disaprove
-              </button>
-              <button
-                className='btn btn-success m-1'
-                data-decision={DISPUTE_DECISION_APPROVE}
-                onClick={this.props.onVote}
-              >
-                Aprove
-              </button>
-            </Fragment>
-          );
+          return this.renderResolvingButtons();
         } else {
           return (
             <Fragment>
               <button
                 className='btn btn-danger m-1'
-                data-decision={DISPUTE_DECISION_ABSTAIN}
-                onClick={this.props.onVote}
+                onClick={this.props.onAbstain}
               >
                 Abstain
               </button>
@@ -106,6 +111,12 @@ class DisputeWnd extends Component {
 
   renderContent() {
     const dispute = this.props.dispute;
+
+    let userDecision = dispute.userDecision;
+
+    if (dispute.userIsAbstained) {
+      userDecision = DISPUTE_DECISION_ABSTAIN;
+    }
 
     return (
       <Fragment>
@@ -137,10 +148,10 @@ class DisputeWnd extends Component {
                 </dd>
               </Fragment>
             }
-            {dispute.userDecision &&
+            {userDecision &&
               <Fragment>
                 <dt className='col-3 text-right'>Your decision:</dt>
-                <dd className='col-9'><b>{dispute.userDecision}</b></dd>
+                <dd className='col-9'><b>{userDecision}</b></dd>
               </Fragment>
             }
             {dispute.result &&

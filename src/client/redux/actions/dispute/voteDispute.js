@@ -32,11 +32,11 @@ function failureVoteDispute(error) {
   };
 }
 
-export function fetchVoteDispute(dispute, decision) {
-  return (dispatch) => dispatch(fetchVoteDisputeDo(dispute, decision));
+export function fetchVoteDispute(dispute, abstain, decision) {
+  return dispatch => dispatch(fetchVoteDisputeDo(dispute, abstain, decision));
 }
 
-function fetchVoteDisputeDo(disputeId, decision) {
+function fetchVoteDisputeDo(disputeId, abstain, decision) {
   return async dispatch => {
     console.log('Fetch: VoteDispute');
     dispatch(requestVoteDispute());
@@ -50,7 +50,7 @@ function fetchVoteDisputeDo(disputeId, decision) {
         resp => fetchProtectedAuth(resp, dispatch),
         fetchSuccessStatusDecorator
       ],
-      request('post', apiRoutes.disputeVote(disputeId), { decision, sig })
+      request('post', apiRoutes.disputeVote(disputeId), { abstain, decision, sig })
     )
       .then(res => {
         dispatch(receiveVoteDispute(res.data));

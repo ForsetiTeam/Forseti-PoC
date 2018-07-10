@@ -57,6 +57,8 @@ const validate = (value, validators) => {
         }
         /* eslint-enable max-len */
         break;
+      case 'list':
+        break;
       default:
         break;
     }

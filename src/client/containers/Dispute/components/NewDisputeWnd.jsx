@@ -5,6 +5,8 @@ import { Window } from '../../Layer';
 
 import ErrorRequest from '../../../components/ErrorRequest';
 
+import { DISPUTE_DECISION_APPROVE, DISPUTE_DECISION_DISAPPROVE } from '../../../consts';
+
 class NewDisputeWnd extends Component {
   static propTypes = {
     formValid: PropTypes.bool,
@@ -68,6 +70,19 @@ class NewDisputeWnd extends Component {
               />
             </div>
             <ErrorRequest error={this.props.errors.ethError} />
+          </div>
+          <div className='form-group row'>
+            <label htmlFor='answers' className='col-sm-4 col-form-label'>Answers</label>
+            <div className='col-sm-8'>
+              <input
+                id='answers'
+                name='answers'
+                className='form-control'
+                placeholder={[DISPUTE_DECISION_APPROVE, DISPUTE_DECISION_DISAPPROVE].join(', ')}
+                onChange={this.props.onChange({ required: true, list: true })}
+              />
+            </div>
+            <ErrorRequest error={this.props.errors.answersError} />
           </div>
           <div className='form-group row'>
             <label htmlFor='arbitersNeed' className='col-sm-4 col-form-label'>Arbiters count *</label>

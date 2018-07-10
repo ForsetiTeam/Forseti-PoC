@@ -5,6 +5,10 @@ import apiRoutes from '../../../redux/apiRoutes';
 
 import DisputeWnd from './DisputeWnd';
 
+import {
+  DISPUTE_DECISION_ABSTAIN
+} from '../../../consts';
+
 class DisputeWndContainer extends Component {
   static propTypes = {
     dispute: PropTypes.shape(),
@@ -46,7 +50,15 @@ class DisputeWndContainer extends Component {
     e.preventDefault();
     const decision = e.target.dataset.decision;
 
-    this.props.fetchVoteDispute(this.props.dispute.id, decision);
+    this.props.fetchVoteDispute(this.props.dispute.id, false, decision);
+
+    this.setState({ isToggled: false });
+  };
+
+  handleAbstain = e => {
+    e.preventDefault();
+
+    this.props.fetchVoteDispute(this.props.dispute.id, true, DISPUTE_DECISION_ABSTAIN);
 
     this.setState({ isToggled: false });
   };
@@ -61,6 +73,7 @@ class DisputeWndContainer extends Component {
         error={this.props.error}
 
         onToggle={this.handleToggle}
+        onAbstain={this.handleAbstain}
         onVote={this.handleVote}
         onStart={this.handleStart}
         onFinish={this.handleFinish}

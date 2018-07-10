@@ -55,7 +55,9 @@ function fetchCreateDisputeDo(dispute, community) {
     dispute.community = community.id;
 
     return uploadFile(dispute.document).then(document => {
-      dispute.document = document.hash;
+      if (document) {
+        dispute.document = document.hash;
+      }
 
       return fetchDecorator(
         [

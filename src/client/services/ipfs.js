@@ -4,6 +4,7 @@ const ipfs = IPFS('localhost', '5002', { protocol: 'http' });
 
 export const uploadFile = file => {
   console.log('START UPLOAD', file);
+  if (!file) return Promise.resolve();
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
 
